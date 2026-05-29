@@ -274,12 +274,30 @@ export default function Navbar() {
 
           {/* CTA + Mobile */}
           <div className="flex items-center gap-3">
-            <Button
-              onClick={() => handleNavClick('#contact')}
-              className="hidden sm:flex bg-mahogany hover:bg-mahogany-dark text-white rounded-full px-5"
+            <div
+              className="relative hidden sm:block"
+              onMouseEnter={() => handleDropdownEnter('apply')}
+              onMouseLeave={handleDropdownLeave}
             >
-              Apply Now
-            </Button>
+              <Button
+                onClick={() => handleNavClick('#contact')}
+                className="bg-mahogany hover:bg-mahogany-dark text-white rounded-full px-5"
+              >
+                Apply Now
+              </Button>
+              {isDropdownActive({ key: 'apply' } as NavLink) && (
+                <motion.div
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute top-full right-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-border p-4 z-50"
+                >
+                  <h4 className="font-semibold text-mahogany text-sm mb-1">Your project</h4>
+                  <p className="text-dove text-xs leading-relaxed">Applying for your dream project is quick and simple</p>
+                </motion.div>
+              )}
+            </div>
 
             {/* Mobile Menu */}
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
@@ -384,6 +402,10 @@ export default function Navbar() {
                     >
                       Apply Now
                     </Button>
+                    <div className="mt-3 text-center">
+                      <p className="font-semibold text-mahogany text-sm">Your project</p>
+                      <p className="text-dove text-xs leading-relaxed mt-0.5">Applying for your dream project is quick and simple</p>
+                    </div>
                   </div>
                 </div>
               </SheetContent>
