@@ -93,9 +93,9 @@ export default function HeroSection() {
                 <span>Select your trip</span>
               </div>
               <div className="w-px h-5 bg-white/20" />
-              <a href="tel:+16193202424" className="flex items-center gap-2 text-white/60 text-sm hover:text-copper transition-colors">
+              <a href="tel:+233244207278" className="flex items-center gap-2 text-white/60 text-sm hover:text-copper transition-colors">
                 <Phone className="w-4 h-4 text-copper flex-shrink-0" />
-                <span>Can&apos;t find your project? <span className="underline">+1 619-320-2424</span></span>
+                <span>Can&apos;t find your project? <span className="underline">+233 244 207 278 / +233 544 129 556</span></span>
               </a>
             </div>
           </motion.div>
