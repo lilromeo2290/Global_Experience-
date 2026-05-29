@@ -195,15 +195,16 @@ export default function ContactSection() {
                       <SelectValue placeholder="Select a program" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="medical">Medical Placements</SelectItem>
-                      <SelectItem value="teaching">Teaching Placements</SelectItem>
-                      <SelectItem value="journalism">Journalism Placements</SelectItem>
-                      <SelectItem value="sports">Sports Placements</SelectItem>
-                      <SelectItem value="finance">Banking & Finance</SelectItem>
+                      <SelectItem value="medical">Medical Placement in Teaching Hospitals</SelectItem>
+                      <SelectItem value="teaching">Teaching</SelectItem>
+                      <SelectItem value="journalism">Journalism</SelectItem>
+                      <SelectItem value="community">Community Outreach</SelectItem>
+                      <SelectItem value="sports">Sports</SelectItem>
+                      <SelectItem value="admin">Office Administration</SelectItem>
+                      <SelectItem value="finance">Banking and Finance</SelectItem>
                       <SelectItem value="law">Law Placements</SelectItem>
-                      <SelectItem value="agriculture">Agriculture Placements</SelectItem>
-                      <SelectItem value="tourism">Tourism & Ecotourism</SelectItem>
-                      <SelectItem value="community">Community Development</SelectItem>
+                      <SelectItem value="agriculture">Agriculture Placement</SelectItem>
+                      <SelectItem value="tourism">Tourism and Ecotourism</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

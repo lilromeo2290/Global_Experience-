@@ -2,98 +2,108 @@
 
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import { ArrowRight, Stethoscope, BookOpen, Newspaper, Trophy, Building2, Scale, Wheat, TreePine, Hammer, Droplets, Heart } from 'lucide-react'
+import { ArrowRight, Stethoscope, BookOpen, Radio, Users, Trophy, Building2, Landmark, Scale, Wheat, TreePine, Heart } from 'lucide-react'
 
 const categories = [
   {
     icon: Stethoscope,
-    title: 'Medical Placements',
+    title: 'Medical Placement in Teaching Hospitals',
     img: '/images/medical-placement.png',
-    desc: 'Gain hands-on clinical experience in diverse healthcare settings across Africa. Work alongside experienced professionals in hospitals, clinics, and community health centers.',
-    benefits: ['Direct patient care experience', 'Cross-cultural medical practice', 'Professional mentorship', 'Certification support'],
+    desc: 'Gain invaluable hands-on clinical experience in leading teaching hospitals across Africa. Work alongside seasoned medical professionals in real healthcare settings, developing practical skills that will shape your career in medicine, nursing, or allied health sciences.',
+    benefits: ['Direct patient care experience', 'Cross-cultural medical practice', 'Professional mentorship from specialists', 'Clinical skills certification'],
     requirements: ['Medical/nursing enrollment', 'Basic language willingness', 'Immunization records', 'Professional references'],
     subtypes: ['Nursing', 'Midwifery', 'Physiotherapy', 'Psychiatric Care', 'Ear, Nose & Throat (ENT)'],
     color: 'mahogany',
   },
   {
     icon: BookOpen,
-    title: 'Teaching Placements',
+    title: 'Teaching',
     img: '/images/teaching-placement.png',
-    desc: 'Inspire the next generation by teaching in local schools and educational institutions. Share your knowledge while learning innovative teaching methods in resource-diverse environments.',
-    benefits: ['Curriculum development skills', 'Cross-cultural teaching', 'Language immersion', 'Community integration'],
+    desc: 'Inspire the next generation by teaching in local schools and educational institutions. Share your knowledge while learning innovative teaching methods in resource-diverse environments, making a direct impact on students\' academic journeys and future opportunities.',
+    benefits: ['Curriculum development skills', 'Cross-cultural teaching experience', 'Language immersion', 'Community integration'],
     requirements: ['Teaching qualification or interest', 'Fluent English', 'Patience & adaptability', 'Cultural sensitivity'],
-    subtypes: ['Primary Education', 'Secondary Education', 'Special Needs', 'Adult Literacy'],
+    subtypes: ['Primary Schools', 'Secondary Schools', 'Special Needs Education', 'Adult Literacy'],
     color: 'copper',
   },
   {
-    icon: Newspaper,
-    title: 'Journalism Placements',
+    icon: Radio,
+    title: 'Journalism',
     img: '/images/journalism-placement.png',
-    desc: 'Build your media portfolio with real-world experience in African newsrooms. Report on compelling stories, develop multimedia content, and gain unique perspectives on global issues.',
-    benefits: ['Published portfolio pieces', 'Multimedia storytelling', 'International reporting', 'Network building'],
+    desc: 'Build your media portfolio with real-world experience in broadcasting and newsrooms. Report on compelling stories, develop multimedia content, and gain unique perspectives on African media landscapes while working alongside experienced journalists and producers.',
+    benefits: ['Published portfolio pieces', 'Multimedia storytelling', 'International reporting experience', 'Professional network building'],
     requirements: ['Journalism/media enrollment', 'Writing samples', 'Digital literacy', 'Storytelling passion'],
-    subtypes: ['TV Stations', 'Radio Stations', 'Print Media', 'Digital Media'],
+    subtypes: ['Television', 'Radio Stations'],
     color: 'brass',
   },
   {
-    icon: Trophy,
-    title: 'Sports Placements',
-    img: '/images/sports-placement.png',
-    desc: 'Coach and develop sports programs in local communities. Use the power of sport to inspire youth, promote health, and build teamwork across cultural boundaries.',
-    benefits: ['Coaching certification path', 'Youth development impact', 'Athletic program design', 'Community engagement'],
-    requirements: ['Sports background', 'Coaching interest', 'Physical fitness', 'Youth mentoring skills'],
-    subtypes: ['Football Clubs', 'Athletics Programs', 'Community Sports', 'Youth Development'],
+    icon: Users,
+    title: 'Community Outreach',
+    img: '/images/community-project.png',
+    desc: 'Make a lasting difference through community outreach programs that address pressing social needs. Engage directly with local communities on health education, youth empowerment, women\'s initiatives, and social welfare projects that create sustainable change.',
+    benefits: ['Direct community impact', 'Grassroots development experience', 'Cultural immersion', 'Program design skills'],
+    requirements: ['Community development interest', 'Strong communication skills', 'Cultural sensitivity', 'Passion for social change'],
+    subtypes: ['Health Education', 'Youth Empowerment', 'Women\'s Initiatives', 'Social Welfare Programs'],
     color: 'mahogany',
   },
   {
-    icon: Building2,
-    title: 'Banking & Finance',
-    img: '/images/community-project.png',
-    desc: 'Gain valuable financial sector experience in emerging markets. Understand African banking systems, microfinance, and financial inclusion initiatives transforming communities.',
-    benefits: ['Emerging market exposure', 'Financial systems knowledge', 'Professional networking', 'Cross-border finance'],
-    requirements: ['Finance/business studies', 'Analytical skills', 'Professional demeanor', 'Cultural adaptability'],
-    subtypes: ['Local Banks', 'Microfinance', 'Insurance', 'Financial Consulting'],
+    icon: Trophy,
+    title: 'Sports',
+    img: '/images/sports-placement.png',
+    desc: 'Coach and develop sports programs in local communities. Use the power of sport to inspire youth, promote health and discipline, and build teamwork across cultural boundaries while gaining valuable coaching and athletic development experience.',
+    benefits: ['Coaching certification path', 'Youth development impact', 'Athletic program design', 'Community engagement'],
+    requirements: ['Sports background', 'Coaching interest', 'Physical fitness', 'Youth mentoring skills'],
+    subtypes: ['Football Clubs'],
     color: 'copper',
+  },
+  {
+    icon: Building2,
+    title: 'Office Administration',
+    img: '/images/community-project.png',
+    desc: 'Develop essential professional skills through office administration placements in dynamic organizational settings. Gain hands-on experience in business operations, management systems, and administrative processes that are transferable across any industry.',
+    benefits: ['Professional office skills', 'Business operations exposure', 'Management systems knowledge', 'Organizational communication'],
+    requirements: ['Business/admin interest', 'Computer literacy', 'Organizational skills', 'Professional demeanor'],
+    subtypes: ['NGO Administration', 'Corporate Offices', 'Government Agencies', 'Startup Operations'],
+    color: 'brass',
+  },
+  {
+    icon: Landmark,
+    title: 'Banking and Finance',
+    img: '/images/community-project.png',
+    desc: 'Gain valuable financial sector experience in emerging markets. Understand African banking systems, microfinance operations, and financial inclusion initiatives that are transforming communities and driving economic growth across the continent.',
+    benefits: ['Emerging market exposure', 'Financial systems knowledge', 'Professional networking', 'Cross-border finance insight'],
+    requirements: ['Finance/business studies', 'Analytical skills', 'Professional demeanor', 'Cultural adaptability'],
+    subtypes: ['Local Banks'],
+    color: 'mahogany',
   },
   {
     icon: Scale,
     title: 'Law Placements',
     img: '/images/community-project.png',
-    desc: 'Experience the legal system firsthand through placements in local courts, law firms, and legal aid organizations. Understand justice systems and human rights advocacy in African contexts.',
+    desc: 'Experience the legal system firsthand through placements in local courts and legal organizations. Observe courtroom proceedings, assist with legal research, and understand justice systems and human rights advocacy within African legal contexts.',
     benefits: ['Courtroom experience', 'Legal research skills', 'Human rights exposure', 'Comparative law knowledge'],
     requirements: ['Law studies enrollment', 'Research proficiency', 'Professional ethics', 'Communication skills'],
-    subtypes: ['Local Courts', 'Legal Aid', 'Human Rights Orgs', 'Corporate Law'],
-    color: 'brass',
-  },
-  {
-    icon: Wheat,
-    title: 'Agriculture Placements',
-    img: '/images/agriculture-placement.png',
-    desc: 'Work on sustainable agriculture projects that feed communities and drive economic growth. Learn innovative farming techniques and contribute to food security initiatives.',
-    benefits: ['Sustainable farming skills', 'Food security impact', 'Agribusiness knowledge', 'Rural development insight'],
-    requirements: ['Agricultural interest', 'Physical stamina', 'Environmental awareness', 'Community focus'],
-    subtypes: ['Crop Farming', 'Animal Husbandry', 'Agribusiness', 'Sustainable Agriculture'],
-    color: 'mahogany',
-  },
-  {
-    icon: TreePine,
-    title: 'Tourism & Ecotourism',
-    img: '/images/tourism-placement.png',
-    desc: 'Explore the intersection of tourism, conservation, and community development. Work with eco-lodges, wildlife sanctuaries, and sustainable tourism enterprises.',
-    benefits: ['Eco-tourism expertise', 'Conservation experience', 'Hospitality skills', 'Cultural preservation'],
-    requirements: ['Tourism/hospitality interest', 'Environmental awareness', 'Customer service skills', 'Adventure mindset'],
-    subtypes: ['Eco-Lodges', 'Wildlife Tours', 'Cultural Tourism', 'Adventure Tourism'],
+    subtypes: ['Local Courts'],
     color: 'copper',
   },
   {
-    icon: Hammer,
-    title: 'Community Development',
-    img: '/images/school-building.png',
-    desc: 'Make a lasting impact through hands-on community infrastructure projects. From building schools to installing water systems, your work directly improves quality of life.',
-    benefits: ['Tangible community impact', 'Project management skills', 'Construction experience', 'Team leadership'],
-    requirements: ['Physical fitness', 'Teamwork mindset', 'Cultural sensitivity', 'Hands-on attitude'],
-    subtypes: ['School Building', 'Borehole Water Projects', 'Rural Community Support', 'Infrastructure Development'],
+    icon: Wheat,
+    title: 'Agriculture Placement',
+    img: '/images/agriculture-placement.png',
+    desc: 'Work on sustainable agriculture projects that feed communities and drive economic growth. Learn innovative farming techniques, contribute to food security initiatives, and gain practical experience in agribusiness and rural development.',
+    benefits: ['Sustainable farming skills', 'Food security impact', 'Agribusiness knowledge', 'Rural development insight'],
+    requirements: ['Agricultural interest', 'Physical stamina', 'Environmental awareness', 'Community focus'],
+    subtypes: ['Crop Farming', 'Animal Husbandry', 'Agribusiness', 'Sustainable Agriculture'],
     color: 'brass',
+  },
+  {
+    icon: TreePine,
+    title: 'Tourism and Ecotourism',
+    img: '/images/tourism-placement.png',
+    desc: 'Explore the intersection of tourism, conservation, and community development. Work with eco-lodges, wildlife sanctuaries, and sustainable tourism enterprises while gaining hospitality skills and contributing to environmental preservation efforts.',
+    benefits: ['Eco-tourism expertise', 'Conservation experience', 'Hospitality skills', 'Cultural preservation'],
+    requirements: ['Tourism/hospitality interest', 'Environmental awareness', 'Customer service skills', 'Adventure mindset'],
+    subtypes: ['Eco-Lodges', 'Wildlife Tours', 'Cultural Tourism', 'Adventure Tourism'],
+    color: 'mahogany',
   },
 ]
 
@@ -118,13 +128,14 @@ export default function ProgramsSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="text-copper font-semibold text-sm uppercase tracking-wider">Placement Programs</span>
+          <span className="text-copper font-semibold text-sm uppercase tracking-wider">Placement Organization</span>
           <h2 className="text-3xl md:text-4xl font-bold text-mahogany mt-2 mb-4">
-            Explore Our Professional Placement Categories
+            Professional Placement Categories
           </h2>
           <p className="text-dove max-w-2xl mx-auto leading-relaxed">
-            Choose from a wide range of professional placement opportunities designed to match your skills,
-            interests, and career goals while making a meaningful impact in communities across Africa.
+            We organize professional placements across diverse sectors, carefully matching your skills and
+            career goals with impactful opportunities. Explore our placement categories and find the
+            perfect fit for your professional development journey.
           </p>
         </motion.div>
 
@@ -138,7 +149,7 @@ export default function ProgramsSection() {
               transition={{ duration: 0.5, delay: i * 0.05 }}
               className="bg-white rounded-2xl shadow-sm border border-border overflow-hidden hover:shadow-lg transition-shadow duration-300"
             >
-              <div className={`grid lg:grid-cols-5 gap-0`}>
+              <div className="grid lg:grid-cols-5 gap-0">
                 {/* Image */}
                 <div className={`lg:col-span-1 ${i % 2 !== 0 ? 'lg:order-last' : ''}`}>
                   <div className="h-48 lg:h-full bg-warm-sand overflow-hidden">

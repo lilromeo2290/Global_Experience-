@@ -15,14 +15,16 @@ const quickLinks = [
 ]
 
 const programs = [
-  'Medical Placements',
-  'Teaching Placements',
-  'Journalism Placements',
-  'Sports Placements',
-  'Community Development',
-  'Agriculture Placements',
-  'Tourism & Ecotourism',
+  'Medical Placement in Teaching Hospitals',
+  'Teaching',
+  'Journalism',
+  'Community Outreach',
+  'Sports',
+  'Office Administration',
+  'Banking and Finance',
   'Law Placements',
+  'Agriculture Placement',
+  'Tourism and Ecotourism',
 ]
 
 const socials = [
