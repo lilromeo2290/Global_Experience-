@@ -98,15 +98,14 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Programs */}
+          {/* Placement Programs */}
           <div>
-            <h4 className="font-semibold text-white mb-4 text-sm uppercase tracking-wider">Our Programs</h4>
+            <h4 className="font-semibold text-white mb-4 text-sm uppercase tracking-wider">Placement Programs</h4>
             <ul className="space-y-2">
               {programs.map((prog) => (
                 <li key={prog}>
                   <a
-                    href="#programs"
-                    onClick={(e) => { e.preventDefault(); handleNavClick('#programs') }}
+                    href="/placements"
                     className="text-sm text-white/60 hover:text-copper transition-colors"
                   >
                     {prog}

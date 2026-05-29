@@ -1,7 +1,8 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Plane, MapPin, Briefcase, Home, UtensilsCrossed } from 'lucide-react'
+import { Plane, MapPin, Briefcase, Home, UtensilsCrossed, ArrowRight } from 'lucide-react'
+import Link from 'next/link'
 
 const services = [
   {
@@ -9,30 +10,35 @@ const services = [
     title: 'Airport Pickups',
     desc: 'Seamless airport transfer services ensuring safe and comfortable arrival. Our team greets you at the airport and ensures you reach your accommodation without any hassle, 24/7.',
     color: 'mahogany',
+    link: null,
   },
   {
     icon: MapPin,
     title: 'Local Orientations',
     desc: 'Comprehensive orientation programs covering local culture, customs, safety guidelines, transportation, and essential information to help you settle in quickly and confidently.',
     color: 'copper',
+    link: null,
   },
   {
     icon: Briefcase,
     title: 'Placement Organization',
-    desc: 'Expert matching of your skills and interests with the perfect placement opportunity. We handle all logistics, documentation, and coordination with host organizations.',
+    desc: 'Expert matching of your skills and interests with the perfect placement opportunity. We organize placements across 10 professional categories including medical, teaching, journalism, and more.',
     color: 'brass',
+    link: '/placements',
   },
   {
     icon: Home,
     title: 'Accommodation',
     desc: 'Safe, comfortable, and affordable housing options carefully vetted by our team. From host families to shared volunteer houses, we ensure you have a secure and welcoming home throughout your placement.',
     color: 'mahogany',
+    link: null,
   },
   {
     icon: UtensilsCrossed,
     title: 'Feeding',
     desc: 'Nutritious meal plans and daily feeding support throughout your stay. We ensure you are well-nourished with local and familiar cuisine so you can focus on your placement and enjoy your experience.',
     color: 'copper',
+    link: null,
   },
 ]
 
@@ -65,6 +71,41 @@ export default function ServicesSection() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, i) => {
             const colors = colorMap[service.color]
+            const cardContent = (
+              <>
+                <div className={`w-14 h-14 ${colors.bg} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                  <service.icon className={`w-7 h-7 ${colors.icon}`} />
+                </div>
+                <h3 className="text-lg font-bold text-mahogany mb-2">{service.title}</h3>
+                <p className="text-sm text-dove leading-relaxed">{service.desc}</p>
+                {service.link && (
+                  <div className="mt-4 inline-flex items-center gap-1 text-copper hover:text-mahogany text-sm font-semibold transition-colors">
+                    View Placements <ArrowRight className="w-4 h-4" />
+                  </div>
+                )}
+              </>
+            )
+
+            if (service.link) {
+              return (
+                <motion.div
+                  key={service.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  whileHover={{ y: -8, scale: 1.02 }}
+                >
+                  <Link
+                    href={service.link}
+                    className="group block bg-white rounded-2xl p-6 shadow-sm border-2 border-brass/30 hover:shadow-xl hover:border-brass/60 transition-all duration-300"
+                  >
+                    {cardContent}
+                  </Link>
+                </motion.div>
+              )
+            }
+
             return (
               <motion.div
                 key={service.title}
@@ -73,13 +114,9 @@ export default function ServicesSection() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
                 whileHover={{ y: -8, scale: 1.02 }}
-                className={`group bg-white rounded-2xl p-6 shadow-sm border border-border hover:shadow-xl hover:border-mahogany/20 transition-all duration-300 ${i === services.length - 1 && services.length % 3 !== 0 ? 'lg:col-span-1' : ''}`}
+                className="group bg-white rounded-2xl p-6 shadow-sm border border-border hover:shadow-xl hover:border-mahogany/20 transition-all duration-300"
               >
-                <div className={`w-14 h-14 ${colors.bg} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                  <service.icon className={`w-7 h-7 ${colors.icon}`} />
-                </div>
-                <h3 className="text-lg font-bold text-mahogany mb-2">{service.title}</h3>
-                <p className="text-sm text-dove leading-relaxed">{service.desc}</p>
+                {cardContent}
               </motion.div>
             )
           })}
@@ -96,7 +133,7 @@ export default function ServicesSection() {
           <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
           <div className="relative grid md:grid-cols-2 gap-8 items-center">
             <div>
-              <h3 className="text-2xl md:text-3xl font-bold mb-4">Why Choose Global Experience Placements?</h3>
+              <h3 className="text-2xl md:text-3xl font-bold mb-4">Why Choose Global Experience?</h3>
               <p className="text-white/80 leading-relaxed">
                 With over a decade of experience, we provide the most comprehensive and trusted
                 volunteer placement services in Africa. Our dedicated team, extensive local network,
