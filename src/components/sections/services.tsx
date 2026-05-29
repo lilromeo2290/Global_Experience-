@@ -12,7 +12,7 @@ const services = [
   },
   {
     icon: MapPin,
-    title: 'Local Orientation',
+    title: 'Local Orientations',
     desc: 'Comprehensive orientation programs covering local culture, customs, safety guidelines, transportation, and essential information to help you settle in quickly and confidently.',
     color: 'copper',
   },
@@ -24,14 +24,14 @@ const services = [
   },
   {
     icon: Home,
-    title: 'Accommodation Assistance',
-    desc: 'Safe, comfortable, and affordable housing options carefully vetted by our team. From host families to shared volunteer houses, we find the perfect fit for your needs.',
+    title: 'Accommodation',
+    desc: 'Safe, comfortable, and affordable housing options carefully vetted by our team. From host families to shared volunteer houses, we ensure you have a secure and welcoming home throughout your placement.',
     color: 'mahogany',
   },
   {
     icon: UtensilsCrossed,
-    title: 'Feeding & Welfare Support',
-    desc: 'Nutritious meal plans and comprehensive welfare support throughout your stay. We ensure your physical and emotional wellbeing is prioritized at every stage of your placement.',
+    title: 'Feeding',
+    desc: 'Nutritious meal plans and daily feeding support throughout your stay. We ensure you are well-nourished with local and familiar cuisine so you can focus on your placement and enjoy your experience.',
     color: 'copper',
   },
 ]
