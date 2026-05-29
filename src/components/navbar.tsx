@@ -90,12 +90,12 @@ export default function Navbar() {
           <a href="#home" onClick={(e) => { e.preventDefault(); handleNavClick('#home') }} className="flex items-center gap-2">
             <img
               src="/images/logo.jpg"
-              alt="Global Volunteer Placements Logo"
+              alt="Global Experience Placements Logo"
               className="w-10 h-10 rounded-full object-cover"
             />
             <div className="flex flex-col">
               <span className={`font-bold text-lg leading-tight transition-colors ${scrolled ? 'text-mahogany' : 'text-white'}`}>
-                Global Volunteer
+                Global Experience
               </span>
               <span className={`text-[10px] uppercase tracking-wider transition-colors ${scrolled ? 'text-dove' : 'text-white/70'}`}>
                 Placements & Support
@@ -148,10 +148,10 @@ export default function Navbar() {
                     <div className="flex items-center gap-2">
                       <img
                         src="/images/logo.jpg"
-                        alt="Global Volunteer Placements Logo"
+                        alt="Global Experience Placements Logo"
                         className="w-8 h-8 rounded-full object-cover"
                       />
-                      <span className="font-bold text-mahogany">Global Volunteer</span>
+                      <span className="font-bold text-mahogany">Global Experience</span>
                     </div>
                   </div>
                   <div className="flex-1 overflow-y-auto py-4">

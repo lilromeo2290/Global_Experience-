@@ -8,7 +8,7 @@ const testimonials = [
   {
     name: 'Emily Thompson',
     role: 'Medical Volunteer, UK',
-    text: 'My medical placement in Ghana was truly life-changing. The team at Global Volunteer Placements made everything seamless — from airport pickup to my daily clinical rotations. I gained hands-on experience that I could never have gotten at home, while making genuine connections with patients and colleagues.',
+    text: 'My medical placement in Ghana was truly life-changing. The team at Global Experience Placements made everything seamless — from airport pickup to my daily clinical rotations. I gained hands-on experience that I could never have gotten at home, while making genuine connections with patients and colleagues.',
     rating: 5,
   },
   {

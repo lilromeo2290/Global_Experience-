@@ -54,11 +54,11 @@ export default function Footer() {
             <div className="flex items-center gap-2">
               <img
                 src="/images/logo.jpg"
-                alt="Global Volunteer Placements Logo"
+                alt="Global Experience Placements Logo"
                 className="w-10 h-10 rounded-full object-cover"
               />
               <div>
-                <h3 className="font-bold text-lg text-white">Global Volunteer</h3>
+                <h3 className="font-bold text-lg text-white">Global Experience</h3>
                 <p className="text-[10px] uppercase tracking-wider text-copper">Placements & Support</p>
               </div>
             </div>
@@ -154,7 +154,7 @@ export default function Footer() {
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-2">
           <p className="text-xs text-white/40">
-            &copy; {new Date().getFullYear()} Global Volunteer Placements. All rights reserved.
+            &copy; {new Date().getFullYear()} Global Experience Placements. All rights reserved.
           </p>
           <div className="flex gap-4 text-xs text-white/40">
             <a href="#" className="hover:text-copper transition-colors">Privacy Policy</a>

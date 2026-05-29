@@ -96,7 +96,7 @@ export default function ServicesSection() {
           <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
           <div className="relative grid md:grid-cols-2 gap-8 items-center">
             <div>
-              <h3 className="text-2xl md:text-3xl font-bold mb-4">Why Choose Global Volunteer Placements?</h3>
+              <h3 className="text-2xl md:text-3xl font-bold mb-4">Why Choose Global Experience Placements?</h3>
               <p className="text-white/80 leading-relaxed">
                 With over a decade of experience, we provide the most comprehensive and trusted
                 volunteer placement services in Africa. Our dedicated team, extensive local network,

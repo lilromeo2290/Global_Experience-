@@ -44,7 +44,7 @@ export default function AboutSection() {
             Who We Are & What Drives Us
           </h2>
           <p className="text-dove max-w-2xl mx-auto leading-relaxed">
-            For over a decade, Global Volunteer Placements has been the bridge between passionate individuals
+            For over a decade, Global Experience Placements has been the bridge between passionate individuals
             and communities in need. We believe that meaningful cultural exchange and professional placements
             have the power to transform both volunteers and the communities they serve.
           </p>
