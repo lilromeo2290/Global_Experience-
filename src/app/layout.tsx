@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Global Volunteer Placements" }],
   icons: {
-    icon: "/logo.svg",
+    icon: "/images/logo.jpg",
   },
   openGraph: {
     title: "Global Volunteer Placements | Empowering Communities",

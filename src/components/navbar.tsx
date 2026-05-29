@@ -88,9 +88,11 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <a href="#home" onClick={(e) => { e.preventDefault(); handleNavClick('#home') }} className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-full bg-gradient-hero flex items-center justify-center">
-              <Heart className="w-5 h-5 text-white fill-white" />
-            </div>
+            <img
+              src="/images/logo.jpg"
+              alt="Global Volunteer Placements Logo"
+              className="w-10 h-10 rounded-full object-cover"
+            />
             <div className="flex flex-col">
               <span className={`font-bold text-lg leading-tight transition-colors ${scrolled ? 'text-mahogany' : 'text-white'}`}>
                 Global Volunteer
@@ -144,9 +146,11 @@ export default function Navbar() {
                 <div className="flex flex-col h-full">
                   <div className="flex items-center justify-between p-4 border-b">
                     <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-full bg-gradient-hero flex items-center justify-center">
-                        <Heart className="w-4 h-4 text-white fill-white" />
-                      </div>
+                      <img
+                        src="/images/logo.jpg"
+                        alt="Global Volunteer Placements Logo"
+                        className="w-8 h-8 rounded-full object-cover"
+                      />
                       <span className="font-bold text-mahogany">Global Volunteer</span>
                     </div>
                   </div>

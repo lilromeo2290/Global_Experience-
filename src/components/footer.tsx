@@ -52,9 +52,11 @@ export default function Footer() {
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-full bg-gradient-hero flex items-center justify-center">
-                <Heart className="w-5 h-5 text-white fill-white" />
-              </div>
+              <img
+                src="/images/logo.jpg"
+                alt="Global Volunteer Placements Logo"
+                className="w-10 h-10 rounded-full object-cover"
+              />
               <div>
                 <h3 className="font-bold text-lg text-white">Global Volunteer</h3>
                 <p className="text-[10px] uppercase tracking-wider text-copper">Placements & Support</p>
