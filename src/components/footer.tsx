@@ -12,7 +12,6 @@ const quickLinks = [
   { label: 'Our Branches', href: '/about/branches' },
   { label: 'Our Team', href: '#team' },
   { label: 'Our Services', href: '#services' },
-  { label: 'Volunteers', href: '#volunteer' },
   { label: 'Gallery', href: '#gallery' },
   { label: 'Contact Us', href: '#contact' },
 ]
