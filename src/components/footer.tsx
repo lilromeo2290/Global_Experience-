@@ -58,7 +58,7 @@ export default function Footer() {
               />
               <div>
                 <h3 className="font-bold text-lg text-white">Global Experience</h3>
-                <p className="text-[10px] uppercase tracking-wider text-copper">Placements & Support</p>
+                <p className="text-[10px] uppercase tracking-wider text-copper">Aligning Skills with Corporate Goals</p>
               </div>
             </div>
             <p className="text-sm text-white/60 leading-relaxed">

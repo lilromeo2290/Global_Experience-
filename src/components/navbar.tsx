@@ -96,7 +96,7 @@ export default function Navbar() {
                 Global Experience
               </span>
               <span className={`text-[10px] uppercase tracking-wider transition-colors ${scrolled ? 'text-dove' : 'text-white/70'}`}>
-                Placements & Support
+                Aligning Skills with Corporate Goals
               </span>
             </div>
           </a>
