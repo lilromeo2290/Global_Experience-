@@ -6,6 +6,7 @@ import Link from 'next/link'
 
 const services = [
   {
+    id: 'airport-pickups',
     icon: Plane,
     title: 'Airport Pickups',
     desc: 'Seamless airport transfer services ensuring safe and comfortable arrival. Our team greets you at the airport and ensures you reach your accommodation without any hassle, 24/7.',
@@ -13,6 +14,7 @@ const services = [
     link: null,
   },
   {
+    id: 'local-orientations',
     icon: MapPin,
     title: 'Local Orientations',
     desc: 'Comprehensive orientation programs covering local culture, customs, safety guidelines, transportation, and essential information to help you settle in quickly and confidently.',
@@ -20,13 +22,15 @@ const services = [
     link: null,
   },
   {
+    id: 'placement-organisation',
     icon: Briefcase,
-    title: 'Placement Organization',
-    desc: 'Expert matching of your skills and interests with the perfect placement opportunity. We organize placements across 10 professional categories including medical, teaching, journalism, and more.',
+    title: 'Placement Organisation',
+    desc: 'Expert matching of your skills and interests with the perfect placement opportunity. We organize placements across 12 professional categories including medical, teaching, journalism, and more.',
     color: 'brass',
     link: '/placements',
   },
   {
+    id: 'accommodation',
     icon: Home,
     title: 'Accommodation',
     desc: 'Safe, comfortable, and affordable housing options carefully vetted by our team. From host families to shared volunteer houses, we ensure you have a secure and welcoming home throughout your placement.',
@@ -34,6 +38,7 @@ const services = [
     link: null,
   },
   {
+    id: 'feeding',
     icon: UtensilsCrossed,
     title: 'Feeding',
     desc: 'Nutritious meal plans and daily feeding support throughout your stay. We ensure you are well-nourished with local and familiar cuisine so you can focus on your placement and enjoy your experience.',
@@ -90,6 +95,7 @@ export default function ServicesSection() {
               return (
                 <motion.div
                   key={service.title}
+                  id={service.id}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -109,6 +115,7 @@ export default function ServicesSection() {
             return (
               <motion.div
                 key={service.title}
+                id={service.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}

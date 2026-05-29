@@ -1,15 +1,37 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet'
-import { Menu, Heart, Phone, X } from 'lucide-react'
+import { Menu, Heart, Phone, ChevronDown, ChevronRight } from 'lucide-react'
+import Link from 'next/link'
 
-const navLinks = [
+interface SubLink {
+  label: string
+  href: string
+}
+
+interface NavLink {
+  label: string
+  href: string
+  subLinks?: SubLink[]
+}
+
+const navLinks: NavLink[] = [
   { label: 'Home', href: '#home' },
   { label: 'About Us', href: '#about' },
-  { label: 'Services', href: '#services' },
+  {
+    label: 'Services',
+    href: '#services',
+    subLinks: [
+      { label: 'Airport Pickups', href: '#airport-pickups' },
+      { label: 'Local Orientations', href: '#local-orientations' },
+      { label: 'Placement Organisation', href: '/placements' },
+      { label: 'Accommodation', href: '#accommodation' },
+      { label: 'Feeding', href: '#feeding' },
+    ],
+  },
   { label: 'Our Team', href: '#team' },
   { label: 'Volunteers', href: '#volunteer' },
   { label: 'Gallery', href: '#gallery' },
@@ -20,12 +42,18 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [servicesOpen, setServicesOpen] = useState(false)
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+  const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20)
 
-      const sections = navLinks.map(l => l.href.replace('#', ''))
+      const sections = navLinks
+        .filter(l => !l.subLinks)
+        .map(l => l.href.replace('#', ''))
       for (let i = sections.length - 1; i >= 0; i--) {
         const el = document.getElementById(sections[i])
         if (el) {
@@ -41,14 +69,47 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setServicesOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
   const handleNavClick = (href: string) => {
     setMobileOpen(false)
+    setServicesOpen(false)
+    setMobileServicesOpen(false)
+
+    if (href.startsWith('/')) {
+      // External page route — let Next.js Link handle it
+      return
+    }
+
     const el = document.querySelector(href)
     if (el) {
       const offset = 80
       const top = el.getBoundingClientRect().top + window.scrollY - offset
       window.scrollTo({ top, behavior: 'smooth' })
     }
+  }
+
+  const handleDropdownEnter = () => {
+    if (dropdownTimeoutRef.current) {
+      clearTimeout(dropdownTimeoutRef.current)
+      dropdownTimeoutRef.current = null
+    }
+    setServicesOpen(true)
+  }
+
+  const handleDropdownLeave = () => {
+    dropdownTimeoutRef.current = setTimeout(() => {
+      setServicesOpen(false)
+    }, 150)
   }
 
   return (
@@ -103,24 +164,98 @@ export default function Navbar() {
 
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={(e) => { e.preventDefault(); handleNavClick(link.href) }}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
-                  activeSection === link.href.replace('#', '')
-                    ? scrolled
-                      ? 'text-mahogany bg-mahogany/10'
-                      : 'text-white bg-white/20'
-                    : scrolled
-                      ? 'text-dove hover:text-mahogany hover:bg-mahogany/5'
-                      : 'text-white/80 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                {link.label}
-              </a>
-            ))}
+            {navLinks.map((link) => {
+              if (link.subLinks) {
+                // Dropdown menu item
+                return (
+                  <div
+                    key={link.label}
+                    ref={dropdownRef}
+                    className="relative"
+                    onMouseEnter={handleDropdownEnter}
+                    onMouseLeave={handleDropdownLeave}
+                  >
+                    <a
+                      href={link.href}
+                      onClick={(e) => { e.preventDefault(); handleNavClick(link.href) }}
+                      className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center gap-1 cursor-pointer ${
+                        activeSection === link.href.replace('#', '') || servicesOpen
+                          ? scrolled
+                            ? 'text-mahogany bg-mahogany/10'
+                            : 'text-white bg-white/20'
+                          : scrolled
+                            ? 'text-dove hover:text-mahogany hover:bg-mahogany/5'
+                            : 'text-white/80 hover:text-white hover:bg-white/10'
+                      }`}
+                    >
+                      {link.label}
+                      <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${servicesOpen ? 'rotate-180' : ''}`} />
+                    </a>
+
+                    {/* Dropdown */}
+                    {servicesOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -8 }}
+                        transition={{ duration: 0.15 }}
+                        className="absolute top-full left-0 mt-1 w-56 bg-white rounded-xl shadow-xl border border-border overflow-hidden z-50"
+                      >
+                        <div className="py-2">
+                          {link.subLinks.map((sub) => {
+                            const isExternalPage = sub.href.startsWith('/')
+                            return isExternalPage ? (
+                              <Link
+                                key={sub.label}
+                                href={sub.href}
+                                onClick={() => setServicesOpen(false)}
+                                className="flex items-center gap-2 px-4 py-2.5 text-sm text-dove hover:text-mahogany hover:bg-mahogany/5 transition-colors cursor-pointer"
+                              >
+                                <ChevronRight className="w-3.5 h-3.5 text-copper" />
+                                {sub.label}
+                              </Link>
+                            ) : (
+                              <a
+                                key={sub.label}
+                                href={sub.href}
+                                onClick={(e) => {
+                                  e.preventDefault()
+                                  handleNavClick(sub.href)
+                                }}
+                                className="flex items-center gap-2 px-4 py-2.5 text-sm text-dove hover:text-mahogany hover:bg-mahogany/5 transition-colors cursor-pointer"
+                              >
+                                <ChevronRight className="w-3.5 h-3.5 text-copper" />
+                                {sub.label}
+                              </a>
+                            )
+                          })}
+                        </div>
+                      </motion.div>
+                    )}
+                  </div>
+                )
+              }
+
+              // Regular menu item
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => { e.preventDefault(); handleNavClick(link.href) }}
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                    activeSection === link.href.replace('#', '')
+                      ? scrolled
+                        ? 'text-mahogany bg-mahogany/10'
+                        : 'text-white bg-white/20'
+                      : scrolled
+                        ? 'text-dove hover:text-mahogany hover:bg-mahogany/5'
+                        : 'text-white/80 hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  {link.label}
+                </a>
+              )
+            })}
           </div>
 
           {/* CTA + Mobile */}
@@ -153,20 +288,80 @@ export default function Navbar() {
                     </div>
                   </div>
                   <div className="flex-1 overflow-y-auto py-4">
-                    {navLinks.map((link) => (
-                      <a
-                        key={link.href}
-                        href={link.href}
-                        onClick={(e) => { e.preventDefault(); handleNavClick(link.href) }}
-                        className={`block px-6 py-3 text-base font-medium transition-colors ${
-                          activeSection === link.href.replace('#', '')
-                            ? 'text-mahogany bg-mahogany/10 border-r-4 border-mahogany'
-                            : 'text-dove hover:text-mahogany hover:bg-mahogany/5'
-                        }`}
-                      >
-                        {link.label}
-                      </a>
-                    ))}
+                    {navLinks.map((link) => {
+                      if (link.subLinks) {
+                        // Mobile dropdown toggle
+                        return (
+                          <div key={link.label}>
+                            <button
+                              onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                              className={`w-full flex items-center justify-between px-6 py-3 text-base font-medium transition-colors ${
+                                activeSection === link.href.replace('#', '')
+                                  ? 'text-mahogany bg-mahogany/10'
+                                  : 'text-dove hover:text-mahogany hover:bg-mahogany/5'
+                              }`}
+                            >
+                              <span>{link.label}</span>
+                              <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileServicesOpen ? 'rotate-180' : ''}`} />
+                            </button>
+                            {mobileServicesOpen && (
+                              <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                transition={{ duration: 0.2 }}
+                                className="bg-warm-cream/60"
+                              >
+                                {link.subLinks.map((sub) => {
+                                  const isExternalPage = sub.href.startsWith('/')
+                                  return isExternalPage ? (
+                                    <Link
+                                      key={sub.label}
+                                      href={sub.href}
+                                      onClick={() => {
+                                        setMobileOpen(false)
+                                        setMobileServicesOpen(false)
+                                      }}
+                                      className="flex items-center gap-2 pl-10 pr-6 py-2.5 text-sm text-dove hover:text-mahogany hover:bg-mahogany/5 transition-colors"
+                                    >
+                                      <ChevronRight className="w-3.5 h-3.5 text-copper" />
+                                      {sub.label}
+                                    </Link>
+                                  ) : (
+                                    <a
+                                      key={sub.label}
+                                      href={sub.href}
+                                      onClick={(e) => {
+                                        e.preventDefault()
+                                        handleNavClick(sub.href)
+                                      }}
+                                      className="flex items-center gap-2 pl-10 pr-6 py-2.5 text-sm text-dove hover:text-mahogany hover:bg-mahogany/5 transition-colors"
+                                    >
+                                      <ChevronRight className="w-3.5 h-3.5 text-copper" />
+                                      {sub.label}
+                                    </a>
+                                  )
+                                })}
+                              </motion.div>
+                            )}
+                          </div>
+                        )
+                      }
+
+                      return (
+                        <a
+                          key={link.href}
+                          href={link.href}
+                          onClick={(e) => { e.preventDefault(); handleNavClick(link.href) }}
+                          className={`block px-6 py-3 text-base font-medium transition-colors ${
+                            activeSection === link.href.replace('#', '')
+                              ? 'text-mahogany bg-mahogany/10 border-r-4 border-mahogany'
+                              : 'text-dove hover:text-mahogany hover:bg-mahogany/5'
+                          }`}
+                        >
+                          {link.label}
+                        </a>
+                      )
+                    })}
                   </div>
                   <div className="p-4 border-t">
                     <Button
