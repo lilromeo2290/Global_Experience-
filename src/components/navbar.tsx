@@ -28,6 +28,7 @@ const navLinks: NavLink[] = [
     subLinks: [
       { label: 'Mission and Vision', href: '#mission-vision' },
       { label: 'Our Branches', href: '/about/branches' },
+      { label: 'Our Team', href: '#team' },
     ],
   },
   {
@@ -42,7 +43,6 @@ const navLinks: NavLink[] = [
       { label: 'Feeding', href: '#feeding' },
     ],
   },
-  { label: 'Our Team', href: '#team', key: 'team' },
   { label: 'Volunteers', href: '#volunteer', key: 'volunteer' },
   { label: 'Gallery', href: '#gallery', key: 'gallery' },
   { label: 'Contact Us', href: '#contact', key: 'contact' },
