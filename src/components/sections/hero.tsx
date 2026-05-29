@@ -8,22 +8,27 @@ import { ArrowRight, Heart, Users, Globe, ChevronLeft, ChevronRight } from 'luci
 const slides = [
   {
     image: '/images/slider-1.jpg',
+    title: 'Make a Difference Abroad',
     description: 'We connect students, graduates, interns, researchers, and volunteers with life-changing placement opportunities across healthcare, education, journalism, agriculture, and community development.',
   },
   {
     image: '/images/slider-2.jpg',
+    title: 'Transform Lives with Meaningful Impact',
     description: 'From medical placements in teaching hospitals to community outreach programs, your skills can create lasting change in communities that need it most.',
   },
   {
     image: '/images/slider-3.jpg',
+    title: 'Building Schools & Clean Water Projects',
     description: 'Join our community projects building schools and drilling bore holes to provide clean, drinkable water — creating infrastructure that serves generations.',
   },
   {
     image: '/images/slider-4.jpg',
+    title: 'Aligning Skills with Corporate Goals',
     description: 'Gain invaluable professional experience through placements in banking, law, journalism, sports, tourism, and more — all while making a genuine difference.',
   },
   {
     image: '/images/slider-5.jpg',
+    title: 'Your Journey Starts Here',
     description: 'With offices in four regional capitals across Ghana and expansion plans to Tanzania, Kenya, Nepal, and Zambia, your next adventure awaits.',
   },
 ]
@@ -98,18 +103,18 @@ export default function HeroSection() {
             </motion.div>
           </AnimatePresence>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6"
-          >
-            Empowering Communities Through{' '}
-            <span className="bg-gradient-to-r from-[#DA8A67] to-[#C88A3D] bg-clip-text text-transparent">
-              Global Volunteerism
-            </span>{' '}
-            &amp; Professional Placements
-          </motion.h1>
+          <AnimatePresence mode="wait">
+            <motion.h1
+              key={`title-${current}`}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6"
+            >
+              {slides[current].title}
+            </motion.h1>
+          </AnimatePresence>
 
           <AnimatePresence mode="wait">
             <motion.p
