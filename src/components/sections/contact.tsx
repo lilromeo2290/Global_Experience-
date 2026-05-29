@@ -205,6 +205,8 @@ export default function ContactSection() {
                       <SelectItem value="law">Law Placements</SelectItem>
                       <SelectItem value="agriculture">Agriculture Placement</SelectItem>
                       <SelectItem value="tourism">Tourism and Ecotourism</SelectItem>
+                      <SelectItem value="schools">Community Projects — Building of Schools</SelectItem>
+                      <SelectItem value="boreholes">Bore Holes — Drinkable Water</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

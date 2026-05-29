@@ -106,6 +106,26 @@ const categories = [
     subtypes: ['Eco-Lodges', 'Wildlife Tours', 'Cultural Tourism', 'Adventure Tourism'],
     color: 'mahogany',
   },
+  {
+    icon: Users,
+    title: 'Community Projects — Building of Schools',
+    img: '/images/school-building.png',
+    desc: 'Participate in transformative community development by helping build schools that provide children with access to quality education. Work alongside local builders and community members on construction projects that create lasting infrastructure, from classrooms and libraries to playgrounds and sanitation facilities that serve generations of learners.',
+    benefits: ['Hands-on construction experience', 'Direct community impact', 'Project management skills', 'Sustainable development practice'],
+    requirements: ['Physical fitness', 'Teamwork mindset', 'Cultural sensitivity', 'Willingness to work outdoors'],
+    subtypes: ['Classroom Construction', 'Library Building', 'Playground Development', 'Sanitation Facilities'],
+    color: 'copper',
+  },
+  {
+    icon: Heart,
+    title: 'Bore Holes — Drinkable Water',
+    img: '/images/community-project.png',
+    desc: 'Help provide communities with access to clean, safe drinking water through bore hole drilling and water infrastructure projects. This life-saving work addresses one of the most critical needs in rural communities, reducing waterborne diseases and improving overall health, while freeing women and children from spending hours each day fetching water from distant sources.',
+    benefits: ['Public health impact', 'Water engineering exposure', 'Community health education', 'Sustainable infrastructure skills'],
+    requirements: ['Community development interest', 'Physical stamina', 'Environmental awareness', 'Compassion for vulnerable communities'],
+    subtypes: ['Bore Hole Drilling', 'Water Purification Systems', 'Community Water Management', 'Health & Hygiene Training'],
+    color: 'brass',
+  },
 ]
 
 const colorMapBg: Record<string, string> = {

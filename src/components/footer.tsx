@@ -25,6 +25,8 @@ const programs = [
   'Law Placements',
   'Agriculture Placement',
   'Tourism and Ecotourism',
+  'Community Projects — Building of Schools',
+  'Bore Holes — Drinkable Water',
 ]
 
 const socials = [
