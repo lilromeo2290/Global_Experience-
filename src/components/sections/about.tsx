@@ -44,7 +44,7 @@ export default function AboutSection() {
         </motion.div>
 
         {/* Mission & Vision */}
-        <div className="grid md:grid-cols-2 gap-8 mb-20">
+        <div id="mission-vision" className="grid md:grid-cols-2 gap-8 mb-20">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}

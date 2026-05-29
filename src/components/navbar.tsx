@@ -15,15 +15,25 @@ interface SubLink {
 interface NavLink {
   label: string
   href: string
+  key: string
   subLinks?: SubLink[]
 }
 
 const navLinks: NavLink[] = [
-  { label: 'Home', href: '#home' },
-  { label: 'About Us', href: '#about' },
+  { label: 'Home', href: '#home', key: 'home' },
+  {
+    label: 'About Us',
+    href: '#about',
+    key: 'about',
+    subLinks: [
+      { label: 'Mission and Vision', href: '#mission-vision' },
+      { label: 'Our Branches', href: '/about/branches' },
+    ],
+  },
   {
     label: 'Services',
     href: '#services',
+    key: 'services',
     subLinks: [
       { label: 'Airport Pickups', href: '#airport-pickups' },
       { label: 'Local Orientations', href: '#local-orientations' },
@@ -32,19 +42,19 @@ const navLinks: NavLink[] = [
       { label: 'Feeding', href: '#feeding' },
     ],
   },
-  { label: 'Our Team', href: '#team' },
-  { label: 'Volunteers', href: '#volunteer' },
-  { label: 'Gallery', href: '#gallery' },
-  { label: 'Contact Us', href: '#contact' },
+  { label: 'Our Team', href: '#team', key: 'team' },
+  { label: 'Volunteers', href: '#volunteer', key: 'volunteer' },
+  { label: 'Gallery', href: '#gallery', key: 'gallery' },
+  { label: 'Contact Us', href: '#contact', key: 'contact' },
 ]
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [servicesOpen, setServicesOpen] = useState(false)
-  const [mobileServicesOpen, setMobileServicesOpen] = useState(false)
-  const dropdownRef = useRef<HTMLDivElement>(null)
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null)
+  const [mobileOpenDropdown, setMobileOpenDropdown] = useState<string | null>(null)
+  const dropdownRefs = useRef<Record<string, HTMLDivElement | null>>({})
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
@@ -72,8 +82,11 @@ export default function Navbar() {
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setServicesOpen(false)
+      const anyOpen = Object.values(dropdownRefs.current).some(
+        ref => ref && ref.contains(e.target as Node)
+      )
+      if (!anyOpen) {
+        setOpenDropdown(null)
       }
     }
     document.addEventListener('mousedown', handleClickOutside)
@@ -82,11 +95,10 @@ export default function Navbar() {
 
   const handleNavClick = (href: string) => {
     setMobileOpen(false)
-    setServicesOpen(false)
-    setMobileServicesOpen(false)
+    setOpenDropdown(null)
+    setMobileOpenDropdown(null)
 
     if (href.startsWith('/')) {
-      // External page route — let Next.js Link handle it
       return
     }
 
@@ -98,18 +110,22 @@ export default function Navbar() {
     }
   }
 
-  const handleDropdownEnter = () => {
+  const handleDropdownEnter = (key: string) => {
     if (dropdownTimeoutRef.current) {
       clearTimeout(dropdownTimeoutRef.current)
       dropdownTimeoutRef.current = null
     }
-    setServicesOpen(true)
+    setOpenDropdown(key)
   }
 
   const handleDropdownLeave = () => {
     dropdownTimeoutRef.current = setTimeout(() => {
-      setServicesOpen(false)
+      setOpenDropdown(null)
     }, 150)
+  }
+
+  const isDropdownActive = (link: NavLink) => {
+    return openDropdown === link.key
   }
 
   return (
@@ -166,20 +182,19 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => {
               if (link.subLinks) {
-                // Dropdown menu item
                 return (
                   <div
-                    key={link.label}
-                    ref={dropdownRef}
+                    key={link.key}
+                    ref={el => { dropdownRefs.current[link.key] = el }}
                     className="relative"
-                    onMouseEnter={handleDropdownEnter}
+                    onMouseEnter={() => handleDropdownEnter(link.key)}
                     onMouseLeave={handleDropdownLeave}
                   >
                     <a
                       href={link.href}
                       onClick={(e) => { e.preventDefault(); handleNavClick(link.href) }}
                       className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center gap-1 cursor-pointer ${
-                        activeSection === link.href.replace('#', '') || servicesOpen
+                        activeSection === link.href.replace('#', '') || isDropdownActive(link)
                           ? scrolled
                             ? 'text-mahogany bg-mahogany/10'
                             : 'text-white bg-white/20'
@@ -189,11 +204,11 @@ export default function Navbar() {
                       }`}
                     >
                       {link.label}
-                      <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${servicesOpen ? 'rotate-180' : ''}`} />
+                      <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isDropdownActive(link) ? 'rotate-180' : ''}`} />
                     </a>
 
                     {/* Dropdown */}
-                    {servicesOpen && (
+                    {isDropdownActive(link) && (
                       <motion.div
                         initial={{ opacity: 0, y: -8 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -208,7 +223,7 @@ export default function Navbar() {
                               <Link
                                 key={sub.label}
                                 href={sub.href}
-                                onClick={() => setServicesOpen(false)}
+                                onClick={() => setOpenDropdown(null)}
                                 className="flex items-center gap-2 px-4 py-2.5 text-sm text-dove hover:text-mahogany hover:bg-mahogany/5 transition-colors cursor-pointer"
                               >
                                 <ChevronRight className="w-3.5 h-3.5 text-copper" />
@@ -239,7 +254,7 @@ export default function Navbar() {
               // Regular menu item
               return (
                 <a
-                  key={link.href}
+                  key={link.key}
                   href={link.href}
                   onClick={(e) => { e.preventDefault(); handleNavClick(link.href) }}
                   className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
@@ -290,11 +305,11 @@ export default function Navbar() {
                   <div className="flex-1 overflow-y-auto py-4">
                     {navLinks.map((link) => {
                       if (link.subLinks) {
-                        // Mobile dropdown toggle
+                        const isOpen = mobileOpenDropdown === link.key
                         return (
-                          <div key={link.label}>
+                          <div key={link.key}>
                             <button
-                              onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                              onClick={() => setMobileOpenDropdown(isOpen ? null : link.key)}
                               className={`w-full flex items-center justify-between px-6 py-3 text-base font-medium transition-colors ${
                                 activeSection === link.href.replace('#', '')
                                   ? 'text-mahogany bg-mahogany/10'
@@ -302,9 +317,9 @@ export default function Navbar() {
                               }`}
                             >
                               <span>{link.label}</span>
-                              <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileServicesOpen ? 'rotate-180' : ''}`} />
+                              <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
                             </button>
-                            {mobileServicesOpen && (
+                            {isOpen && (
                               <motion.div
                                 initial={{ height: 0, opacity: 0 }}
                                 animate={{ height: 'auto', opacity: 1 }}
@@ -319,7 +334,7 @@ export default function Navbar() {
                                       href={sub.href}
                                       onClick={() => {
                                         setMobileOpen(false)
-                                        setMobileServicesOpen(false)
+                                        setMobileOpenDropdown(null)
                                       }}
                                       className="flex items-center gap-2 pl-10 pr-6 py-2.5 text-sm text-dove hover:text-mahogany hover:bg-mahogany/5 transition-colors"
                                     >
@@ -349,7 +364,7 @@ export default function Navbar() {
 
                       return (
                         <a
-                          key={link.href}
+                          key={link.key}
                           href={link.href}
                           onClick={(e) => { e.preventDefault(); handleNavClick(link.href) }}
                           className={`block px-6 py-3 text-base font-medium transition-colors ${
