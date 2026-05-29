@@ -21,13 +21,6 @@ const milestones = [
   { year: '2024', title: 'Global Recognition', desc: 'Received international recognition for excellence in volunteer placement services.' },
 ]
 
-const team = [
-  { name: 'Dr. Kwame Mensah', role: 'Founder & Executive Director', img: '/images/about-team.png' },
-  { name: 'Sarah Johnson', role: 'Director of Programs', img: '/images/volunteer-group.png' },
-  { name: 'Ama Osei', role: 'Head of Volunteer Services', img: '/images/community-project.png' },
-  { name: 'David Chen', role: 'International Partnerships Lead', img: '/images/hero-volunteers.png' },
-]
-
 export default function AboutSection() {
   return (
     <section id="about" className="py-20 bg-warm-cream">
@@ -133,7 +126,7 @@ export default function AboutSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-20"
+          className=""
         >
           <div className="text-center mb-10">
             <h3 className="text-2xl font-bold text-mahogany">Our Journey</h3>
@@ -166,42 +159,6 @@ export default function AboutSection() {
           </div>
         </motion.div>
 
-        {/* Team */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          <div className="text-center mb-10">
-            <h3 className="text-2xl font-bold text-mahogany">Our Leadership Team</h3>
-            <p className="text-dove mt-2">Passionate professionals driving our mission forward</p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {team.map((member, i) => (
-              <motion.div
-                key={member.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ y: -5 }}
-                className="bg-white rounded-xl overflow-hidden shadow-sm border border-border hover:shadow-md transition-all"
-              >
-                <div className="aspect-square bg-warm-sand overflow-hidden">
-                  <img
-                    src={member.img}
-                    alt={member.name}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div className="p-4 text-center">
-                  <h4 className="font-semibold text-mahogany text-sm">{member.name}</h4>
-                  <p className="text-xs text-dove mt-0.5">{member.role}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
       </div>
     </section>
   )

@@ -8,14 +8,12 @@ import { Menu, Heart, Phone, X } from 'lucide-react'
 
 const navLinks = [
   { label: 'Home', href: '#home' },
-  { label: 'About', href: '#about' },
+  { label: 'About Us', href: '#about' },
   { label: 'Services', href: '#services' },
-  { label: 'Programs', href: '#programs' },
-  { label: 'Volunteer', href: '#volunteer' },
+  { label: 'Our Team', href: '#team' },
+  { label: 'Volunteers', href: '#volunteer' },
   { label: 'Gallery', href: '#gallery' },
-  { label: 'Donate', href: '#donate' },
-  { label: 'Blog', href: '#blog' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Contact Us', href: '#contact' },
 ]
 
 export default function Navbar() {

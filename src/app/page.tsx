@@ -6,6 +6,7 @@ import HeroSection from '@/components/sections/hero'
 import StatsSection from '@/components/sections/stats'
 import AboutSection from '@/components/sections/about'
 import ServicesSection from '@/components/sections/services'
+import TeamSection from '@/components/sections/team'
 import ProgramsSection from '@/components/sections/programs'
 import VolunteerSection from '@/components/sections/volunteer'
 import GallerySection from '@/components/sections/gallery'
@@ -26,6 +27,7 @@ export default function Home() {
         <StatsSection />
         <AboutSection />
         <ServicesSection />
+        <TeamSection />
         <ProgramsSection />
         <VolunteerSection />
         <GallerySection />
