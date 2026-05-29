@@ -274,29 +274,17 @@ export default function Navbar() {
 
           {/* CTA + Mobile */}
           <div className="flex items-center gap-3">
-            <div
-              className="relative hidden sm:block"
-              onMouseEnter={() => handleDropdownEnter('apply')}
-              onMouseLeave={handleDropdownLeave}
-            >
+            <div className="hidden sm:flex flex-col items-center">
               <Button
                 onClick={() => handleNavClick('#contact')}
                 className="bg-mahogany hover:bg-mahogany-dark text-white rounded-full px-5"
               >
                 Apply Now
               </Button>
-              {isDropdownActive({ key: 'apply' } as NavLink) && (
-                <motion.div
-                  initial={{ opacity: 0, y: -8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.15 }}
-                  className="absolute top-full right-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-border p-4 z-50"
-                >
-                  <h4 className="font-semibold text-mahogany text-sm mb-1">Your project</h4>
-                  <p className="text-dove text-xs leading-relaxed">Applying for your dream project is quick and simple</p>
-                </motion.div>
-              )}
+              <div className="mt-1.5 text-center">
+                <p className={`font-semibold text-[10px] leading-tight transition-colors ${scrolled ? 'text-mahogany' : 'text-white'}`}>Your project</p>
+                <p className={`text-[9px] leading-tight transition-colors ${scrolled ? 'text-dove' : 'text-white/70'}`}>Applying for your dream project is quick and simple</p>
+              </div>
             </div>
 
             {/* Mobile Menu */}
