@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import { ArrowLeft, MapPin, Phone, Mail, Clock, Globe, Users, Building2 } from 'lucide-react'
+import { ArrowLeft, MapPin, Phone, Mail, Clock, Globe, Users, Building2, Rocket } from 'lucide-react'
 import Link from 'next/link'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
@@ -16,93 +16,72 @@ const branches = [
     phone: '+233 123 456 789',
     email: 'accra@globalexperience.org',
     hours: 'Mon–Fri: 8:00 AM – 5:00 PM | Sat: 9:00 AM – 1:00 PM',
-    description: 'Our headquarters and primary coordination centre, managing all placement programs across West Africa. The Accra office oversees volunteer onboarding, partner relations, and program development for the entire organization.',
-    services: ['Volunteer Onboarding', 'Program Coordination', 'Partner Relations', 'Orientation Programs'],
+    description: 'Our headquarters and primary coordination centre, managing all placement programs across Ghana and West Africa. The Accra office oversees volunteer onboarding, partner relations, program development, and serves as the main hub for airport pickups and orientation programs for all arriving volunteers.',
+    services: ['Volunteer Onboarding', 'Program Coordination', 'Partner Relations', 'Orientation Programs', 'Airport Pickups'],
     color: 'mahogany',
   },
   {
     country: 'Ghana',
-    city: 'Kumasi',
+    city: 'Cape Coast',
     type: 'Regional Office',
-    address: '45 Asante Avenue, Kumasi, Ashanti Region, Ghana',
+    address: '45 Castle Road, Cape Coast, Central Region, Ghana',
     phone: '+233 234 567 890',
-    email: 'kumasi@globalexperience.org',
+    email: 'capecoast@globalexperience.org',
     hours: 'Mon–Fri: 8:30 AM – 4:30 PM',
-    description: 'Serving the Ashanti Region and central Ghana, our Kumasi office coordinates placements in teaching hospitals, schools, and community outreach programs throughout the region. This branch is essential for our medical and education placement operations.',
-    services: ['Medical Placements', 'Teaching Programs', 'Community Outreach'],
+    description: 'Located in the historic Central Region, our Cape Coast office coordinates placements in teaching hospitals, schools, and community outreach programs. This branch also manages our school building projects and bore hole water initiatives in the surrounding coastal and inland communities.',
+    services: ['Medical Placements', 'Teaching Programs', 'School Building Projects', 'Community Outreach'],
     color: 'copper',
   },
   {
     country: 'Ghana',
-    city: 'Tamale',
+    city: 'Ho',
     type: 'Regional Office',
-    address: '12 Dagbon Road, Tamale, Northern Region, Ghana',
+    address: '12 Volta Avenue, Ho, Volta Region, Ghana',
     phone: '+233 345 678 901',
-    email: 'tamale@globalexperience.org',
+    email: 'ho@globalexperience.org',
     hours: 'Mon–Fri: 8:30 AM – 4:30 PM',
-    description: 'Our northernmost branch manages placements across the Northern, North East, and Savannah Regions. This office is pivotal for agriculture placements, community development projects, and bore hole water initiatives in rural communities.',
-    services: ['Agriculture Placements', 'Bore Hole Projects', 'Rural Community Development'],
+    description: 'Our Volta Regional office in Ho manages placements across one of Ghana\'s most scenic and culturally rich regions. This branch specializes in agriculture placements, ecotourism programs, and community development projects, leveraging the region\'s natural beauty and farming heritage for impactful volunteer experiences.',
+    services: ['Agriculture Placements', 'Ecotourism Programs', 'Community Development', 'Bore Hole Projects'],
     color: 'brass',
+  },
+  {
+    country: 'Ghana',
+    city: 'Takoradi',
+    type: 'Regional Office',
+    address: '78 Market Circle Road, Takoradi, Western Region, Ghana',
+    phone: '+233 456 789 012',
+    email: 'takoradi@globalexperience.org',
+    hours: 'Mon–Fri: 8:30 AM – 4:30 PM',
+    description: 'Serving the Western Region, our Takoradi office coordinates placements in banking and finance, office administration, and law. The region\'s growing oil and gas industry and commercial activity provide unique opportunities for professional placements in corporate and legal settings.',
+    services: ['Banking & Finance', 'Office Administration', 'Law Placements', 'Sports Programs'],
+    color: 'mahogany',
+  },
+]
+
+const expansionCountries = [
+  {
+    country: 'Tanzania',
+    flag: '🇹🇿',
+    description: 'We plan to establish operations in Tanzania, focusing on ecotourism placements, community health outreach, and education programs. Tanzania\'s rich wildlife heritage, including the Serengeti and Mount Kilimanjaro, offers extraordinary opportunities for conservation and tourism-focused volunteer placements.',
+    focusAreas: ['Ecotourism', 'Community Health', 'Education', 'Wildlife Conservation'],
   },
   {
     country: 'Kenya',
-    city: 'Nairobi',
-    type: 'Regional Office',
-    address: '78 Kenyatta Avenue, Nairobi, Kenya',
-    phone: '+254 123 456 789',
-    email: 'nairobi@globalexperience.org',
-    hours: 'Mon–Fri: 8:00 AM – 5:00 PM | Sat: 9:00 AM – 12:00 PM',
-    description: 'Our East African hub coordinates placements across Kenya and surrounding countries. The Nairobi office manages programs in journalism, banking and finance, and tourism, leveraging Kenya\'s dynamic economy and diverse landscapes for impactful volunteer experiences.',
-    services: ['Journalism Placements', 'Banking & Finance', 'Tourism & Ecotourism'],
-    color: 'mahogany',
+    flag: '🇰🇪',
+    description: 'Our Kenya expansion will centre on journalism, banking and finance, and tourism placements. Kenya\'s dynamic economy, vibrant media landscape, and world-famous national parks create an ideal environment for professional development and impactful community engagement.',
+    focusAreas: ['Journalism & Media', 'Banking & Finance', 'Tourism', 'Sports Development'],
   },
   {
-    country: 'Tanzania',
-    city: 'Dar es Salaam',
-    type: 'Regional Office',
-    address: '34 Independence Road, Dar es Salaam, Tanzania',
-    phone: '+255 123 456 789',
-    email: 'dar@globalexperience.org',
-    hours: 'Mon–Fri: 8:30 AM – 4:30 PM',
-    description: 'Our Tanzania branch focuses on ecotourism placements, community health outreach, and education programs. Located in the commercial capital, this office also coordinates placements in Zanzibar and the northern safari circuit regions.',
-    services: ['Ecotourism Programs', 'Community Health', 'Education Placements'],
-    color: 'copper',
+    country: 'Nepal',
+    flag: '🇳🇵',
+    description: 'Nepal represents our first expansion into Asia, with planned placements in community development, teaching, and healthcare. The country\'s breathtaking Himalayan landscapes and resilient communities offer volunteers a truly unique cultural immersion and meaningful service opportunity.',
+    focusAreas: ['Teaching', 'Healthcare', 'Community Development', 'Mountain Ecotourism'],
   },
   {
-    country: 'Uganda',
-    city: 'Kampala',
-    type: 'Regional Office',
-    address: '56 Parliament Avenue, Kampala, Uganda',
-    phone: '+256 123 456 789',
-    email: 'kampala@globalexperience.org',
-    hours: 'Mon–Fri: 8:00 AM – 5:00 PM',
-    description: 'The Kampala office oversees placements in Uganda, with a strong focus on community development, school building projects, and sports programs. Uganda\'s welcoming culture and growing economy provide rich environments for volunteer impact.',
-    services: ['School Building Projects', 'Sports Programs', 'Law Placements'],
-    color: 'brass',
-  },
-  {
-    country: 'United Kingdom',
-    city: 'London',
-    type: 'Liaison Office',
-    address: '15 Voluntary Lane, Camden, London, NW1 0AB, United Kingdom',
-    phone: '+44 20 1234 5678',
-    email: 'london@globalexperience.org',
-    hours: 'Mon–Fri: 9:00 AM – 5:30 PM',
-    description: 'Our London liaison office serves as the primary point of contact for European volunteers, handling pre-departure orientation, visa support, and partnership development with European universities and organizations. This office also manages fundraising and donor relations.',
-    services: ['Pre-departure Orientation', 'Visa Support', 'University Partnerships', 'Fundraising'],
-    color: 'mahogany',
-  },
-  {
-    country: 'United States',
-    city: 'Washington D.C.',
-    type: 'Liaison Office',
-    address: '1800 Pennsylvania Ave NW, Suite 400, Washington D.C., 20006, USA',
-    phone: '+1 202 123 4567',
-    email: 'dc@globalexperience.org',
-    hours: 'Mon–Fri: 9:00 AM – 5:00 PM EST',
-    description: 'The Washington D.C. office manages relationships with North American universities, handles volunteer recruitment from the United States and Canada, and coordinates grant applications and institutional partnerships with development organizations.',
-    services: ['University Partnerships', 'Volunteer Recruitment', 'Grant Applications', 'Institutional Relations'],
-    color: 'copper',
+    country: 'Zambia',
+    flag: '🇿🇲',
+    description: 'In Zambia, we intend to focus on agriculture placements, school building projects, and bore hole water initiatives. Zambia\'s commitment to community development and its stunning natural wonders, including Victoria Falls, provide a powerful backdrop for transformative volunteer work.',
+    focusAreas: ['Agriculture', 'School Building', 'Bore Hole Projects', 'Community Outreach'],
   },
 ]
 
@@ -158,9 +137,9 @@ export default function BranchesPage() {
               Our Branches
             </h1>
             <p className="text-white/70 max-w-2xl text-lg leading-relaxed">
-              With offices across Africa and liaison offices in Europe and North America, Global Experience
-              Placements maintains a truly global presence. Each branch is staffed by dedicated professionals
-              who ensure our volunteers receive the highest quality support and placement services.
+              Currently operating across four regional capitals in Ghana, Global Experience Placements
+              is expanding to new countries across Africa and Asia. Each branch is staffed by dedicated
+              professionals who ensure our volunteers receive the highest quality support and placement services.
             </p>
           </motion.div>
         </div>
@@ -171,10 +150,10 @@ export default function BranchesPage() {
         <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
-              { icon: Globe, num: '5', label: 'Countries' },
-              { icon: Building2, num: '8', label: 'Offices Worldwide' },
-              { icon: Users, num: '50+', label: 'Local Staff' },
-              { icon: MapPin, num: '3', label: 'Continents Covered' },
+              { icon: Globe, num: '4', label: 'Regional Capitals in Ghana' },
+              { icon: Building2, num: '4', label: 'Offices Nationwide' },
+              { icon: Users, num: '30+', label: 'Local Staff' },
+              { icon: Rocket, num: '4', label: 'Countries Expanding To' },
             ].map((stat) => (
               <div key={stat.label} className="text-center">
                 <stat.icon className="w-5 h-5 text-copper mx-auto mb-1" />
@@ -188,7 +167,7 @@ export default function BranchesPage() {
 
       {/* Branches List */}
       <div className="max-w-7xl mx-auto px-4 py-12">
-        {/* Head Office first */}
+        {/* Head Office */}
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-mahogany mb-6 flex items-center gap-2">
             <Building2 className="w-6 h-6" /> Head Office
@@ -203,7 +182,7 @@ export default function BranchesPage() {
               <div className="lg:col-span-1 bg-gradient-to-br from-mahogany to-mahogany-dark p-8 text-white flex flex-col justify-center">
                 <span className="text-white/60 text-xs uppercase tracking-wider mb-2">Head Office</span>
                 <h3 className="text-2xl font-bold mb-1">Accra, Ghana</h3>
-                <p className="text-white/70 text-sm">West Africa Regional Hub</p>
+                <p className="text-white/70 text-sm">National Headquarters</p>
               </div>
               <div className="lg:col-span-2 p-8">
                 <p className="text-dove leading-relaxed mb-6">{branches[0].description}</p>
@@ -241,11 +220,11 @@ export default function BranchesPage() {
         </div>
 
         {/* Regional Offices */}
-        <div className="mb-8">
+        <div className="mb-12">
           <h2 className="text-2xl font-bold text-mahogany mb-6 flex items-center gap-2">
             <Globe className="w-6 h-6" /> Regional Offices
           </h2>
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {branches.filter(b => b.type === 'Regional Office').map((branch, i) => (
               <motion.div
                 key={branch.city}
@@ -306,63 +285,56 @@ export default function BranchesPage() {
           </div>
         </div>
 
-        {/* Liaison Offices */}
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold text-mahogany mb-6 flex items-center gap-2">
-            <Users className="w-6 h-6" /> Liaison Offices
-          </h2>
+        {/* Expansion Plans */}
+        <div className="mb-12">
+          <div className="text-center mb-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <span className="text-copper font-semibold text-sm uppercase tracking-wider">Coming Soon</span>
+              <h2 className="text-2xl md:text-3xl font-bold text-mahogany mt-2 mb-3 flex items-center justify-center gap-2">
+                <Rocket className="w-7 h-7" /> Expanding To New Countries
+              </h2>
+              <p className="text-dove max-w-2xl mx-auto leading-relaxed">
+                We are actively working to establish offices in these countries, bringing our trusted placement
+                services and community development programs to even more communities across Africa and Asia.
+              </p>
+            </motion.div>
+          </div>
           <div className="grid md:grid-cols-2 gap-6">
-            {branches.filter(b => b.type === 'Liaison Office').map((branch, i) => (
+            {expansionCountries.map((country, i) => (
               <motion.div
-                key={branch.city}
+                key={country.country}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className={`bg-white rounded-2xl shadow-sm border ${colorMapBorder[branch.color]} overflow-hidden hover:shadow-lg transition-shadow duration-300`}
+                className="bg-white rounded-2xl shadow-sm border-2 border-dashed border-copper/30 overflow-hidden hover:shadow-lg hover:border-copper/50 transition-all duration-300 relative"
               >
+                <div className="absolute top-4 right-4">
+                  <span className="text-[10px] font-bold uppercase tracking-wider bg-copper/10 text-copper px-3 py-1 rounded-full">
+                    Coming Soon
+                  </span>
+                </div>
                 <div className="p-6">
-                  <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-3xl">{country.flag}</span>
                     <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <MapPin className={`w-4 h-4 ${colorMapText[branch.color]}`} />
-                        <span className="text-xs font-medium text-dove uppercase tracking-wider">{branch.country}</span>
-                      </div>
-                      <h3 className="text-xl font-bold text-mahogany">{branch.city}</h3>
-                      <span className="text-xs text-copper font-medium">Liaison &amp; Recruitment</span>
-                    </div>
-                    <div className={`w-10 h-10 ${colorMapBg[branch.color]} rounded-lg flex items-center justify-center`}>
-                      <Globe className={`w-5 h-5 ${colorMapText[branch.color]}`} />
+                      <h3 className="text-xl font-bold text-mahogany">{country.country}</h3>
+                      <span className="text-xs text-copper font-medium">Planned Expansion</span>
                     </div>
                   </div>
 
-                  <p className="text-sm text-dove leading-relaxed mb-5">{branch.description}</p>
-
-                  <div className="space-y-2 mb-5">
-                    <div className="flex items-start gap-2">
-                      <MapPin className="w-3.5 h-3.5 text-dove mt-0.5 flex-shrink-0" />
-                      <span className="text-xs text-dove">{branch.address}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Phone className="w-3.5 h-3.5 text-dove flex-shrink-0" />
-                      <a href={`tel:${branch.phone.replace(/\s/g, '')}`} className="text-xs text-dove hover:text-mahogany transition-colors">{branch.phone}</a>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Mail className="w-3.5 h-3.5 text-dove flex-shrink-0" />
-                      <a href={`mailto:${branch.email}`} className="text-xs text-dove hover:text-mahogany transition-colors">{branch.email}</a>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <Clock className="w-3.5 h-3.5 text-dove mt-0.5 flex-shrink-0" />
-                      <span className="text-xs text-dove">{branch.hours}</span>
-                    </div>
-                  </div>
+                  <p className="text-sm text-dove leading-relaxed mb-5">{country.description}</p>
 
                   <div>
-                    <h4 className="text-xs font-semibold text-mahogany mb-2">Services</h4>
+                    <h4 className="text-xs font-semibold text-mahogany mb-2">Planned Focus Areas</h4>
                     <div className="flex flex-wrap gap-1.5">
-                      {branch.services.map((s) => (
-                        <span key={s} className={`text-[11px] ${colorMapBg[branch.color]} ${colorMapText[branch.color]} px-2.5 py-0.5 rounded-full font-medium`}>
-                          {s}
+                      {country.focusAreas.map((area) => (
+                        <span key={area} className="text-[11px] bg-copper/10 text-copper px-2.5 py-0.5 rounded-full font-medium">
+                          {area}
                         </span>
                       ))}
                     </div>
