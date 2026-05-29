@@ -58,11 +58,8 @@ export default function AboutSection() {
               </div>
               <h3 className="text-xl font-bold text-mahogany mb-3">Our Mission</h3>
               <p className="text-dove leading-relaxed">
-                To provide exceptional international placement opportunities and comprehensive support services
-                that empower students, graduates, interns, researchers, and volunteers to make meaningful
-                contributions to communities while gaining invaluable professional and cultural experiences.
-                We are committed to fostering sustainable development, cross-cultural understanding, and
-                humanitarian support across all our program areas.
+                To deliver high-quality placement and support services that connect students, graduates,
+                volunteers, and professionals with impactful opportunities across diverse sectors worldwide.
               </p>
             </div>
           </motion.div>
@@ -80,10 +77,8 @@ export default function AboutSection() {
               </div>
               <h3 className="text-xl font-bold text-mahogany mb-3">Our Vision</h3>
               <p className="text-dove leading-relaxed">
-                A world where every community has access to the skills, knowledge, and support needed to thrive,
-                and where cross-cultural exchange is the foundation of global understanding and sustainable progress.
-                We envision a future where volunteerism and professional placements serve as catalysts for community
-                transformation, youth empowerment, and lasting humanitarian impact across borders and generations.
+                To be the most trusted international placement organization fostering professional growth,
+                global partnerships, and community transformation.
               </p>
             </div>
           </motion.div>
