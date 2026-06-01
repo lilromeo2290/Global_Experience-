@@ -5,9 +5,13 @@ import { useState } from 'react'
 import { X } from 'lucide-react'
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 
-const galleryItems: { src: string; alt: string; category: string }[] = []
+const galleryItems: { src: string; alt: string; category: string }[] = [
+  { src: '/gallery/gallery-1.jpg', alt: 'Volunteers making an impact in Ghana', category: 'Volunteering' },
+  { src: '/gallery/gallery-2.jpg', alt: 'Community outreach and engagement', category: 'Community' },
+  { src: '/gallery/gallery-3.jpg', alt: 'Experiencing the beauty of Ghana', category: 'Experience' },
+]
 
-const categories = ['All']
+const categories = ['All', 'Volunteering', 'Community', 'Experience']
 
 export default function GallerySection() {
   const [filter, setFilter] = useState('All')
