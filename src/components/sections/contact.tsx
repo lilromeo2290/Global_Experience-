@@ -92,18 +92,32 @@ export default function ContactSection() {
             </div>
 
             {/* WhatsApp */}
-            <a
-              href="https://wa.me/233123456789"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-3 bg-green-600 hover:bg-green-700 text-white rounded-xl p-4 shadow-sm transition-colors"
-            >
-              <MessageCircle className="w-6 h-6" />
-              <div>
-                <div className="font-semibold text-sm">Chat on WhatsApp</div>
-                <div className="text-xs text-white/80">Quick response, available 24/7</div>
-              </div>
-            </a>
+            <div className="flex flex-col gap-2">
+              <a
+                href="https://wa.me/233244207278"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 bg-green-600 hover:bg-green-700 text-white rounded-xl p-4 shadow-sm transition-colors"
+              >
+                <MessageCircle className="w-6 h-6" />
+                <div>
+                  <div className="font-semibold text-sm">Chat on WhatsApp</div>
+                  <div className="text-xs text-white/80">+233 244 207 278</div>
+                </div>
+              </a>
+              <a
+                href="https://wa.me/233544129556"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 bg-green-600 hover:bg-green-700 text-white rounded-xl p-4 shadow-sm transition-colors"
+              >
+                <MessageCircle className="w-6 h-6" />
+                <div>
+                  <div className="font-semibold text-sm">Chat on WhatsApp</div>
+                  <div className="text-xs text-white/80">+233 544 129 556</div>
+                </div>
+              </a>
+            </div>
 
             {/* Social Links */}
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-border">
