@@ -274,13 +274,17 @@ export default function Navbar() {
 
           {/* CTA + Mobile */}
           <div className="flex items-center gap-3">
-            <div className="hidden sm:flex items-center">
+            <div className="hidden sm:flex flex-col items-center">
               <Button
                 onClick={() => handleNavClick('#contact')}
                 className="bg-cornell hover:bg-cornell-dark text-white rounded-full px-5"
               >
                 Apply Now
               </Button>
+              <div className="mt-1.5 text-center">
+                <p className={`font-semibold text-[10px] leading-tight transition-colors ${scrolled ? 'text-cornell' : 'text-white'}`}>Medical · Teaching · Journalism</p>
+                <p className={`text-[9px] leading-tight transition-colors ${scrolled ? 'text-charcoal' : 'text-white/70'}`}>Agriculture · Sports · Community · Law</p>
+              </div>
             </div>
 
             {/* Mobile Menu */}
@@ -386,6 +390,11 @@ export default function Navbar() {
                     >
                       Apply Now
                     </Button>
+                    <div className="mt-3 text-center">
+                      <p className="font-semibold text-cornell text-xs">Medical · Teaching · Journalism</p>
+                      <p className="text-charcoal text-[11px] leading-relaxed mt-0.5">Agriculture · Sports · Community · Law · Finance · Tourism</p>
+                      <p className="text-vogue text-[10px] mt-1">Starting from $295 deposit</p>
+                    </div>
                   </div>
                 </div>
               </SheetContent>
