@@ -12,6 +12,16 @@ const slides = [
     position: 'center center',
   },
   {
+    src: '/images/slider-kakum-park.jpg',
+    alt: 'Kakum National Park - Canopy Walkway',
+    position: 'center center',
+  },
+  {
+    src: '/images/slider-keta-lagoon.jpg',
+    alt: 'Keta Lagoon - Coastal Beauty',
+    position: 'center center',
+  },
+  {
     src: '/images/slider-volunteer-ghana.jpg',
     alt: 'Volunteer Programs in Ghana',
     position: 'center center',
