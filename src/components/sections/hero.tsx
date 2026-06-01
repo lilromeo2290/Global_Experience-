@@ -167,30 +167,6 @@ export default function HeroSection() {
             </Button>
           </motion.div>
 
-          {/* Your Project info card */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.65 }}
-            className="mt-6 max-w-md bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-5"
-          >
-            <h3 className="text-white font-semibold text-base mb-1">Your project</h3>
-            <p className="text-white/70 text-sm leading-relaxed mb-4">
-              Applying for your dream project is quick and simple. All we need today to get you started is a deposit of <span className="text-vogue font-semibold">$295</span>.
-            </p>
-            <div className="flex items-start gap-3">
-              <div className="flex items-center gap-2 text-white/60 text-sm">
-                <MapPin className="w-4 h-4 text-vogue flex-shrink-0" />
-                <span>Select your trip</span>
-              </div>
-              <div className="w-px h-5 bg-white/20" />
-              <a href="tel:+233244207278" className="flex items-center gap-2 text-white/60 text-sm hover:text-vogue transition-colors">
-                <Phone className="w-4 h-4 text-vogue flex-shrink-0" />
-                <span>Can&apos;t find your project? <span className="underline">+233 244 207 278 / +233 544 129 556</span></span>
-              </a>
-            </div>
-          </motion.div>
-
           {/* Trust indicators */}
           <motion.div
             initial={{ opacity: 0 }}
