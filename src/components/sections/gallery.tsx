@@ -5,22 +5,9 @@ import { useState } from 'react'
 import { X } from 'lucide-react'
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 
-const galleryItems = [
-  { src: '/images/medical-placement.png', alt: 'Medical placement volunteers in clinic', category: 'Medical', span: 'row-span-2' },
-  { src: '/images/teaching-placement.png', alt: 'Teaching placement in local school', category: 'Education', span: '' },
-  { src: '/images/sports-placement.png', alt: 'Sports coaching with youth', category: 'Sports', span: '' },
-  { src: '/images/community-project.png', alt: 'Community borehole water project', category: 'Community', span: 'col-span-2' },
-  { src: '/images/volunteer-group.png', alt: 'Group of international volunteers', category: 'Volunteers', span: '' },
-  { src: '/images/school-building.png', alt: 'School building construction project', category: 'Community', span: 'row-span-2' },
-  { src: '/images/journalism-placement.png', alt: 'Journalism placement at radio station', category: 'Media', span: '' },
-  { src: '/images/agriculture-placement.png', alt: 'Agriculture volunteer placement', category: 'Agriculture', span: '' },
-  { src: '/images/tourism-placement.png', alt: 'Ecotourism volunteer experience', category: 'Tourism', span: '' },
-  { src: '/images/donate-hero.png', alt: 'Humanitarian support and donation', category: 'Community', span: 'col-span-2' },
-  { src: '/images/hero-volunteers.png', alt: 'Volunteers building together', category: 'Volunteers', span: '' },
-  { src: '/images/about-team.png', alt: 'Team collaboration and planning', category: 'Team', span: '' },
-]
+const galleryItems: { src: string; alt: string; category: string }[] = []
 
-const categories = ['All', 'Medical', 'Education', 'Sports', 'Community', 'Volunteers', 'Media', 'Agriculture', 'Tourism', 'Team']
+const categories = ['All']
 
 export default function GallerySection() {
   const [filter, setFilter] = useState('All')
@@ -65,7 +52,12 @@ export default function GallerySection() {
         </div>
 
         {/* Masonry Grid */}
-        <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+        {filtered.length === 0 ? (
+          <div className="text-center py-16">
+            <p className="text-charcoal/50 text-lg">Gallery images coming soon.</p>
+          </div>
+        ) : (
+          <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
           {filtered.map((item, i) => (
             <motion.div
               key={item.alt}
@@ -90,6 +82,7 @@ export default function GallerySection() {
             </motion.div>
           ))}
         </div>
+        )}
 
         {/* Lightbox */}
         <Dialog open={!!selected} onOpenChange={() => setSelected(null)}>
