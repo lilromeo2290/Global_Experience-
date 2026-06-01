@@ -12,8 +12,18 @@ const slides = [
     position: 'center center',
   },
   {
-    src: '/images/slider-1.jpg',
+    src: '/images/slider-volunteer-ghana.jpg',
     alt: 'Volunteer Programs in Ghana',
+    position: 'center center',
+  },
+  {
+    src: '/images/slider-adaklu-mountains.jpg',
+    alt: 'Adaklu Mountains - Paragliding Excellence',
+    position: 'center center',
+  },
+  {
+    src: '/images/slider-1.jpg',
+    alt: 'Community Development Projects',
     position: 'center center',
   },
   {
@@ -23,12 +33,12 @@ const slides = [
   },
   {
     src: '/images/slider-2.jpg',
-    alt: 'Community Development Projects',
+    alt: 'Life-Changing Placements Abroad',
     position: 'center center',
   },
   {
     src: '/images/slider-4.jpg',
-    alt: 'Life-Changing Placements Abroad',
+    alt: 'Discover New Horizons',
     position: 'center center',
   },
 ]
