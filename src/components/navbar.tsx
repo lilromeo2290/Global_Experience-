@@ -274,17 +274,13 @@ export default function Navbar() {
 
           {/* CTA + Mobile */}
           <div className="flex items-center gap-3">
-            <div className="hidden sm:flex flex-col items-center">
+            <div className="hidden sm:flex items-center">
               <Button
                 onClick={() => handleNavClick('#contact')}
                 className="bg-cornell hover:bg-cornell-dark text-white rounded-full px-5"
               >
                 Apply Now
               </Button>
-              <div className="mt-1.5 text-center">
-                <p className={`font-semibold text-[10px] leading-tight transition-colors ${scrolled ? 'text-cornell' : 'text-white'}`}>Your project</p>
-                <p className={`text-[9px] leading-tight transition-colors ${scrolled ? 'text-charcoal' : 'text-white/70'}`}>Applying for your dream project is quick and simple</p>
-              </div>
             </div>
 
             {/* Mobile Menu */}
@@ -390,10 +386,6 @@ export default function Navbar() {
                     >
                       Apply Now
                     </Button>
-                    <div className="mt-3 text-center">
-                      <p className="font-semibold text-cornell text-sm">Your project</p>
-                      <p className="text-charcoal text-xs leading-relaxed mt-0.5">Applying for your dream project is quick and simple</p>
-                    </div>
                   </div>
                 </div>
               </SheetContent>
