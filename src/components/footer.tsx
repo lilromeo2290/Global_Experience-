@@ -171,7 +171,7 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} Global Experience Placements. All rights reserved.
           </p>
           <p className="text-xs text-white/40">
-            Designed and Powered by Clipe233 Engineers
+            Designed and Powered by <a href="https://clipe233eng.net/" target="_blank" rel="noopener noreferrer" className="hover:text-vogue transition-colors">Clipe233 Engineers</a>
           </p>
         </div>
       </div>
