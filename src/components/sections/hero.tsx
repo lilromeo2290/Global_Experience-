@@ -128,15 +128,6 @@ export default function HeroSection() {
       {/* Content */}
       <div className="relative max-w-7xl mx-auto px-4 py-32 w-full z-10">
         <div className="max-w-3xl">
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl leading-relaxed"
-          >
-            We connect students, graduates, interns, researchers, and volunteers with life-changing placement opportunities across healthcare, education, journalism, agriculture, and community development. With offices in four regional capitals across Ghana and expansion plans to Tanzania, Kenya, Nepal, and Zambia, your next adventure awaits.
-          </motion.p>
-
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
