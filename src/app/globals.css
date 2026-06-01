@@ -99,40 +99,40 @@
   --card-foreground: #F5F0EB;
   --popover: #122A1B;
   --popover-foreground: #F5F0EB;
-  --primary: #D43232;
-  --primary-foreground: #0A1F12;
+  --primary: #B31B1B;
+  --primary-foreground: #FFFFFF;
   --secondary: #1A3A28;
-  --secondary-foreground: #2A6B42;
+  --secondary-foreground: #1A4D2E;
   --muted: #122A1B;
   --muted-foreground: #8A9A8E;
-  --accent: #2A6B42;
-  --accent-foreground: #0A1F12;
+  --accent: #1A4D2E;
+  --accent-foreground: #FFFFFF;
   --destructive: #EF4444;
   --border: #1A3A28;
   --input: #1A3A28;
-  --ring: #D43232;
-  --chart-1: #D43232;
-  --chart-2: #2A6B42;
+  --ring: #B31B1B;
+  --chart-1: #B31B1B;
+  --chart-2: #1A4D2E;
   --chart-3: #C8A44D;
   --chart-4: #8A9A8E;
   --chart-5: #8C1515;
   --sidebar: #122A1B;
   --sidebar-foreground: #F5F0EB;
-  --sidebar-primary: #D43232;
-  --sidebar-primary-foreground: #0A1F12;
-  --sidebar-accent: #2A6B42;
-  --sidebar-accent-foreground: #0A1F12;
+  --sidebar-primary: #B31B1B;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #1A4D2E;
+  --sidebar-accent-foreground: #FFFFFF;
   --sidebar-border: #1A3A28;
-  --sidebar-ring: #D43232;
+  --sidebar-ring: #B31B1B;
 
-  /* Dark mode brand color overrides */
+  /* Dark mode brand color overrides - keep original brand colors */
   --color-cream: #0F1F15;
   --color-charcoal: #E0E8E3;
   --color-ivory: #122A1B;
   --color-sage: #1A3A28;
   --color-gold: #D4B95E;
-  --color-cornell-light: #E04848;
-  --color-vogue-light: #3A8B52;
+  --color-cornell-light: #D43232;
+  --color-vogue-light: #2A6B42;
 }
 
 @layer base {
