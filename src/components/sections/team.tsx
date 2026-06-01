@@ -33,7 +33,7 @@ export default function TeamSection() {
           transition={{ duration: 0.5 }}
           className="max-w-3xl mx-auto"
         >
-          <div className="bg-white rounded-2xl overflow-hidden shadow-md border border-border hover:shadow-xl hover:border-vogue/30 transition-all duration-300 group">
+          <div className="bg-white dark:bg-[#122A1B] rounded-2xl overflow-hidden shadow-md border border-border hover:shadow-xl hover:border-vogue/30 transition-all duration-300 group">
             <div className="grid md:grid-cols-2 gap-0">
               {/* Photo */}
               <div className="aspect-square md:aspect-auto md:min-h-[420px] bg-ivory overflow-hidden relative">
@@ -57,7 +57,7 @@ export default function TeamSection() {
                 <span className="text-vogue font-semibold text-sm uppercase tracking-wider">Leadership</span>
                 <h3 className="text-2xl md:text-3xl font-bold text-cornell mt-2 mb-1">John Success Akotia</h3>
                 <p className="text-vogue font-medium text-lg mb-4">Chief Executive Officer (CEO)</p>
-                <p className="text-charcoal leading-relaxed mb-6">
+                <p className="text-charcoal dark:text-white/80 leading-relaxed mb-6">
                   As the founder and driving force behind Global Experience Placements, John Success Akotia
                   leads the organization with a clear vision: to deliver high-quality placement and support
                   services that connect students, graduates, volunteers, and professionals with impactful
@@ -65,6 +65,62 @@ export default function TeamSection() {
                   volunteer coordination and community development, he has built a trusted organization
                   that fosters professional growth, global partnerships, and community transformation.
                 </p>
+                <div className="flex items-center gap-4">
+                  <a href="#" className="w-10 h-10 bg-cornell/10 rounded-full flex items-center justify-center hover:bg-cornell hover:text-white transition-all group/icon">
+                    <Linkedin className="w-5 h-5 text-cornell group-hover/icon:text-white" />
+                  </a>
+                  <a href="mailto:info@globalexperiencegh.org" className="w-10 h-10 bg-cornell/10 rounded-full flex items-center justify-center hover:bg-cornell hover:text-white transition-all group/icon">
+                    <Mail className="w-5 h-5 text-cornell group-hover/icon:text-white" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* IT Director Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="max-w-3xl mx-auto mt-8"
+        >
+          <div className="bg-white dark:bg-[#122A1B] rounded-2xl overflow-hidden shadow-md border border-border hover:shadow-xl hover:border-vogue/30 transition-all duration-300 group">
+            <div className="grid md:grid-cols-2 gap-0">
+              {/* Photo */}
+              <div className="aspect-square md:aspect-auto md:min-h-[420px] bg-ivory overflow-hidden relative">
+                <img
+                  src="/images/team-it-director.png"
+                  alt="Raymond Romeo Dravie"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6 gap-4">
+                  <a href="#" aria-label="Raymond Romeo Dravie LinkedIn" className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/40 transition-colors">
+                    <Linkedin className="w-5 h-5 text-white" />
+                  </a>
+                  <a href="mailto:info@globalexperiencegh.org" aria-label="Email Raymond Romeo Dravie" className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/40 transition-colors">
+                    <Mail className="w-5 h-5 text-white" />
+                  </a>
+                </div>
+              </div>
+
+              {/* Info */}
+              <div className="p-8 md:p-10 flex flex-col justify-center">
+                <span className="text-vogue font-semibold text-sm uppercase tracking-wider">Technology</span>
+                <h3 className="text-2xl md:text-3xl font-bold text-cornell mt-2 mb-1">Raymond Romeo Dravie</h3>
+                <p className="text-vogue font-medium text-lg mb-4">Director of IT</p>
+                <p className="text-charcoal dark:text-white/80 leading-relaxed mb-4">
+                  Has more than 10 years experience in ICT with a strong background in Algorithmic Designs,
+                  Data Centers, IT Infrastructure, Software Development, Network, Management and Leadership.
+                </p>
+                <div className="mb-4">
+                  <h4 className="text-sm font-semibold text-cornell mb-2">Expertise:</h4>
+                  <p className="text-charcoal dark:text-white/80 text-sm leading-relaxed">
+                    Knowledge and experience in Networking, Programming &amp; Databases: C++, PHP, CSS, JavaScript,
+                    VB.NET, Java, MySQL, Website Development
+                  </p>
+                </div>
                 <div className="flex items-center gap-4">
                   <a href="#" className="w-10 h-10 bg-cornell/10 rounded-full flex items-center justify-center hover:bg-cornell hover:text-white transition-all group/icon">
                     <Linkedin className="w-5 h-5 text-cornell group-hover/icon:text-white" />
