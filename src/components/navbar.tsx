@@ -302,27 +302,27 @@ export default function Navbar() {
                   </div>
                   <div className="py-1 max-h-80 overflow-y-auto">
                     {[
-                      { label: 'Medical Placement in Teaching Hospitals', href: '/placements' },
-                      { label: 'Teaching', href: '/placements' },
-                      { label: 'Journalism', href: '/placements' },
-                      { label: 'Community Outreach', href: '/placements' },
-                      { label: 'Sports', href: '/placements' },
-                      { label: 'Office Administration', href: '/placements' },
-                      { label: 'Banking and Finance', href: '/placements' },
-                      { label: 'Law Placements', href: '/placements' },
-                      { label: 'Agriculture Placement', href: '/placements' },
-                      { label: 'Tourism and Ecotourism', href: '/placements' },
-                      { label: 'Community Projects — Building of Schools', href: '/placements' },
-                      { label: 'Bore Holes — Drinkable Water', href: '/placements' },
+                      'Medical Placement in Teaching Hospitals',
+                      'Teaching',
+                      'Journalism',
+                      'Community Outreach',
+                      'Sports',
+                      'Office Administration',
+                      'Banking and Finance',
+                      'Law Placements',
+                      'Agriculture Placement',
+                      'Tourism and Ecotourism',
+                      'Community Projects — Building of Schools',
+                      'Bore Holes — Drinkable Water',
                     ].map((program) => (
                       <Link
-                        key={program.label}
-                        href={program.href}
+                        key={program}
+                        href={`/apply?program=${encodeURIComponent(program)}`}
                         onClick={() => setApplyOpen(false)}
                         className="flex items-center gap-2 px-4 py-2.5 text-sm text-charcoal hover:text-cornell hover:bg-cornell/5 transition-colors cursor-pointer"
                       >
                         <ChevronRight className="w-3.5 h-3.5 text-vogue flex-shrink-0" />
-                        {program.label}
+                        {program}
                       </Link>
                     ))}
                   </div>
@@ -442,22 +442,22 @@ export default function Navbar() {
                         className="mt-2 bg-cream/60 rounded-lg overflow-hidden"
                       >
                         {[
-                          { label: 'Medical Placement in Teaching Hospitals', href: '/placements' },
-                          { label: 'Teaching', href: '/placements' },
-                          { label: 'Journalism', href: '/placements' },
-                          { label: 'Community Outreach', href: '/placements' },
-                          { label: 'Sports', href: '/placements' },
-                          { label: 'Office Administration', href: '/placements' },
-                          { label: 'Banking and Finance', href: '/placements' },
-                          { label: 'Law Placements', href: '/placements' },
-                          { label: 'Agriculture Placement', href: '/placements' },
-                          { label: 'Tourism and Ecotourism', href: '/placements' },
-                          { label: 'Community Projects — Building of Schools', href: '/placements' },
-                          { label: 'Bore Holes — Drinkable Water', href: '/placements' },
+                          'Medical Placement in Teaching Hospitals',
+                          'Teaching',
+                          'Journalism',
+                          'Community Outreach',
+                          'Sports',
+                          'Office Administration',
+                          'Banking and Finance',
+                          'Law Placements',
+                          'Agriculture Placement',
+                          'Tourism and Ecotourism',
+                          'Community Projects — Building of Schools',
+                          'Bore Holes — Drinkable Water',
                         ].map((program) => (
                           <Link
-                            key={program.label}
-                            href={program.href}
+                            key={program}
+                            href={`/apply?program=${encodeURIComponent(program)}`}
                             onClick={() => {
                               setMobileOpen(false)
                               setMobileOpenDropdown(null)
@@ -465,7 +465,7 @@ export default function Navbar() {
                             className="flex items-center gap-2 pl-4 pr-3 py-2.5 text-sm text-charcoal hover:text-cornell hover:bg-cornell/5 transition-colors"
                           >
                             <ChevronRight className="w-3.5 h-3.5 text-vogue flex-shrink-0" />
-                            {program.label}
+                            {program}
                           </Link>
                         ))}
                       </motion.div>
