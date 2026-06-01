@@ -3,7 +3,6 @@
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import HeroSection from '@/components/sections/hero'
-import StatsSection from '@/components/sections/stats'
 import AboutSection from '@/components/sections/about'
 import ServicesSection from '@/components/sections/services'
 import TeamSection from '@/components/sections/team'
@@ -23,7 +22,6 @@ export default function Home() {
       <Navbar />
       <main className="flex-1">
         <HeroSection />
-        <StatsSection />
         <AboutSection />
         <ServicesSection />
         <TeamSection />
