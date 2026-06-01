@@ -116,44 +116,6 @@ export default function AboutSection() {
           </div>
         </motion.div>
 
-        {/* Timeline */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className=""
-        >
-          <div className="text-center mb-10">
-            <h3 className="text-2xl font-bold text-cornell">Our Journey</h3>
-            <p className="text-charcoal mt-2">Key milestones in our mission to empower communities</p>
-          </div>
-          <div className="relative">
-            <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-cornell/20 -translate-x-1/2" />
-            <div className="space-y-8">
-              {milestones.map((milestone, i) => (
-                <motion.div
-                  key={milestone.year}
-                  initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className={`flex flex-col md:flex-row items-center gap-4 ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
-                >
-                  <div className={`flex-1 ${i % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
-                    <div className="bg-white rounded-xl p-5 shadow-sm border border-border inline-block">
-                      <span className="text-vogue font-bold text-lg">{milestone.year}</span>
-                      <h4 className="font-semibold text-cornell">{milestone.title}</h4>
-                      <p className="text-sm text-charcoal mt-1">{milestone.desc}</p>
-                    </div>
-                  </div>
-                  <div className="w-4 h-4 bg-cornell rounded-full border-4 border-white shadow-md z-10 flex-shrink-0" />
-                  <div className="flex-1 hidden md:block" />
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-
       </div>
     </section>
   )
