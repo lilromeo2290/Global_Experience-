@@ -282,12 +282,12 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
             {/* Apply Now - Desktop */}
             <div className="hidden sm:flex items-center">
-              <Link
-                href="/apply"
-                className="bg-cornell hover:bg-cornell-dark text-white rounded-full px-5 py-2 text-sm font-medium transition-colors"
+              <Button
+                onClick={() => { setApplyOpen(false); handleNavClick('#volunteer') }}
+                className="bg-cornell hover:bg-cornell-dark text-white rounded-full px-5"
               >
                 Apply Now
-              </Link>
+              </Button>
             </div>
 
             {/* Mobile Menu */}
@@ -387,13 +387,12 @@ export default function Navbar() {
                     })}
                   </div>
                   <div className="p-4 border-t">
-                    <Link
-                      href="/apply"
-                      onClick={() => { setMobileOpen(false); setMobileOpenDropdown(null) }}
-                      className="block w-full text-center bg-cornell hover:bg-cornell-dark text-white rounded-full py-2 text-sm font-medium transition-colors"
+                    <Button
+                      onClick={() => { setMobileOpen(false); setMobileOpenDropdown(null); handleNavClick('#volunteer') }}
+                      className="w-full bg-cornell hover:bg-cornell-dark text-white rounded-full"
                     >
                       Apply Now
-                    </Link>
+                    </Button>
                   </div>
                 </div>
               </SheetContent>
