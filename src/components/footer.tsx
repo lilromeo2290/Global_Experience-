@@ -29,6 +29,7 @@ const programs = [
   'Tourism and Ecotourism',
   'Community Projects — Building of Schools',
   'Bore Holes — Drinkable Water',
+  'Gap Year',
 ]
 
 const socials = [
