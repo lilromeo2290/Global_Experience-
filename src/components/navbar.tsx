@@ -140,16 +140,16 @@ export default function Navbar() {
     >
       {/* Top bar */}
       <div className={`transition-all duration-300 overflow-hidden ${scrolled ? 'max-h-0 opacity-0' : 'max-h-10 opacity-100'}`}>
-        <div className="bg-mahogany text-white text-xs">
+        <div className="bg-cornell text-white text-xs">
           <div className="max-w-7xl mx-auto px-4 flex justify-between items-center h-9">
             <div className="flex items-center gap-4">
-              <a href="mailto:info@globalvolunteer.org" className="hover:text-copper-light transition-colors">info@globalvolunteer.org</a>
-              <a href="tel:+233123456789" className="flex items-center gap-1 hover:text-copper-light transition-colors">
+              <a href="mailto:info@globalvolunteer.org" className="hover:text-vogue-light transition-colors">info@globalvolunteer.org</a>
+              <a href="tel:+233123456789" className="flex items-center gap-1 hover:text-vogue-light transition-colors">
                 <Phone className="w-3 h-3" /> +233 123 456 789
               </a>
             </div>
             <div className="flex items-center gap-3">
-              <a href="#donate" onClick={(e) => { e.preventDefault(); handleNavClick('#donate') }} className="flex items-center gap-1 hover:text-copper-light transition-colors">
+              <a href="#donate" onClick={(e) => { e.preventDefault(); handleNavClick('#donate') }} className="flex items-center gap-1 hover:text-vogue-light transition-colors">
                 <Heart className="w-3 h-3" /> Donate Now
               </a>
             </div>
@@ -168,10 +168,10 @@ export default function Navbar() {
               className="w-10 h-10 rounded-full object-cover"
             />
             <div className="flex flex-col">
-              <span className={`font-bold text-lg leading-tight transition-colors ${scrolled ? 'text-mahogany' : 'text-white'}`}>
+              <span className={`font-bold text-lg leading-tight transition-colors ${scrolled ? 'text-cornell' : 'text-white'}`}>
                 Global Experience
               </span>
-              <span className={`text-[10px] uppercase tracking-wider transition-colors ${scrolled ? 'text-dove' : 'text-white/70'}`}>
+              <span className={`text-[10px] uppercase tracking-wider transition-colors ${scrolled ? 'text-charcoal' : 'text-white/70'}`}>
                 Aligning Skills with Corporate Goals
               </span>
             </div>
@@ -195,10 +195,10 @@ export default function Navbar() {
                       className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center gap-1 cursor-pointer ${
                         activeSection === link.href.replace('#', '') || isDropdownActive(link)
                           ? scrolled
-                            ? 'text-mahogany bg-mahogany/10'
+                            ? 'text-cornell bg-cornell/10'
                             : 'text-white bg-white/20'
                           : scrolled
-                            ? 'text-dove hover:text-mahogany hover:bg-mahogany/5'
+                            ? 'text-charcoal hover:text-cornell hover:bg-cornell/5'
                             : 'text-white/80 hover:text-white hover:bg-white/10'
                       }`}
                     >
@@ -223,9 +223,9 @@ export default function Navbar() {
                                 key={sub.label}
                                 href={sub.href}
                                 onClick={() => setOpenDropdown(null)}
-                                className="flex items-center gap-2 px-4 py-2.5 text-sm text-dove hover:text-mahogany hover:bg-mahogany/5 transition-colors cursor-pointer"
+                                className="flex items-center gap-2 px-4 py-2.5 text-sm text-charcoal hover:text-cornell hover:bg-cornell/5 transition-colors cursor-pointer"
                               >
-                                <ChevronRight className="w-3.5 h-3.5 text-copper" />
+                                <ChevronRight className="w-3.5 h-3.5 text-vogue" />
                                 {sub.label}
                               </Link>
                             ) : (
@@ -236,9 +236,9 @@ export default function Navbar() {
                                   e.preventDefault()
                                   handleNavClick(sub.href)
                                 }}
-                                className="flex items-center gap-2 px-4 py-2.5 text-sm text-dove hover:text-mahogany hover:bg-mahogany/5 transition-colors cursor-pointer"
+                                className="flex items-center gap-2 px-4 py-2.5 text-sm text-charcoal hover:text-cornell hover:bg-cornell/5 transition-colors cursor-pointer"
                               >
-                                <ChevronRight className="w-3.5 h-3.5 text-copper" />
+                                <ChevronRight className="w-3.5 h-3.5 text-vogue" />
                                 {sub.label}
                               </a>
                             )
@@ -259,10 +259,10 @@ export default function Navbar() {
                   className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
                     activeSection === link.href.replace('#', '')
                       ? scrolled
-                        ? 'text-mahogany bg-mahogany/10'
+                        ? 'text-cornell bg-cornell/10'
                         : 'text-white bg-white/20'
                       : scrolled
-                        ? 'text-dove hover:text-mahogany hover:bg-mahogany/5'
+                        ? 'text-charcoal hover:text-cornell hover:bg-cornell/5'
                         : 'text-white/80 hover:text-white hover:bg-white/10'
                   }`}
                 >
@@ -277,20 +277,20 @@ export default function Navbar() {
             <div className="hidden sm:flex flex-col items-center">
               <Button
                 onClick={() => handleNavClick('#contact')}
-                className="bg-mahogany hover:bg-mahogany-dark text-white rounded-full px-5"
+                className="bg-cornell hover:bg-cornell-dark text-white rounded-full px-5"
               >
                 Apply Now
               </Button>
               <div className="mt-1.5 text-center">
-                <p className={`font-semibold text-[10px] leading-tight transition-colors ${scrolled ? 'text-mahogany' : 'text-white'}`}>Your project</p>
-                <p className={`text-[9px] leading-tight transition-colors ${scrolled ? 'text-dove' : 'text-white/70'}`}>Applying for your dream project is quick and simple</p>
+                <p className={`font-semibold text-[10px] leading-tight transition-colors ${scrolled ? 'text-cornell' : 'text-white'}`}>Your project</p>
+                <p className={`text-[9px] leading-tight transition-colors ${scrolled ? 'text-charcoal' : 'text-white/70'}`}>Applying for your dream project is quick and simple</p>
               </div>
             </div>
 
             {/* Mobile Menu */}
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
               <SheetTrigger asChild className="lg:hidden">
-                <Button variant="ghost" size="icon" className={scrolled ? 'text-mahogany' : 'text-white'}>
+                <Button variant="ghost" size="icon" className={scrolled ? 'text-cornell' : 'text-white'}>
                   <Menu className="w-6 h-6" />
                 </Button>
               </SheetTrigger>
@@ -304,7 +304,7 @@ export default function Navbar() {
                         alt="Global Experience Placements Logo"
                         className="w-8 h-8 rounded-full object-cover"
                       />
-                      <span className="font-bold text-mahogany">Global Experience</span>
+                      <span className="font-bold text-cornell">Global Experience</span>
                     </div>
                   </div>
                   <div className="flex-1 overflow-y-auto py-4">
@@ -317,8 +317,8 @@ export default function Navbar() {
                               onClick={() => setMobileOpenDropdown(isOpen ? null : link.key)}
                               className={`w-full flex items-center justify-between px-6 py-3 text-base font-medium transition-colors ${
                                 activeSection === link.href.replace('#', '')
-                                  ? 'text-mahogany bg-mahogany/10'
-                                  : 'text-dove hover:text-mahogany hover:bg-mahogany/5'
+                                  ? 'text-cornell bg-cornell/10'
+                                  : 'text-charcoal hover:text-cornell hover:bg-cornell/5'
                               }`}
                             >
                               <span>{link.label}</span>
@@ -329,7 +329,7 @@ export default function Navbar() {
                                 initial={{ height: 0, opacity: 0 }}
                                 animate={{ height: 'auto', opacity: 1 }}
                                 transition={{ duration: 0.2 }}
-                                className="bg-warm-cream/60"
+                                className="bg-cream/60"
                               >
                                 {link.subLinks.map((sub) => {
                                   const isExternalPage = sub.href.startsWith('/')
@@ -341,9 +341,9 @@ export default function Navbar() {
                                         setMobileOpen(false)
                                         setMobileOpenDropdown(null)
                                       }}
-                                      className="flex items-center gap-2 pl-10 pr-6 py-2.5 text-sm text-dove hover:text-mahogany hover:bg-mahogany/5 transition-colors"
+                                      className="flex items-center gap-2 pl-10 pr-6 py-2.5 text-sm text-charcoal hover:text-cornell hover:bg-cornell/5 transition-colors"
                                     >
-                                      <ChevronRight className="w-3.5 h-3.5 text-copper" />
+                                      <ChevronRight className="w-3.5 h-3.5 text-vogue" />
                                       {sub.label}
                                     </Link>
                                   ) : (
@@ -354,9 +354,9 @@ export default function Navbar() {
                                         e.preventDefault()
                                         handleNavClick(sub.href)
                                       }}
-                                      className="flex items-center gap-2 pl-10 pr-6 py-2.5 text-sm text-dove hover:text-mahogany hover:bg-mahogany/5 transition-colors"
+                                      className="flex items-center gap-2 pl-10 pr-6 py-2.5 text-sm text-charcoal hover:text-cornell hover:bg-cornell/5 transition-colors"
                                     >
-                                      <ChevronRight className="w-3.5 h-3.5 text-copper" />
+                                      <ChevronRight className="w-3.5 h-3.5 text-vogue" />
                                       {sub.label}
                                     </a>
                                   )
@@ -374,8 +374,8 @@ export default function Navbar() {
                           onClick={(e) => { e.preventDefault(); handleNavClick(link.href) }}
                           className={`block px-6 py-3 text-base font-medium transition-colors ${
                             activeSection === link.href.replace('#', '')
-                              ? 'text-mahogany bg-mahogany/10 border-r-4 border-mahogany'
-                              : 'text-dove hover:text-mahogany hover:bg-mahogany/5'
+                              ? 'text-cornell bg-cornell/10 border-r-4 border-cornell'
+                              : 'text-charcoal hover:text-cornell hover:bg-cornell/5'
                           }`}
                         >
                           {link.label}
@@ -386,13 +386,13 @@ export default function Navbar() {
                   <div className="p-4 border-t">
                     <Button
                       onClick={() => handleNavClick('#contact')}
-                      className="w-full bg-mahogany hover:bg-mahogany-dark text-white rounded-full"
+                      className="w-full bg-cornell hover:bg-cornell-dark text-white rounded-full"
                     >
                       Apply Now
                     </Button>
                     <div className="mt-3 text-center">
-                      <p className="font-semibold text-mahogany text-sm">Your project</p>
-                      <p className="text-dove text-xs leading-relaxed mt-0.5">Applying for your dream project is quick and simple</p>
+                      <p className="font-semibold text-cornell text-sm">Your project</p>
+                      <p className="text-charcoal text-xs leading-relaxed mt-0.5">Applying for your dream project is quick and simple</p>
                     </div>
                   </div>
                 </div>

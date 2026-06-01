@@ -10,7 +10,7 @@ const services = [
     icon: Plane,
     title: 'Airport Pickups',
     desc: 'Seamless airport transfer services ensuring safe and comfortable arrival. Our team greets you at the airport and ensures you reach your accommodation without any hassle, 24/7.',
-    color: 'mahogany',
+    color: 'cornell',
     link: null,
   },
   {
@@ -18,7 +18,7 @@ const services = [
     icon: MapPin,
     title: 'Local Orientations',
     desc: 'Comprehensive orientation programs covering local culture, customs, safety guidelines, transportation, and essential information to help you settle in quickly and confidently.',
-    color: 'copper',
+    color: 'vogue',
     link: null,
   },
   {
@@ -26,7 +26,7 @@ const services = [
     icon: Briefcase,
     title: 'Placement Organisation',
     desc: 'Expert matching of your skills and interests with the perfect placement opportunity. We organize placements across 12 professional categories including medical, teaching, journalism, and more.',
-    color: 'brass',
+    color: 'vogue-light',
     link: '/placements',
   },
   {
@@ -34,7 +34,7 @@ const services = [
     icon: Home,
     title: 'Accommodation',
     desc: 'Safe, comfortable, and affordable housing options carefully vetted by our team. From host families to shared volunteer houses, we ensure you have a secure and welcoming home throughout your placement.',
-    color: 'mahogany',
+    color: 'cornell',
     link: null,
   },
   {
@@ -42,15 +42,15 @@ const services = [
     icon: UtensilsCrossed,
     title: 'Feeding',
     desc: 'Nutritious meal plans and daily feeding support throughout your stay. We ensure you are well-nourished with local and familiar cuisine so you can focus on your placement and enjoy your experience.',
-    color: 'copper',
+    color: 'vogue',
     link: null,
   },
 ]
 
 const colorMap: Record<string, { bg: string; icon: string; border: string }> = {
-  mahogany: { bg: 'bg-mahogany/10', icon: 'text-mahogany', border: 'group-hover:border-mahogany/40' },
-  copper: { bg: 'bg-copper/10', icon: 'text-copper', border: 'group-hover:border-copper/40' },
-  brass: { bg: 'bg-brass/10', icon: 'text-brass', border: 'group-hover:border-brass/40' },
+  cornell: { bg: 'bg-cornell/10', icon: 'text-cornell', border: 'group-hover:border-cornell/40' },
+  vogue: { bg: 'bg-vogue/10', icon: 'text-vogue', border: 'group-hover:border-vogue/40' },
+  'vogue-light': { bg: 'bg-vogue-light/10', icon: 'text-vogue-light', border: 'group-hover:border-vogue-light/40' },
 }
 
 export default function ServicesSection() {
@@ -63,11 +63,11 @@ export default function ServicesSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="text-copper font-semibold text-sm uppercase tracking-wider">Our Services</span>
-          <h2 className="text-3xl md:text-4xl font-bold text-mahogany mt-2 mb-4">
+          <span className="text-vogue font-semibold text-sm uppercase tracking-wider">Our Services</span>
+          <h2 className="text-3xl md:text-4xl font-bold text-cornell mt-2 mb-4">
             Comprehensive Support Every Step of the Way
           </h2>
-          <p className="text-dove max-w-2xl mx-auto leading-relaxed">
+          <p className="text-charcoal max-w-2xl mx-auto leading-relaxed">
             From the moment you arrive until your placement is complete, our dedicated team provides
             end-to-end support to ensure a safe, enriching, and transformative experience.
           </p>
@@ -81,10 +81,10 @@ export default function ServicesSection() {
                 <div className={`w-14 h-14 ${colors.bg} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
                   <service.icon className={`w-7 h-7 ${colors.icon}`} />
                 </div>
-                <h3 className="text-lg font-bold text-mahogany mb-2">{service.title}</h3>
-                <p className="text-sm text-dove leading-relaxed">{service.desc}</p>
+                <h3 className="text-lg font-bold text-cornell mb-2">{service.title}</h3>
+                <p className="text-sm text-charcoal leading-relaxed">{service.desc}</p>
                 {service.link && (
-                  <div className="mt-4 inline-flex items-center gap-1 text-copper hover:text-mahogany text-sm font-semibold transition-colors">
+                  <div className="mt-4 inline-flex items-center gap-1 text-vogue hover:text-cornell text-sm font-semibold transition-colors">
                     View Placements <ArrowRight className="w-4 h-4" />
                   </div>
                 )}
@@ -104,7 +104,7 @@ export default function ServicesSection() {
                 >
                   <Link
                     href={service.link}
-                    className="group block bg-white rounded-2xl p-6 shadow-sm border-2 border-brass/30 hover:shadow-xl hover:border-brass/60 transition-all duration-300"
+                    className="group block bg-white rounded-2xl p-6 shadow-sm border-2 border-vogue-light/30 hover:shadow-xl hover:border-vogue-light/60 transition-all duration-300"
                   >
                     {cardContent}
                   </Link>
@@ -121,7 +121,7 @@ export default function ServicesSection() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
                 whileHover={{ y: -8, scale: 1.02 }}
-                className="group bg-white rounded-2xl p-6 shadow-sm border border-border hover:shadow-xl hover:border-mahogany/20 transition-all duration-300"
+                className="group bg-white rounded-2xl p-6 shadow-sm border border-border hover:shadow-xl hover:border-cornell/20 transition-all duration-300"
               >
                 {cardContent}
               </motion.div>
@@ -134,7 +134,7 @@ export default function ServicesSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-16 bg-gradient-to-r from-mahogany to-copper rounded-2xl p-8 md:p-12 text-white relative overflow-hidden"
+          className="mt-16 bg-gradient-to-r from-cornell to-vogue rounded-2xl p-8 md:p-12 text-white relative overflow-hidden"
         >
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
           <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />

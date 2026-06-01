@@ -51,11 +51,11 @@ export default function VolunteerSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="text-copper font-semibold text-sm uppercase tracking-wider">Volunteer With Us</span>
-          <h2 className="text-3xl md:text-4xl font-bold text-mahogany mt-2 mb-4">
+          <span className="text-vogue font-semibold text-sm uppercase tracking-wider">Volunteer With Us</span>
+          <h2 className="text-3xl md:text-4xl font-bold text-cornell mt-2 mb-4">
             Your Journey to Making a Difference Starts Here
           </h2>
-          <p className="text-dove max-w-2xl mx-auto leading-relaxed">
+          <p className="text-charcoal max-w-2xl mx-auto leading-relaxed">
             Volunteering abroad is more than giving back — it is about growing as a person, gaining new
             perspectives, and building bridges between cultures. Join our community of change-makers.
           </p>
@@ -63,7 +63,7 @@ export default function VolunteerSection() {
 
         {/* Opportunities Grid */}
         <div className="mb-20">
-          <h3 className="text-2xl font-bold text-mahogany mb-6">Current Opportunities</h3>
+          <h3 className="text-2xl font-bold text-cornell mb-6">Current Opportunities</h3>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {opportunities.map((opp, i) => (
               <motion.div
@@ -73,14 +73,14 @@ export default function VolunteerSection() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
                 whileHover={{ y: -3 }}
-                className="bg-white rounded-xl p-5 border border-border hover:border-copper/30 hover:shadow-md transition-all group"
+                className="bg-white rounded-xl p-5 border border-border hover:border-vogue/30 hover:shadow-md transition-all group"
               >
                 <div className="flex items-start justify-between mb-2">
-                  <span className="text-xs bg-mahogany/10 text-mahogany font-medium px-2 py-0.5 rounded-full">{opp.sector}</span>
-                  <span className="text-xs text-dove">{opp.duration}</span>
+                  <span className="text-xs bg-cornell/10 text-cornell font-medium px-2 py-0.5 rounded-full">{opp.sector}</span>
+                  <span className="text-xs text-charcoal">{opp.duration}</span>
                 </div>
-                <h4 className="font-semibold text-mahogany mb-1 group-hover:text-copper transition-colors">{opp.title}</h4>
-                <p className="text-xs text-dove flex items-center gap-1">
+                <h4 className="font-semibold text-cornell mb-1 group-hover:text-vogue transition-colors">{opp.title}</h4>
+                <p className="text-xs text-charcoal flex items-center gap-1">
                   <MapPin className="w-3 h-3" /> {opp.location}
                 </p>
               </motion.div>
@@ -90,7 +90,7 @@ export default function VolunteerSection() {
 
         {/* Application Process */}
         <div className="mb-20">
-          <h3 className="text-2xl font-bold text-mahogany mb-6 text-center">Application Process</h3>
+          <h3 className="text-2xl font-bold text-cornell mb-6 text-center">Application Process</h3>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {process.map((step, i) => (
               <motion.div
@@ -99,16 +99,16 @@ export default function VolunteerSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
-                className="relative bg-white rounded-xl p-6 border border-border hover:border-mahogany/20 hover:shadow-sm transition-all"
+                className="relative bg-white rounded-xl p-6 border border-border hover:border-cornell/20 hover:shadow-sm transition-all"
               >
                 <div className="flex items-center gap-3 mb-3">
-                  <span className="text-3xl font-bold text-mahogany/15">{step.step}</span>
-                  <div className="w-10 h-10 bg-mahogany/10 rounded-lg flex items-center justify-center">
-                    <step.icon className="w-5 h-5 text-mahogany" />
+                  <span className="text-3xl font-bold text-cornell/15">{step.step}</span>
+                  <div className="w-10 h-10 bg-cornell/10 rounded-lg flex items-center justify-center">
+                    <step.icon className="w-5 h-5 text-cornell" />
                   </div>
                 </div>
-                <h4 className="font-semibold text-mahogany mb-1">{step.title}</h4>
-                <p className="text-sm text-dove">{step.desc}</p>
+                <h4 className="font-semibold text-cornell mb-1">{step.title}</h4>
+                <p className="text-sm text-charcoal">{step.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -121,14 +121,14 @@ export default function VolunteerSection() {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="bg-warm-cream rounded-2xl p-8"
+            className="bg-cream rounded-2xl p-8"
           >
-            <h3 className="text-xl font-bold text-mahogany mb-4">Benefits of Volunteering</h3>
+            <h3 className="text-xl font-bold text-cornell mb-4">Benefits of Volunteering</h3>
             <div className="grid gap-3">
               {benefits.map((benefit) => (
                 <div key={benefit} className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-copper mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-dove">{benefit}</span>
+                  <CheckCircle2 className="w-4 h-4 text-vogue mt-0.5 flex-shrink-0" />
+                  <span className="text-sm text-charcoal">{benefit}</span>
                 </div>
               ))}
             </div>
@@ -139,22 +139,22 @@ export default function VolunteerSection() {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="bg-warm-cream rounded-2xl p-8"
+            className="bg-cream rounded-2xl p-8"
           >
-            <h3 className="text-xl font-bold text-mahogany mb-4">Your Safety Matters</h3>
-            <p className="text-sm text-dove mb-5 leading-relaxed">
+            <h3 className="text-xl font-bold text-cornell mb-4">Your Safety Matters</h3>
+            <p className="text-sm text-charcoal mb-5 leading-relaxed">
               We take your safety seriously. Our comprehensive safety protocols and support systems
               ensure you can focus on making impact while we handle the rest.
             </p>
             <div className="grid gap-4">
               {safetyFeatures.map((feat) => (
                 <div key={feat.title} className="flex items-start gap-3 bg-white rounded-xl p-4 border border-border">
-                  <div className="w-10 h-10 bg-mahogany/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <feat.icon className="w-5 h-5 text-mahogany" />
+                  <div className="w-10 h-10 bg-cornell/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <feat.icon className="w-5 h-5 text-cornell" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-mahogany text-sm">{feat.title}</h4>
-                    <p className="text-xs text-dove">{feat.desc}</p>
+                    <h4 className="font-semibold text-cornell text-sm">{feat.title}</h4>
+                    <p className="text-xs text-charcoal">{feat.desc}</p>
                   </div>
                 </div>
               ))}
@@ -174,7 +174,7 @@ export default function VolunteerSection() {
             alt="Volunteers experiencing cultural immersion"
             className="w-full h-72 md:h-96 object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-mahogany/90 via-mahogany/60 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-cornell/90 via-cornell/60 to-transparent" />
           <div className="absolute inset-0 flex items-center p-8 md:p-12">
             <div className="max-w-lg text-white">
               <h3 className="text-2xl md:text-3xl font-bold mb-3">Cultural Immersion Experiences</h3>
@@ -185,7 +185,7 @@ export default function VolunteerSection() {
               </p>
               <Button
                 onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
-                className="bg-white text-mahogany hover:bg-white/90 rounded-full"
+                className="bg-white text-cornell hover:bg-white/90 rounded-full"
               >
                 Start Your Journey
                 <ArrowRight className="ml-2 w-4 h-4" />

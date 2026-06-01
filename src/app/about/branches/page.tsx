@@ -18,7 +18,7 @@ const branches = [
     hours: 'Mon–Fri: 8:00 AM – 5:00 PM | Sat: 9:00 AM – 1:00 PM',
     description: 'Our headquarters and primary coordination centre, managing all placement programs across Ghana and West Africa. The Accra office oversees volunteer onboarding, partner relations, program development, and serves as the main hub for airport pickups and orientation programs for all arriving volunteers.',
     services: ['Volunteer Onboarding', 'Program Coordination', 'Partner Relations', 'Orientation Programs', 'Airport Pickups'],
-    color: 'mahogany',
+    color: 'cornell',
   },
   {
     country: 'Ghana',
@@ -30,7 +30,7 @@ const branches = [
     hours: 'Mon–Fri: 8:30 AM – 4:30 PM',
     description: 'Located in the historic Central Region, our Cape Coast office coordinates placements in teaching hospitals, schools, and community outreach programs. This branch also manages our school building projects and bore hole water initiatives in the surrounding coastal and inland communities.',
     services: ['Medical Placements', 'Teaching Programs', 'School Building Projects', 'Community Outreach'],
-    color: 'copper',
+    color: 'vogue',
   },
   {
     country: 'Ghana',
@@ -42,7 +42,7 @@ const branches = [
     hours: 'Mon–Fri: 8:30 AM – 4:30 PM',
     description: 'Our Volta Regional office in Ho manages placements across one of Ghana\'s most scenic and culturally rich regions. This branch specializes in agriculture placements, ecotourism programs, and community development projects, leveraging the region\'s natural beauty and farming heritage for impactful volunteer experiences.',
     services: ['Agriculture Placements', 'Ecotourism Programs', 'Community Development', 'Bore Hole Projects'],
-    color: 'brass',
+    color: 'vogue-light',
   },
   {
     country: 'Ghana',
@@ -54,7 +54,7 @@ const branches = [
     hours: 'Mon–Fri: 8:30 AM – 4:30 PM',
     description: 'Serving the Western Region, our Takoradi office coordinates placements in banking and finance, office administration, and law. The region\'s growing oil and gas industry and commercial activity provide unique opportunities for professional placements in corporate and legal settings.',
     services: ['Banking & Finance', 'Office Administration', 'Law Placements', 'Sports Programs'],
-    color: 'mahogany',
+    color: 'cornell',
   },
 ]
 
@@ -86,31 +86,31 @@ const expansionCountries = [
 ]
 
 const colorMapBg: Record<string, string> = {
-  mahogany: 'bg-mahogany/10',
-  copper: 'bg-copper/10',
-  brass: 'bg-brass/10',
+  cornell: 'bg-cornell/10',
+  vogue: 'bg-vogue/10',
+  'vogue-light': 'bg-vogue-light/10',
 }
 const colorMapText: Record<string, string> = {
-  mahogany: 'text-mahogany',
-  copper: 'text-copper',
-  brass: 'text-brass',
+  cornell: 'text-cornell',
+  vogue: 'text-vogue',
+  'vogue-light': 'text-vogue-light',
 }
 const colorMapBorder: Record<string, string> = {
-  mahogany: 'border-mahogany/30',
-  copper: 'border-copper/30',
-  brass: 'border-brass/30',
+  cornell: 'border-cornell/30',
+  vogue: 'border-vogue/30',
+  'vogue-light': 'border-vogue-light/30',
 }
 
 export default function BranchesPage() {
   return (
-    <div className="min-h-screen bg-warm-cream">
+    <div className="min-h-screen bg-cream">
       <Navbar />
 
       {/* Header */}
       <div className="relative overflow-hidden pt-16">
-        <div className="absolute inset-0 bg-gradient-to-r from-mahogany to-mahogany-dark" />
+        <div className="absolute inset-0 bg-gradient-to-r from-cornell to-cornell-dark" />
         <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-copper/10 rounded-full translate-y-1/2 -translate-x-1/2" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-vogue/10 rounded-full translate-y-1/2 -translate-x-1/2" />
         <div className="absolute top-1/2 left-1/3 w-40 h-40 bg-white/5 rounded-full -translate-y-1/2" />
         <div className="relative max-w-7xl mx-auto px-4 py-16 md:py-24">
           <motion.div
@@ -156,9 +156,9 @@ export default function BranchesPage() {
               { icon: Rocket, num: '4', label: 'Countries Expanding To' },
             ].map((stat) => (
               <div key={stat.label} className="text-center">
-                <stat.icon className="w-5 h-5 text-copper mx-auto mb-1" />
-                <div className="text-2xl font-bold text-mahogany">{stat.num}</div>
-                <div className="text-xs text-dove">{stat.label}</div>
+                <stat.icon className="w-5 h-5 text-vogue mx-auto mb-1" />
+                <div className="text-2xl font-bold text-cornell">{stat.num}</div>
+                <div className="text-xs text-charcoal">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -169,46 +169,46 @@ export default function BranchesPage() {
       <div className="max-w-7xl mx-auto px-4 py-12">
         {/* Head Office */}
         <div className="mb-8">
-          <h2 className="text-2xl font-bold text-mahogany mb-6 flex items-center gap-2">
+          <h2 className="text-2xl font-bold text-cornell mb-6 flex items-center gap-2">
             <Building2 className="w-6 h-6" /> Head Office
           </h2>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="bg-white rounded-2xl shadow-md border-2 border-mahogany/20 overflow-hidden"
+            className="bg-white rounded-2xl shadow-md border-2 border-cornell/20 overflow-hidden"
           >
             <div className="grid lg:grid-cols-3 gap-0">
-              <div className="lg:col-span-1 bg-gradient-to-br from-mahogany to-mahogany-dark p-8 text-white flex flex-col justify-center">
+              <div className="lg:col-span-1 bg-gradient-to-br from-cornell to-cornell-dark p-8 text-white flex flex-col justify-center">
                 <span className="text-white/60 text-xs uppercase tracking-wider mb-2">Head Office</span>
                 <h3 className="text-2xl font-bold mb-1">Accra, Ghana</h3>
                 <p className="text-white/70 text-sm">National Headquarters</p>
               </div>
               <div className="lg:col-span-2 p-8">
-                <p className="text-dove leading-relaxed mb-6">{branches[0].description}</p>
+                <p className="text-charcoal leading-relaxed mb-6">{branches[0].description}</p>
                 <div className="grid sm:grid-cols-2 gap-4 mb-6">
                   <div className="flex items-start gap-3">
-                    <MapPin className="w-4 h-4 text-mahogany mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-dove">{branches[0].address}</span>
+                    <MapPin className="w-4 h-4 text-cornell mt-0.5 flex-shrink-0" />
+                    <span className="text-sm text-charcoal">{branches[0].address}</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Phone className="w-4 h-4 text-mahogany flex-shrink-0" />
-                    <a href={`tel:${branches[0].phone.replace(/\s/g, '')}`} className="text-sm text-dove hover:text-mahogany transition-colors">{branches[0].phone}</a>
+                    <Phone className="w-4 h-4 text-cornell flex-shrink-0" />
+                    <a href={`tel:${branches[0].phone.replace(/\s/g, '')}`} className="text-sm text-charcoal hover:text-cornell transition-colors">{branches[0].phone}</a>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Mail className="w-4 h-4 text-mahogany flex-shrink-0" />
-                    <a href={`mailto:${branches[0].email}`} className="text-sm text-dove hover:text-mahogany transition-colors">{branches[0].email}</a>
+                    <Mail className="w-4 h-4 text-cornell flex-shrink-0" />
+                    <a href={`mailto:${branches[0].email}`} className="text-sm text-charcoal hover:text-cornell transition-colors">{branches[0].email}</a>
                   </div>
                   <div className="flex items-start gap-3">
-                    <Clock className="w-4 h-4 text-mahogany mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-dove">{branches[0].hours}</span>
+                    <Clock className="w-4 h-4 text-cornell mt-0.5 flex-shrink-0" />
+                    <span className="text-sm text-charcoal">{branches[0].hours}</span>
                   </div>
                 </div>
                 <div>
-                  <h4 className="text-sm font-semibold text-mahogany mb-2">Services Offered</h4>
+                  <h4 className="text-sm font-semibold text-cornell mb-2">Services Offered</h4>
                   <div className="flex flex-wrap gap-2">
                     {branches[0].services.map((s) => (
-                      <span key={s} className="text-xs bg-mahogany/10 text-mahogany px-3 py-1 rounded-full font-medium">
+                      <span key={s} className="text-xs bg-cornell/10 text-cornell px-3 py-1 rounded-full font-medium">
                         {s}
                       </span>
                     ))}
@@ -221,7 +221,7 @@ export default function BranchesPage() {
 
         {/* Regional Offices */}
         <div className="mb-12">
-          <h2 className="text-2xl font-bold text-mahogany mb-6 flex items-center gap-2">
+          <h2 className="text-2xl font-bold text-cornell mb-6 flex items-center gap-2">
             <Globe className="w-6 h-6" /> Regional Offices
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -239,38 +239,38 @@ export default function BranchesPage() {
                     <div>
                       <div className="flex items-center gap-2 mb-1">
                         <MapPin className={`w-4 h-4 ${colorMapText[branch.color]}`} />
-                        <span className="text-xs font-medium text-dove uppercase tracking-wider">{branch.country}</span>
+                        <span className="text-xs font-medium text-charcoal uppercase tracking-wider">{branch.country}</span>
                       </div>
-                      <h3 className="text-xl font-bold text-mahogany">{branch.city}</h3>
+                      <h3 className="text-xl font-bold text-cornell">{branch.city}</h3>
                     </div>
                     <div className={`w-10 h-10 ${colorMapBg[branch.color]} rounded-lg flex items-center justify-center`}>
                       <Building2 className={`w-5 h-5 ${colorMapText[branch.color]}`} />
                     </div>
                   </div>
 
-                  <p className="text-sm text-dove leading-relaxed mb-5">{branch.description}</p>
+                  <p className="text-sm text-charcoal leading-relaxed mb-5">{branch.description}</p>
 
                   <div className="space-y-2 mb-5">
                     <div className="flex items-start gap-2">
-                      <MapPin className="w-3.5 h-3.5 text-dove mt-0.5 flex-shrink-0" />
-                      <span className="text-xs text-dove">{branch.address}</span>
+                      <MapPin className="w-3.5 h-3.5 text-charcoal mt-0.5 flex-shrink-0" />
+                      <span className="text-xs text-charcoal">{branch.address}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Phone className="w-3.5 h-3.5 text-dove flex-shrink-0" />
-                      <a href={`tel:${branch.phone.replace(/\s/g, '')}`} className="text-xs text-dove hover:text-mahogany transition-colors">{branch.phone}</a>
+                      <Phone className="w-3.5 h-3.5 text-charcoal flex-shrink-0" />
+                      <a href={`tel:${branch.phone.replace(/\s/g, '')}`} className="text-xs text-charcoal hover:text-cornell transition-colors">{branch.phone}</a>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Mail className="w-3.5 h-3.5 text-dove flex-shrink-0" />
-                      <a href={`mailto:${branch.email}`} className="text-xs text-dove hover:text-mahogany transition-colors">{branch.email}</a>
+                      <Mail className="w-3.5 h-3.5 text-charcoal flex-shrink-0" />
+                      <a href={`mailto:${branch.email}`} className="text-xs text-charcoal hover:text-cornell transition-colors">{branch.email}</a>
                     </div>
                     <div className="flex items-start gap-2">
-                      <Clock className="w-3.5 h-3.5 text-dove mt-0.5 flex-shrink-0" />
-                      <span className="text-xs text-dove">{branch.hours}</span>
+                      <Clock className="w-3.5 h-3.5 text-charcoal mt-0.5 flex-shrink-0" />
+                      <span className="text-xs text-charcoal">{branch.hours}</span>
                     </div>
                   </div>
 
                   <div>
-                    <h4 className="text-xs font-semibold text-mahogany mb-2">Services</h4>
+                    <h4 className="text-xs font-semibold text-cornell mb-2">Services</h4>
                     <div className="flex flex-wrap gap-1.5">
                       {branch.services.map((s) => (
                         <span key={s} className={`text-[11px] ${colorMapBg[branch.color]} ${colorMapText[branch.color]} px-2.5 py-0.5 rounded-full font-medium`}>
@@ -293,11 +293,11 @@ export default function BranchesPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <span className="text-copper font-semibold text-sm uppercase tracking-wider">Coming Soon</span>
-              <h2 className="text-2xl md:text-3xl font-bold text-mahogany mt-2 mb-3 flex items-center justify-center gap-2">
+              <span className="text-vogue font-semibold text-sm uppercase tracking-wider">Coming Soon</span>
+              <h2 className="text-2xl md:text-3xl font-bold text-cornell mt-2 mb-3 flex items-center justify-center gap-2">
                 <Rocket className="w-7 h-7" /> Expanding To New Countries
               </h2>
-              <p className="text-dove max-w-2xl mx-auto leading-relaxed">
+              <p className="text-charcoal max-w-2xl mx-auto leading-relaxed">
                 We are actively working to establish offices in these countries, bringing our trusted placement
                 services and community development programs to even more communities across Africa and Asia.
               </p>
@@ -311,10 +311,10 @@ export default function BranchesPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="bg-white rounded-2xl shadow-sm border-2 border-dashed border-copper/30 overflow-hidden hover:shadow-lg hover:border-copper/50 transition-all duration-300 relative"
+                className="bg-white rounded-2xl shadow-sm border-2 border-dashed border-vogue/30 overflow-hidden hover:shadow-lg hover:border-vogue/50 transition-all duration-300 relative"
               >
                 <div className="absolute top-4 right-4">
-                  <span className="text-[10px] font-bold uppercase tracking-wider bg-copper/10 text-copper px-3 py-1 rounded-full">
+                  <span className="text-[10px] font-bold uppercase tracking-wider bg-vogue/10 text-vogue px-3 py-1 rounded-full">
                     Coming Soon
                   </span>
                 </div>
@@ -322,18 +322,18 @@ export default function BranchesPage() {
                   <div className="flex items-center gap-3 mb-4">
                     <span className="text-3xl">{country.flag}</span>
                     <div>
-                      <h3 className="text-xl font-bold text-mahogany">{country.country}</h3>
-                      <span className="text-xs text-copper font-medium">Planned Expansion</span>
+                      <h3 className="text-xl font-bold text-cornell">{country.country}</h3>
+                      <span className="text-xs text-vogue font-medium">Planned Expansion</span>
                     </div>
                   </div>
 
-                  <p className="text-sm text-dove leading-relaxed mb-5">{country.description}</p>
+                  <p className="text-sm text-charcoal leading-relaxed mb-5">{country.description}</p>
 
                   <div>
-                    <h4 className="text-xs font-semibold text-mahogany mb-2">Planned Focus Areas</h4>
+                    <h4 className="text-xs font-semibold text-cornell mb-2">Planned Focus Areas</h4>
                     <div className="flex flex-wrap gap-1.5">
                       {country.focusAreas.map((area) => (
-                        <span key={area} className="text-[11px] bg-copper/10 text-copper px-2.5 py-0.5 rounded-full font-medium">
+                        <span key={area} className="text-[11px] bg-vogue/10 text-vogue px-2.5 py-0.5 rounded-full font-medium">
                           {area}
                         </span>
                       ))}
@@ -350,7 +350,7 @@ export default function BranchesPage() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-12 bg-gradient-to-r from-mahogany to-copper rounded-2xl p-8 md:p-12 text-white text-center relative overflow-hidden"
+          className="mt-12 bg-gradient-to-r from-cornell to-vogue rounded-2xl p-8 md:p-12 text-white text-center relative overflow-hidden"
         >
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
           <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
@@ -362,7 +362,7 @@ export default function BranchesPage() {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link href="/#contact">
-                <Button size="lg" className="bg-white text-mahogany hover:bg-white/90 rounded-full px-8">
+                <Button size="lg" className="bg-white text-cornell hover:bg-white/90 rounded-full px-8">
                   Contact Us
                 </Button>
               </Link>

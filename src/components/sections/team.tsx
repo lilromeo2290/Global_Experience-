@@ -14,11 +14,11 @@ export default function TeamSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="text-copper font-semibold text-sm uppercase tracking-wider">Our Team</span>
-          <h2 className="text-3xl md:text-4xl font-bold text-mahogany mt-2 mb-4">
+          <span className="text-vogue font-semibold text-sm uppercase tracking-wider">Our Team</span>
+          <h2 className="text-3xl md:text-4xl font-bold text-cornell mt-2 mb-4">
             Meet Our Leadership
           </h2>
-          <p className="text-dove max-w-2xl mx-auto leading-relaxed">
+          <p className="text-charcoal max-w-2xl mx-auto leading-relaxed">
             Our dedicated team of professionals brings together diverse expertise in international
             development, volunteer coordination, community engagement, and humanitarian support.
             Together, we are committed to making every placement a transformative experience.
@@ -33,10 +33,10 @@ export default function TeamSection() {
           transition={{ duration: 0.5 }}
           className="max-w-3xl mx-auto"
         >
-          <div className="bg-white rounded-2xl overflow-hidden shadow-md border border-border hover:shadow-xl hover:border-copper/30 transition-all duration-300 group">
+          <div className="bg-white rounded-2xl overflow-hidden shadow-md border border-border hover:shadow-xl hover:border-vogue/30 transition-all duration-300 group">
             <div className="grid md:grid-cols-2 gap-0">
               {/* Photo */}
-              <div className="aspect-square md:aspect-auto md:min-h-[420px] bg-warm-sand overflow-hidden relative">
+              <div className="aspect-square md:aspect-auto md:min-h-[420px] bg-ivory overflow-hidden relative">
                 <img
                   src="/images/team-ceo.jpg"
                   alt="John Success Akotia"
@@ -54,10 +54,10 @@ export default function TeamSection() {
 
               {/* Info */}
               <div className="p-8 md:p-10 flex flex-col justify-center">
-                <span className="text-copper font-semibold text-sm uppercase tracking-wider">Leadership</span>
-                <h3 className="text-2xl md:text-3xl font-bold text-mahogany mt-2 mb-1">John Success Akotia</h3>
-                <p className="text-copper font-medium text-lg mb-4">Chief Executive Officer (CEO)</p>
-                <p className="text-dove leading-relaxed mb-6">
+                <span className="text-vogue font-semibold text-sm uppercase tracking-wider">Leadership</span>
+                <h3 className="text-2xl md:text-3xl font-bold text-cornell mt-2 mb-1">John Success Akotia</h3>
+                <p className="text-vogue font-medium text-lg mb-4">Chief Executive Officer (CEO)</p>
+                <p className="text-charcoal leading-relaxed mb-6">
                   As the founder and driving force behind Global Experience Placements, John Success Akotia
                   leads the organization with a clear vision: to deliver high-quality placement and support
                   services that connect students, graduates, volunteers, and professionals with impactful
@@ -66,11 +66,11 @@ export default function TeamSection() {
                   that fosters professional growth, global partnerships, and community transformation.
                 </p>
                 <div className="flex items-center gap-4">
-                  <a href="#" className="w-10 h-10 bg-mahogany/10 rounded-full flex items-center justify-center hover:bg-mahogany hover:text-white transition-all group/icon">
-                    <Linkedin className="w-5 h-5 text-mahogany group-hover/icon:text-white" />
+                  <a href="#" className="w-10 h-10 bg-cornell/10 rounded-full flex items-center justify-center hover:bg-cornell hover:text-white transition-all group/icon">
+                    <Linkedin className="w-5 h-5 text-cornell group-hover/icon:text-white" />
                   </a>
-                  <a href="mailto:info@globalvolunteer.org" className="w-10 h-10 bg-mahogany/10 rounded-full flex items-center justify-center hover:bg-mahogany hover:text-white transition-all group/icon">
-                    <Mail className="w-5 h-5 text-mahogany group-hover/icon:text-white" />
+                  <a href="mailto:info@globalvolunteer.org" className="w-10 h-10 bg-cornell/10 rounded-full flex items-center justify-center hover:bg-cornell hover:text-white transition-all group/icon">
+                    <Mail className="w-5 h-5 text-cornell group-hover/icon:text-white" />
                   </a>
                 </div>
               </div>
@@ -83,17 +83,17 @@ export default function TeamSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-16 bg-warm-cream rounded-2xl p-8 md:p-12 text-center border border-border"
+          className="mt-16 bg-cream rounded-2xl p-8 md:p-12 text-center border border-border"
         >
-          <h3 className="text-2xl font-bold text-mahogany mb-3">Want to Join Our Team?</h3>
-          <p className="text-dove max-w-xl mx-auto mb-6 leading-relaxed">
+          <h3 className="text-2xl font-bold text-cornell mb-3">Want to Join Our Team?</h3>
+          <p className="text-charcoal max-w-xl mx-auto mb-6 leading-relaxed">
             We are always looking for passionate, dedicated individuals who share our vision of
             empowering communities through global volunteerism. If you want to make a difference,
             we would love to hear from you.
           </p>
           <button
             onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
-            className="inline-flex items-center gap-2 bg-mahogany hover:bg-mahogany-dark text-white rounded-full px-8 py-3 font-medium transition-colors"
+            className="inline-flex items-center gap-2 bg-cornell hover:bg-cornell-dark text-white rounded-full px-8 py-3 font-medium transition-colors"
           >
             Get In Touch
           </button>

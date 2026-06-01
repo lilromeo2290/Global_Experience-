@@ -14,7 +14,7 @@ const categories = [
     benefits: ['Direct patient care experience', 'Cross-cultural medical practice', 'Professional mentorship from specialists', 'Clinical skills certification'],
     requirements: ['Medical/nursing enrollment', 'Basic language willingness', 'Immunization records', 'Professional references'],
     subtypes: ['Nursing', 'Midwifery', 'Physiotherapy', 'Psychiatric Care', 'Ear, Nose & Throat (ENT)'],
-    color: 'mahogany',
+    color: 'cornell',
   },
   {
     icon: BookOpen,
@@ -24,7 +24,7 @@ const categories = [
     benefits: ['Curriculum development skills', 'Cross-cultural teaching experience', 'Language immersion', 'Community integration'],
     requirements: ['Teaching qualification or interest', 'Fluent English', 'Patience & adaptability', 'Cultural sensitivity'],
     subtypes: ['Primary Schools', 'Secondary Schools', 'Special Needs Education', 'Adult Literacy'],
-    color: 'copper',
+    color: 'vogue',
   },
   {
     icon: Radio,
@@ -34,7 +34,7 @@ const categories = [
     benefits: ['Published portfolio pieces', 'Multimedia storytelling', 'International reporting experience', 'Professional network building'],
     requirements: ['Journalism/media enrollment', 'Writing samples', 'Digital literacy', 'Storytelling passion'],
     subtypes: ['Television', 'Radio Stations'],
-    color: 'brass',
+    color: 'vogue-light',
   },
   {
     icon: Users,
@@ -44,7 +44,7 @@ const categories = [
     benefits: ['Direct community impact', 'Grassroots development experience', 'Cultural immersion', 'Program design skills'],
     requirements: ['Community development interest', 'Strong communication skills', 'Cultural sensitivity', 'Passion for social change'],
     subtypes: ['Health Education', 'Youth Empowerment', 'Women\'s Initiatives', 'Social Welfare Programs'],
-    color: 'mahogany',
+    color: 'cornell',
   },
   {
     icon: Trophy,
@@ -54,7 +54,7 @@ const categories = [
     benefits: ['Coaching certification path', 'Youth development impact', 'Athletic program design', 'Community engagement'],
     requirements: ['Sports background', 'Coaching interest', 'Physical fitness', 'Youth mentoring skills'],
     subtypes: ['Football Clubs'],
-    color: 'copper',
+    color: 'vogue',
   },
   {
     icon: Building2,
@@ -64,7 +64,7 @@ const categories = [
     benefits: ['Professional office skills', 'Business operations exposure', 'Management systems knowledge', 'Organizational communication'],
     requirements: ['Business/admin interest', 'Computer literacy', 'Organizational skills', 'Professional demeanor'],
     subtypes: ['NGO Administration', 'Corporate Offices', 'Government Agencies', 'Startup Operations'],
-    color: 'brass',
+    color: 'vogue-light',
   },
   {
     icon: Landmark,
@@ -74,7 +74,7 @@ const categories = [
     benefits: ['Emerging market exposure', 'Financial systems knowledge', 'Professional networking', 'Cross-border finance insight'],
     requirements: ['Finance/business studies', 'Analytical skills', 'Professional demeanor', 'Cultural adaptability'],
     subtypes: ['Local Banks'],
-    color: 'mahogany',
+    color: 'cornell',
   },
   {
     icon: Scale,
@@ -84,7 +84,7 @@ const categories = [
     benefits: ['Courtroom experience', 'Legal research skills', 'Human rights exposure', 'Comparative law knowledge'],
     requirements: ['Law studies enrollment', 'Research proficiency', 'Professional ethics', 'Communication skills'],
     subtypes: ['Local Courts'],
-    color: 'copper',
+    color: 'vogue',
   },
   {
     icon: Wheat,
@@ -94,7 +94,7 @@ const categories = [
     benefits: ['Sustainable farming skills', 'Food security impact', 'Agribusiness knowledge', 'Rural development insight'],
     requirements: ['Agricultural interest', 'Physical stamina', 'Environmental awareness', 'Community focus'],
     subtypes: ['Crop Farming', 'Animal Husbandry', 'Agribusiness', 'Sustainable Agriculture'],
-    color: 'brass',
+    color: 'vogue-light',
   },
   {
     icon: TreePine,
@@ -104,7 +104,7 @@ const categories = [
     benefits: ['Eco-tourism expertise', 'Conservation experience', 'Hospitality skills', 'Cultural preservation'],
     requirements: ['Tourism/hospitality interest', 'Environmental awareness', 'Customer service skills', 'Adventure mindset'],
     subtypes: ['Eco-Lodges', 'Wildlife Tours', 'Cultural Tourism', 'Adventure Tourism'],
-    color: 'mahogany',
+    color: 'cornell',
   },
   {
     icon: Users,
@@ -114,7 +114,7 @@ const categories = [
     benefits: ['Hands-on construction experience', 'Direct community impact', 'Project management skills', 'Sustainable development practice'],
     requirements: ['Physical fitness', 'Teamwork mindset', 'Cultural sensitivity', 'Willingness to work outdoors'],
     subtypes: ['Classroom Construction', 'Library Building', 'Playground Development', 'Sanitation Facilities'],
-    color: 'copper',
+    color: 'vogue',
   },
   {
     icon: Heart,
@@ -124,29 +124,29 @@ const categories = [
     benefits: ['Public health impact', 'Water engineering exposure', 'Community health education', 'Sustainable infrastructure skills'],
     requirements: ['Community development interest', 'Physical stamina', 'Environmental awareness', 'Compassion for vulnerable communities'],
     subtypes: ['Bore Hole Drilling', 'Water Purification Systems', 'Community Water Management', 'Health & Hygiene Training'],
-    color: 'brass',
+    color: 'vogue-light',
   },
 ]
 
 const colorMapBg: Record<string, string> = {
-  mahogany: 'bg-mahogany/10',
-  copper: 'bg-copper/10',
-  brass: 'bg-brass/10',
+  cornell: 'bg-cornell/10',
+  vogue: 'bg-vogue/10',
+  'vogue-light': 'bg-vogue-light/10',
 }
 const colorMapText: Record<string, string> = {
-  mahogany: 'text-mahogany',
-  copper: 'text-copper',
-  brass: 'text-brass',
+  cornell: 'text-cornell',
+  vogue: 'text-vogue',
+  'vogue-light': 'text-vogue-light',
 }
 
 export default function PlacementsPage() {
   return (
-    <div className="min-h-screen bg-warm-beige">
+    <div className="min-h-screen bg-sage">
       {/* Header */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-mahogany to-mahogany-dark" />
+        <div className="absolute inset-0 bg-gradient-to-r from-cornell to-cornell-dark" />
         <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-copper/10 rounded-full translate-y-1/2 -translate-x-1/2" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-vogue/10 rounded-full translate-y-1/2 -translate-x-1/2" />
         <div className="relative max-w-7xl mx-auto px-4 py-16 md:py-24">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -187,7 +187,7 @@ export default function PlacementsPage() {
               <div className="grid lg:grid-cols-5 gap-0">
                 {/* Image */}
                 <div className={`lg:col-span-1 ${i % 2 !== 0 ? 'lg:order-last' : ''}`}>
-                  <div className="h-48 lg:h-full bg-warm-sand overflow-hidden">
+                  <div className="h-48 lg:h-full bg-ivory overflow-hidden">
                     <img
                       src={cat.img}
                       alt={cat.title}
@@ -203,10 +203,10 @@ export default function PlacementsPage() {
                       <cat.icon className={`w-5 h-5 ${colorMapText[cat.color]}`} />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-mahogany">{cat.title}</h3>
+                      <h3 className="text-xl font-bold text-cornell">{cat.title}</h3>
                       <div className="flex flex-wrap gap-2 mt-1">
                         {cat.subtypes.map((sub) => (
-                          <span key={sub} className="text-xs bg-warm-sand text-dove px-2 py-0.5 rounded-full">
+                          <span key={sub} className="text-xs bg-ivory text-charcoal px-2 py-0.5 rounded-full">
                             {sub}
                           </span>
                         ))}
@@ -214,30 +214,30 @@ export default function PlacementsPage() {
                     </div>
                   </div>
 
-                  <p className="text-dove mb-5 leading-relaxed text-sm">{cat.desc}</p>
+                  <p className="text-charcoal mb-5 leading-relaxed text-sm">{cat.desc}</p>
 
                   <div className="grid sm:grid-cols-2 gap-4 mb-5">
                     <div>
-                      <h4 className="text-sm font-semibold text-mahogany mb-2 flex items-center gap-1">
-                        <Heart className="w-3.5 h-3.5 text-copper" /> Benefits
+                      <h4 className="text-sm font-semibold text-cornell mb-2 flex items-center gap-1">
+                        <Heart className="w-3.5 h-3.5 text-vogue" /> Benefits
                       </h4>
                       <ul className="space-y-1">
                         {cat.benefits.map((b) => (
-                          <li key={b} className="text-xs text-dove flex items-start gap-1.5">
-                            <span className="w-1.5 h-1.5 bg-copper rounded-full mt-1.5 flex-shrink-0" />
+                          <li key={b} className="text-xs text-charcoal flex items-start gap-1.5">
+                            <span className="w-1.5 h-1.5 bg-vogue rounded-full mt-1.5 flex-shrink-0" />
                             {b}
                           </li>
                         ))}
                       </ul>
                     </div>
                     <div>
-                      <h4 className="text-sm font-semibold text-mahogany mb-2 flex items-center gap-1">
-                        <Stethoscope className="w-3.5 h-3.5 text-brass" /> Requirements
+                      <h4 className="text-sm font-semibold text-cornell mb-2 flex items-center gap-1">
+                        <Stethoscope className="w-3.5 h-3.5 text-vogue-light" /> Requirements
                       </h4>
                       <ul className="space-y-1">
                         {cat.requirements.map((r) => (
-                          <li key={r} className="text-xs text-dove flex items-start gap-1.5">
-                            <span className="w-1.5 h-1.5 bg-brass rounded-full mt-1.5 flex-shrink-0" />
+                          <li key={r} className="text-xs text-charcoal flex items-start gap-1.5">
+                            <span className="w-1.5 h-1.5 bg-vogue-light rounded-full mt-1.5 flex-shrink-0" />
                             {r}
                           </li>
                         ))}
@@ -247,7 +247,7 @@ export default function PlacementsPage() {
 
                   <Link href="/#contact">
                     <Button
-                      className="bg-mahogany hover:bg-mahogany-dark text-white rounded-full"
+                      className="bg-cornell hover:bg-cornell-dark text-white rounded-full"
                       size="sm"
                     >
                       Apply for This Placement
@@ -265,7 +265,7 @@ export default function PlacementsPage() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-16 bg-gradient-to-r from-mahogany to-copper rounded-2xl p-8 md:p-12 text-white text-center relative overflow-hidden"
+          className="mt-16 bg-gradient-to-r from-cornell to-vogue rounded-2xl p-8 md:p-12 text-white text-center relative overflow-hidden"
         >
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
           <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
@@ -277,7 +277,7 @@ export default function PlacementsPage() {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link href="/#contact">
-                <Button size="lg" className="bg-white text-mahogany hover:bg-white/90 rounded-full px-8">
+                <Button size="lg" className="bg-white text-cornell hover:bg-white/90 rounded-full px-8">
                   Apply Now
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>

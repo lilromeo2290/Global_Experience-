@@ -67,10 +67,10 @@ export default function DonateSection() {
             alt="Support our humanitarian mission"
             className="w-full h-64 md:h-80 object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-mahogany/90 via-mahogany/70 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-cornell/90 via-cornell/70 to-transparent" />
           <div className="absolute inset-0 flex items-center p-8 md:p-12">
             <div className="max-w-lg text-white">
-              <span className="text-sm uppercase tracking-wider font-semibold text-copper-light">Make a Difference</span>
+              <span className="text-sm uppercase tracking-wider font-semibold text-vogue-light">Make a Difference</span>
               <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4">Your Generosity Changes Lives</h2>
               <p className="text-white/80 mb-6 leading-relaxed">
                 Every donation directly supports community development projects, volunteer placements,
@@ -78,7 +78,7 @@ export default function DonateSection() {
               </p>
               <Button
                 size="lg"
-                className="bg-white text-mahogany hover:bg-white/90 rounded-full px-8"
+                className="bg-white text-cornell hover:bg-white/90 rounded-full px-8"
                 onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 Donate Now
@@ -91,8 +91,8 @@ export default function DonateSection() {
         {/* Impact Stories */}
         <div className="mb-16">
           <div className="text-center mb-10">
-            <h3 className="text-2xl font-bold text-mahogany">Impact Stories</h3>
-            <p className="text-dove mt-2">See how your support transforms communities</p>
+            <h3 className="text-2xl font-bold text-cornell">Impact Stories</h3>
+            <p className="text-charcoal mt-2">See how your support transforms communities</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {impactStories.map((story, i) => (
@@ -103,15 +103,15 @@ export default function DonateSection() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
                 whileHover={{ y: -5 }}
-                className="bg-white rounded-xl p-6 shadow-sm border border-border hover:shadow-md hover:border-copper/30 transition-all text-center"
+                className="bg-white rounded-xl p-6 shadow-sm border border-border hover:shadow-md hover:border-vogue/30 transition-all text-center"
               >
-                <div className="w-12 h-12 bg-mahogany/10 rounded-xl flex items-center justify-center mx-auto mb-3">
-                  <story.icon className="w-6 h-6 text-mahogany" />
+                <div className="w-12 h-12 bg-cornell/10 rounded-xl flex items-center justify-center mx-auto mb-3">
+                  <story.icon className="w-6 h-6 text-cornell" />
                 </div>
-                <div className="text-3xl font-bold text-mahogany mb-1">{story.stat}</div>
-                <div className="text-xs text-copper font-medium mb-2">{story.statLabel}</div>
-                <h4 className="font-semibold text-mahogany mb-1">{story.title}</h4>
-                <p className="text-xs text-dove leading-relaxed">{story.desc}</p>
+                <div className="text-3xl font-bold text-cornell mb-1">{story.stat}</div>
+                <div className="text-xs text-vogue font-medium mb-2">{story.statLabel}</div>
+                <h4 className="font-semibold text-cornell mb-1">{story.title}</h4>
+                <p className="text-xs text-charcoal leading-relaxed">{story.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -120,8 +120,8 @@ export default function DonateSection() {
         {/* Sponsorship Programs */}
         <div className="mb-16">
           <div className="text-center mb-10">
-            <h3 className="text-2xl font-bold text-mahogany">Sponsorship Programs</h3>
-            <p className="text-dove mt-2">Choose a program that resonates with your passion</p>
+            <h3 className="text-2xl font-bold text-cornell">Sponsorship Programs</h3>
+            <p className="text-charcoal mt-2">Choose a program that resonates with your passion</p>
           </div>
           <div className="grid sm:grid-cols-2 gap-6">
             {sponsorPrograms.map((prog, i) => (
@@ -131,16 +131,16 @@ export default function DonateSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="bg-warm-cream rounded-xl p-6 border border-border hover:border-mahogany/20 hover:shadow-md transition-all"
+                className="bg-cream rounded-xl p-6 border border-border hover:border-cornell/20 hover:shadow-md transition-all"
               >
                 <div className="flex items-start justify-between mb-3">
-                  <h4 className="font-bold text-mahogany">{prog.title}</h4>
-                  <span className="text-copper font-bold text-lg">{prog.amount}</span>
+                  <h4 className="font-bold text-cornell">{prog.title}</h4>
+                  <span className="text-vogue font-bold text-lg">{prog.amount}</span>
                 </div>
-                <p className="text-sm text-dove mb-4">{prog.desc}</p>
+                <p className="text-sm text-charcoal mb-4">{prog.desc}</p>
                 <Button
                   size="sm"
-                  className="bg-mahogany hover:bg-mahogany-dark text-white rounded-full"
+                  className="bg-cornell hover:bg-cornell-dark text-white rounded-full"
                   onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
                 >
                   Sponsor Now
@@ -157,7 +157,7 @@ export default function DonateSection() {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="bg-gradient-to-br from-mahogany to-mahogany-dark rounded-2xl p-8 text-white relative overflow-hidden"
+            className="bg-gradient-to-br from-cornell to-cornell-dark rounded-2xl p-8 text-white relative overflow-hidden"
           >
             <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
             <div className="relative">
@@ -189,28 +189,28 @@ export default function DonateSection() {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="bg-warm-cream rounded-2xl p-8 border border-border"
+            className="bg-cream rounded-2xl p-8 border border-border"
           >
             <div className="flex items-center gap-2 mb-4">
-              <Shield className="w-6 h-6 text-mahogany" />
-              <h3 className="text-xl font-bold text-mahogany">Transparent Accountability</h3>
+              <Shield className="w-6 h-6 text-cornell" />
+              <h3 className="text-xl font-bold text-cornell">Transparent Accountability</h3>
             </div>
-            <p className="text-dove mb-6 text-sm leading-relaxed">
+            <p className="text-charcoal mb-6 text-sm leading-relaxed">
               We are committed to complete financial transparency. Every donation is tracked, reported,
               and directed toward maximum community impact. Here is how we ensure accountability:
             </p>
             <div className="grid gap-3">
               {accountabilityItems.map((item) => (
                 <div key={item} className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-copper flex-shrink-0" />
-                  <span className="text-sm text-dove">{item}</span>
+                  <CheckCircle2 className="w-4 h-4 text-vogue flex-shrink-0" />
+                  <span className="text-sm text-charcoal">{item}</span>
                 </div>
               ))}
             </div>
             <div className="mt-6 bg-white rounded-xl p-4 border border-border text-center">
-              <div className="text-4xl font-bold text-mahogany">90%</div>
-              <div className="text-sm text-dove">of all funds go directly to programs</div>
-              <div className="w-full bg-mahogany/10 rounded-full h-3 mt-3">
+              <div className="text-4xl font-bold text-cornell">90%</div>
+              <div className="text-sm text-charcoal">of all funds go directly to programs</div>
+              <div className="w-full bg-cornell/10 rounded-full h-3 mt-3">
                 <div className="bg-gradient-hero h-3 rounded-full" style={{ width: '90%' }} />
               </div>
             </div>

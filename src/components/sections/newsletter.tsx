@@ -7,7 +7,7 @@ import { Mail, ArrowRight } from 'lucide-react'
 
 export default function NewsletterSection() {
   return (
-    <section className="py-16 bg-gradient-to-r from-mahogany via-mahogany-dark to-[#8B2D2D] relative overflow-hidden">
+    <section className="py-16 bg-gradient-to-r from-cornell via-cornell-dark to-[#8C1515] relative overflow-hidden">
       <div className="absolute inset-0">
         <div className="absolute top-0 left-0 w-96 h-96 bg-white/5 rounded-full -translate-y-1/2 -translate-x-1/2" />
         <div className="absolute bottom-0 right-0 w-64 h-64 bg-white/5 rounded-full translate-y-1/2 translate-x-1/2" />
@@ -36,7 +36,7 @@ export default function NewsletterSection() {
             />
             <Button
               size="lg"
-              className="bg-white text-mahogany hover:bg-white/90 rounded-full px-8 shadow-lg"
+              className="bg-white text-cornell hover:bg-white/90 rounded-full px-8 shadow-lg"
             >
               Subscribe
               <ArrowRight className="ml-2 w-4 h-4" />

@@ -42,18 +42,19 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  /* NGO Brand Colors */
-  --color-mahogany: #C04040;
-  --color-copper: #DA8A67;
-  --color-brass: #C88A3D;
-  --color-dove: #6D6D6D;
-  --color-mahogany-light: #d46b6b;
-  --color-mahogany-dark: #9a3333;
-  --color-copper-light: #e5a98c;
-  --color-brass-light: #daa85e;
-  --color-warm-cream: #FFF8F3;
-  --color-warm-beige: #FAF0E6;
-  --color-warm-sand: #F5E6D3;
+  /* NGO Brand Colors - Cornell Red & Green Vogue */
+  --color-cornell: #B31B1B;
+  --color-vogue: #1A4D2E;
+  --color-gold: #C8A44D;
+  --color-charcoal: #2D2D2D;
+  --color-cornell-light: #D43232;
+  --color-cornell-dark: #8C1515;
+  --color-vogue-light: #2A6B42;
+  --color-vogue-dark: #0F3320;
+  --color-gold-light: #D4B95E;
+  --color-cream: #FDF8F4;
+  --color-sage: #E8F0EB;
+  --color-ivory: #F5F0EB;
 }
 
 :root {
@@ -64,65 +65,65 @@
   --card-foreground: #2D2D2D;
   --popover: #FFFFFF;
   --popover-foreground: #2D2D2D;
-  --primary: #C04040;
+  --primary: #B31B1B;
   --primary-foreground: #FFFFFF;
-  --secondary: #FAF0E6;
-  --secondary-foreground: #C04040;
+  --secondary: #E8F0EB;
+  --secondary-foreground: #B31B1B;
   --muted: #F5F0EB;
-  --muted-foreground: #6D6D6D;
-  --accent: #DA8A67;
+  --muted-foreground: #2D2D2D;
+  --accent: #1A4D2E;
   --accent-foreground: #FFFFFF;
   --destructive: #DC2626;
-  --border: #E8DDD3;
-  --input: #E8DDD3;
-  --ring: #C04040;
-  --chart-1: #C04040;
-  --chart-2: #DA8A67;
-  --chart-3: #C88A3D;
-  --chart-4: #6D6D6D;
-  --chart-5: #d46b6b;
-  --sidebar: #FAF0E6;
+  --border: #D4DDD7;
+  --input: #D4DDD7;
+  --ring: #B31B1B;
+  --chart-1: #B31B1B;
+  --chart-2: #1A4D2E;
+  --chart-3: #2A6B42;
+  --chart-4: #2D2D2D;
+  --chart-5: #D43232;
+  --sidebar: #E8F0EB;
   --sidebar-foreground: #2D2D2D;
-  --sidebar-primary: #C04040;
+  --sidebar-primary: #B31B1B;
   --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #DA8A67;
+  --sidebar-accent: #1A4D2E;
   --sidebar-accent-foreground: #FFFFFF;
-  --sidebar-border: #E8DDD3;
-  --sidebar-ring: #C04040;
+  --sidebar-border: #D4DDD7;
+  --sidebar-ring: #B31B1B;
 }
 
 .dark {
-  --background: #1A1412;
-  --foreground: #F5E6D3;
-  --card: #2A2220;
-  --card-foreground: #F5E6D3;
-  --popover: #2A2220;
-  --popover-foreground: #F5E6D3;
-  --primary: #d46b6b;
-  --primary-foreground: #1A1412;
-  --secondary: #3A2E28;
-  --secondary-foreground: #e5a98c;
-  --muted: #2A2220;
-  --muted-foreground: #9A8A7A;
-  --accent: #e5a98c;
-  --accent-foreground: #1A1412;
+  --background: #0A1F12;
+  --foreground: #F5F0EB;
+  --card: #122A1B;
+  --card-foreground: #F5F0EB;
+  --popover: #122A1B;
+  --popover-foreground: #F5F0EB;
+  --primary: #D43232;
+  --primary-foreground: #0A1F12;
+  --secondary: #1A3A28;
+  --secondary-foreground: #2A6B42;
+  --muted: #122A1B;
+  --muted-foreground: #8A9A8E;
+  --accent: #2A6B42;
+  --accent-foreground: #0A1F12;
   --destructive: #EF4444;
-  --border: #3A2E28;
-  --input: #3A2E28;
-  --ring: #d46b6b;
-  --chart-1: #d46b6b;
-  --chart-2: #e5a98c;
-  --chart-3: #daa85e;
-  --chart-4: #9A8A7A;
-  --chart-5: #9a3333;
-  --sidebar: #2A2220;
-  --sidebar-foreground: #F5E6D3;
-  --sidebar-primary: #d46b6b;
-  --sidebar-primary-foreground: #1A1412;
-  --sidebar-accent: #e5a98c;
-  --sidebar-accent-foreground: #1A1412;
-  --sidebar-border: #3A2E28;
-  --sidebar-ring: #d46b6b;
+  --border: #1A3A28;
+  --input: #1A3A28;
+  --ring: #D43232;
+  --chart-1: #D43232;
+  --chart-2: #2A6B42;
+  --chart-3: #C8A44D;
+  --chart-4: #8A9A8E;
+  --chart-5: #8C1515;
+  --sidebar: #122A1B;
+  --sidebar-foreground: #F5F0EB;
+  --sidebar-primary: #D43232;
+  --sidebar-primary-foreground: #0A1F12;
+  --sidebar-accent: #2A6B42;
+  --sidebar-accent-foreground: #0A1F12;
+  --sidebar-border: #1A3A28;
+  --sidebar-ring: #D43232;
 }
 
 @layer base {
@@ -138,22 +139,22 @@
 }
 
 @layer utilities {
-  .text-gradient-mahogany {
-    background: linear-gradient(135deg, #C04040, #DA8A67);
+  .text-gradient-cornell {
+    background: linear-gradient(135deg, #B31B1B, #1A4D2E);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
   .bg-gradient-hero {
-    background: linear-gradient(135deg, #C04040 0%, #DA8A67 50%, #C88A3D 100%);
+    background: linear-gradient(135deg, #B31B1B 0%, #1A4D2E 50%, #2A6B42 100%);
   }
   .bg-gradient-warm {
-    background: linear-gradient(180deg, #FFF8F3 0%, #FAF0E6 50%, #F5E6D3 100%);
+    background: linear-gradient(180deg, #FDF8F4 0%, #E8F0EB 50%, #F5F0EB 100%);
   }
-  .bg-gradient-mahogany {
-    background: linear-gradient(135deg, #9a3333 0%, #C04040 50%, #d46b6b 100%);
+  .bg-gradient-cornell {
+    background: linear-gradient(135deg, #8C1515 0%, #B31B1B 50%, #D43232 100%);
   }
   .bg-gradient-card-hover {
-    background: linear-gradient(145deg, #FFFFFF 0%, #FFF8F3 100%);
+    background: linear-gradient(145deg, #FFFFFF 0%, #FDF8F4 100%);
   }
 }

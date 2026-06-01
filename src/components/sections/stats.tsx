@@ -50,7 +50,7 @@ export default function StatsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="bg-white rounded-2xl shadow-xl shadow-mahogany/10 border border-border p-8 md:p-10"
+          className="bg-white rounded-2xl shadow-xl shadow-cornell/10 border border-border p-8 md:p-10"
         >
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
             {stats.map((stat, i) => (
@@ -63,10 +63,10 @@ export default function StatsSection() {
                 className="text-center group"
               >
                 <div className="text-3xl mb-2">{stat.icon}</div>
-                <div className="text-2xl md:text-3xl font-bold text-mahogany">
+                <div className="text-2xl md:text-3xl font-bold text-cornell">
                   <AnimatedCounter end={stat.value} suffix={stat.suffix} />
                 </div>
-                <div className="text-xs md:text-sm text-dove mt-1 font-medium">{stat.label}</div>
+                <div className="text-xs md:text-sm text-charcoal mt-1 font-medium">{stat.label}</div>
               </motion.div>
             ))}
           </div>

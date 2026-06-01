@@ -29,7 +29,7 @@ export default function GallerySection() {
   const filtered = filter === 'All' ? galleryItems : galleryItems.filter(item => item.category === filter)
 
   return (
-    <section id="gallery" className="py-20 bg-warm-cream">
+    <section id="gallery" className="py-20 bg-cream">
       <div className="max-w-7xl mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -37,11 +37,11 @@ export default function GallerySection() {
           viewport={{ once: true }}
           className="text-center mb-10"
         >
-          <span className="text-copper font-semibold text-sm uppercase tracking-wider">Gallery</span>
-          <h2 className="text-3xl md:text-4xl font-bold text-mahogany mt-2 mb-4">
+          <span className="text-vogue font-semibold text-sm uppercase tracking-wider">Gallery</span>
+          <h2 className="text-3xl md:text-4xl font-bold text-cornell mt-2 mb-4">
             Moments of Impact & Inspiration
           </h2>
-          <p className="text-dove max-w-2xl mx-auto leading-relaxed">
+          <p className="text-charcoal max-w-2xl mx-auto leading-relaxed">
             Explore photos from our placement programs, community projects, volunteer activities,
             and the transformative moments that define our mission.
           </p>
@@ -55,8 +55,8 @@ export default function GallerySection() {
               onClick={() => setFilter(cat)}
               className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
                 filter === cat
-                  ? 'bg-mahogany text-white shadow-md shadow-mahogany/20'
-                  : 'bg-white text-dove hover:bg-mahogany/10 hover:text-mahogany border border-border'
+                  ? 'bg-cornell text-white shadow-md shadow-cornell/20'
+                  : 'bg-white text-charcoal hover:bg-cornell/10 hover:text-cornell border border-border'
               }`}
             >
               {cat}
@@ -83,7 +83,7 @@ export default function GallerySection() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
                 <div>
-                  <span className="text-xs bg-mahogany/80 text-white px-2 py-0.5 rounded-full">{item.category}</span>
+                  <span className="text-xs bg-cornell/80 text-white px-2 py-0.5 rounded-full">{item.category}</span>
                   <p className="text-white text-sm font-medium mt-1">{item.alt}</p>
                 </div>
               </div>
@@ -103,7 +103,7 @@ export default function GallerySection() {
                   className="w-full max-h-[80vh] object-contain"
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
-                  <span className="text-xs bg-mahogany/80 text-white px-2 py-0.5 rounded-full">{selected.category}</span>
+                  <span className="text-xs bg-cornell/80 text-white px-2 py-0.5 rounded-full">{selected.category}</span>
                   <p className="text-white font-medium mt-1">{selected.alt}</p>
                 </div>
               </div>

@@ -11,12 +11,12 @@ export default function HeroSection() {
       className="relative min-h-screen flex items-center overflow-hidden"
     >
       {/* Branded Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-mahogany via-mahogany-dark to-mahogany" />
+      <div className="absolute inset-0 bg-gradient-to-br from-cornell via-cornell-dark to-cornell" />
 
       {/* Decorative Elements */}
-      <div className="absolute top-20 right-10 w-72 h-72 bg-copper/15 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 left-10 w-96 h-96 bg-brass/10 rounded-full blur-3xl" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-copper/5 rounded-full blur-3xl" />
+      <div className="absolute top-20 right-10 w-72 h-72 bg-vogue/15 rounded-full blur-3xl" />
+      <div className="absolute bottom-20 left-10 w-96 h-96 bg-vogue-light/10 rounded-full blur-3xl" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-vogue/5 rounded-full blur-3xl" />
 
       {/* Subtle pattern overlay */}
       <div className="absolute inset-0 opacity-5" style={{
@@ -45,7 +45,7 @@ export default function HeroSection() {
           >
             <Button
               size="lg"
-              className="bg-white text-mahogany hover:bg-white/90 rounded-full px-8 text-base shadow-lg"
+              className="bg-white text-cornell hover:bg-white/90 rounded-full px-8 text-base shadow-lg"
               onClick={() => {
                 document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })
               }}
@@ -66,7 +66,7 @@ export default function HeroSection() {
             </Button>
             <Button
               size="lg"
-              className="bg-copper hover:bg-copper-light text-white rounded-full px-8 text-base shadow-lg shadow-copper/30"
+              className="bg-vogue hover:bg-vogue-light text-white rounded-full px-8 text-base shadow-lg shadow-vogue/30"
               onClick={() => {
                 document.querySelector('#donate')?.scrollIntoView({ behavior: 'smooth' })
               }}
@@ -85,16 +85,16 @@ export default function HeroSection() {
           >
             <h3 className="text-white font-semibold text-base mb-1">Your project</h3>
             <p className="text-white/70 text-sm leading-relaxed mb-4">
-              Applying for your dream project is quick and simple. All we need today to get you started is a deposit of <span className="text-copper font-semibold">$295</span>.
+              Applying for your dream project is quick and simple. All we need today to get you started is a deposit of <span className="text-vogue font-semibold">$295</span>.
             </p>
             <div className="flex items-start gap-3">
               <div className="flex items-center gap-2 text-white/60 text-sm">
-                <MapPin className="w-4 h-4 text-copper flex-shrink-0" />
+                <MapPin className="w-4 h-4 text-vogue flex-shrink-0" />
                 <span>Select your trip</span>
               </div>
               <div className="w-px h-5 bg-white/20" />
-              <a href="tel:+233244207278" className="flex items-center gap-2 text-white/60 text-sm hover:text-copper transition-colors">
-                <Phone className="w-4 h-4 text-copper flex-shrink-0" />
+              <a href="tel:+233244207278" className="flex items-center gap-2 text-white/60 text-sm hover:text-vogue transition-colors">
+                <Phone className="w-4 h-4 text-vogue flex-shrink-0" />
                 <span>Can&apos;t find your project? <span className="underline">+233 244 207 278 / +233 544 129 556</span></span>
               </a>
             </div>
@@ -112,11 +112,11 @@ export default function HeroSection() {
               <span>Trusted by 2,000+ volunteers</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-copper animate-pulse" />
+              <div className="w-2 h-2 rounded-full bg-vogue animate-pulse" />
               <span>4 regional offices in Ghana</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-brass animate-pulse" />
+              <div className="w-2 h-2 rounded-full bg-vogue-light animate-pulse" />
               <span>10+ years of impact</span>
             </div>
           </motion.div>

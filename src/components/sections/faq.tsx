@@ -58,11 +58,11 @@ export default function FAQSection() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <span className="text-copper font-semibold text-sm uppercase tracking-wider">FAQ</span>
-          <h2 className="text-3xl md:text-4xl font-bold text-mahogany mt-2 mb-4">
+          <span className="text-vogue font-semibold text-sm uppercase tracking-wider">FAQ</span>
+          <h2 className="text-3xl md:text-4xl font-bold text-cornell mt-2 mb-4">
             Frequently Asked Questions
           </h2>
-          <p className="text-dove leading-relaxed">
+          <p className="text-charcoal leading-relaxed">
             Find answers to the most common questions about our programs, placements, and volunteer opportunities.
           </p>
         </motion.div>
@@ -76,11 +76,11 @@ export default function FAQSection() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.05 }}
             >
-              <AccordionItem value={`faq-${i}`} className="bg-white rounded-xl border border-border px-6 shadow-sm hover:border-copper/20 transition-colors">
-                <AccordionTrigger className="text-left text-mahogany font-semibold hover:no-underline text-sm py-4">
+              <AccordionItem value={`faq-${i}`} className="bg-white rounded-xl border border-border px-6 shadow-sm hover:border-vogue/20 transition-colors">
+                <AccordionTrigger className="text-left text-cornell font-semibold hover:no-underline text-sm py-4">
                   {faq.q}
                 </AccordionTrigger>
-                <AccordionContent className="text-dove text-sm leading-relaxed pb-4">
+                <AccordionContent className="text-charcoal text-sm leading-relaxed pb-4">
                   {faq.a}
                 </AccordionContent>
               </AccordionItem>
