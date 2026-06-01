@@ -7,12 +7,29 @@ import { ArrowRight, Heart, Users, Phone, MapPin, ChevronLeft, ChevronRight } fr
 
 const slides = [
   {
-    src: '/images/slider-kakum-park.jpg',
-    alt: 'Kakum National Park - Canopy Walkway',
+    src: '/images/slider-3.jpg',
+    alt: 'Global Experience - Making a Difference',
+    position: 'center center',
   },
   {
-    src: '/images/slider-keta-lagoon.jpg',
-    alt: 'Keta Lagoon - Coastal Beauty',
+    src: '/images/slider-1.jpg',
+    alt: 'Volunteer Programs in Ghana',
+    position: 'center center',
+  },
+  {
+    src: '/images/slider-5.jpg',
+    alt: 'Explore Ghana with Global Experience',
+    position: 'center center',
+  },
+  {
+    src: '/images/slider-2.jpg',
+    alt: 'Community Development Projects',
+    position: 'center center',
+  },
+  {
+    src: '/images/slider-4.jpg',
+    alt: 'Life-Changing Placements Abroad',
+    position: 'center center',
   },
 ]
 
@@ -38,22 +55,22 @@ export default function HeroSection() {
       id="home"
       className="relative min-h-screen flex items-center overflow-hidden"
     >
-      {/* Slider Images - object-contain preserves aspect ratio, no stretching */}
+      {/* Slider Background Images - background-size:cover NEVER stretches, only crops edges */}
       <AnimatePresence mode="wait">
         <motion.div
           key={current}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1, ease: 'easeInOut' }}
-          className="absolute inset-0 bg-vogue-dark"
-        >
-          <img
-            src={slides[current].src}
-            alt={slides[current].alt}
-            className="w-full h-full object-contain"
-          />
-        </motion.div>
+          transition={{ duration: 1.2, ease: 'easeInOut' }}
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `url(${slides[current].src})`,
+            backgroundSize: 'cover',
+            backgroundPosition: slides[current].position,
+            backgroundRepeat: 'no-repeat',
+          }}
+        />
       </AnimatePresence>
 
       {/* Dark overlay for text readability */}
