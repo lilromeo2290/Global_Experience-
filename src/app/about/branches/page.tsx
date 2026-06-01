@@ -13,7 +13,7 @@ const branches = [
     city: 'Accra',
     type: 'Head Office',
     address: '123 Volunteer Lane, Osu, Accra, Ghana',
-    phone: '+233 123 456 789',
+    phone: '+233 244 207 278',
     email: 'accra@globalexperience.org',
     hours: 'Mon–Fri: 8:00 AM – 5:00 PM | Sat: 9:00 AM – 1:00 PM',
     description: 'Our headquarters and primary coordination centre, managing all placement programs across Ghana and West Africa. The Accra office oversees volunteer onboarding, partner relations, program development, and serves as the main hub for airport pickups and orientation programs for all arriving volunteers.',

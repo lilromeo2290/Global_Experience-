@@ -46,7 +46,7 @@ export default function TeamSection() {
                   <a href="#" aria-label="John Success Akotia LinkedIn" className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/40 transition-colors">
                     <Linkedin className="w-5 h-5 text-white" />
                   </a>
-                  <a href="mailto:info@globalvolunteer.org" aria-label="Email John Success Akotia" className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/40 transition-colors">
+                  <a href="mailto:info@globalexperiencegh.org" aria-label="Email John Success Akotia" className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/40 transition-colors">
                     <Mail className="w-5 h-5 text-white" />
                   </a>
                 </div>
@@ -69,7 +69,7 @@ export default function TeamSection() {
                   <a href="#" className="w-10 h-10 bg-cornell/10 rounded-full flex items-center justify-center hover:bg-cornell hover:text-white transition-all group/icon">
                     <Linkedin className="w-5 h-5 text-cornell group-hover/icon:text-white" />
                   </a>
-                  <a href="mailto:info@globalvolunteer.org" className="w-10 h-10 bg-cornell/10 rounded-full flex items-center justify-center hover:bg-cornell hover:text-white transition-all group/icon">
+                  <a href="mailto:info@globalexperiencegh.org" className="w-10 h-10 bg-cornell/10 rounded-full flex items-center justify-center hover:bg-cornell hover:text-white transition-all group/icon">
                     <Mail className="w-5 h-5 text-cornell group-hover/icon:text-white" />
                   </a>
                 </div>

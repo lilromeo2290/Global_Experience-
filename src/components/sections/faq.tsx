@@ -8,7 +8,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 const faqs = [
   {
     q: 'How do I apply for a placement?',
-    a: 'Simply navigate to our Contact page and fill out the application form. Select your preferred program type, indicate your availability, and our team will review your application within 48 hours. You can also email us directly at placements@globalvolunteer.org for a more personalized consultation.',
+    a: 'Simply navigate to our Contact page and fill out the application form. Select your preferred program type, indicate your availability, and our team will review your application within 48 hours. You can also email us directly at info@globalexperiencegh.org for a more personalized consultation.',
   },
   {
     q: 'What is included in the placement fee?',

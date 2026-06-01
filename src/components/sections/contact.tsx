@@ -64,9 +64,7 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <h4 className="text-sm font-semibold text-cornell">Email</h4>
-                    <a href="mailto:info@globalvolunteer.org" className="text-sm text-vogue hover:text-cornell transition-colors">info@globalvolunteer.org</a>
-                    <br />
-                    <a href="mailto:placements@globalvolunteer.org" className="text-sm text-vogue hover:text-cornell transition-colors">placements@globalvolunteer.org</a>
+                    <a href="mailto:info@globalexperiencegh.org" className="text-sm text-vogue hover:text-cornell transition-colors">info@globalexperiencegh.org</a>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -75,9 +73,9 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <h4 className="text-sm font-semibold text-cornell">Phone</h4>
-                    <a href="tel:+233123456789" className="text-sm text-vogue hover:text-cornell transition-colors">+233 123 456 789</a>
+                    <a href="tel:+233244207278" className="text-sm text-vogue hover:text-cornell transition-colors">+233 244 207 278</a>
                     <br />
-                    <a href="tel:+233987654321" className="text-sm text-vogue hover:text-cornell transition-colors">+233 987 654 321</a>
+                    <a href="tel:+233544129556" className="text-sm text-vogue hover:text-cornell transition-colors">+233 544 129 556</a>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">

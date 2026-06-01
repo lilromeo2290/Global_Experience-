@@ -138,11 +138,11 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-vogue flex-shrink-0" />
-                <a href="tel:+233123456789" className="text-sm text-white/60 hover:text-vogue transition-colors">+233 123 456 789</a>
+                <a href="tel:+233244207278" className="text-sm text-white/60 hover:text-vogue transition-colors">+233 244 207 278</a>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-vogue flex-shrink-0" />
-                <a href="mailto:info@globalvolunteer.org" className="text-sm text-white/60 hover:text-vogue transition-colors">info@globalvolunteer.org</a>
+                <a href="mailto:info@globalexperiencegh.org" className="text-sm text-white/60 hover:text-vogue transition-colors">info@globalexperiencegh.org</a>
               </li>
             </ul>
 
