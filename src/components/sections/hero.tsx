@@ -1,38 +1,111 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import { ArrowRight, Heart, Users, Phone, MapPin } from 'lucide-react'
+import { ArrowRight, Heart, Users, Phone, MapPin, ChevronLeft, ChevronRight } from 'lucide-react'
+
+const slides = [
+  {
+    src: '/images/slider-kakum-park.jpg',
+    alt: 'Kakum National Park - Canopy Walkway',
+  },
+  {
+    src: '/images/slider-keta-lagoon.jpg',
+    alt: 'Keta Lagoon - Coastal Beauty',
+  },
+]
 
 export default function HeroSection() {
+  const [current, setCurrent] = useState(0)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % slides.length)
+    }, 6000)
+    return () => clearInterval(timer)
+  }, [])
+
+  const goTo = (index: number) => {
+    setCurrent(index)
+  }
+
+  const prev = () => setCurrent((c) => (c - 1 + slides.length) % slides.length)
+  const next = () => setCurrent((c) => (c + 1) % slides.length)
+
   return (
     <section
       id="home"
       className="relative min-h-screen flex items-center overflow-hidden"
     >
-      {/* Branded Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-cornell via-cornell-dark to-cornell" />
+      {/* Slider Images - object-cover ensures no stretching */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={current}
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 1 }}
+          transition={{ duration: 1, ease: 'easeInOut' }}
+          className="absolute inset-0"
+        >
+          <img
+            src={slides[current].src}
+            alt={slides[current].alt}
+            className="w-full h-full object-cover"
+          />
+        </motion.div>
+      </AnimatePresence>
 
-      {/* Decorative Elements */}
-      <div className="absolute top-20 right-10 w-72 h-72 bg-vogue/15 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 left-10 w-96 h-96 bg-vogue-light/10 rounded-full blur-3xl" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-vogue/5 rounded-full blur-3xl" />
+      {/* Dark overlay for text readability */}
+      <div className="absolute inset-0 bg-black/55" />
 
       {/* Subtle pattern overlay */}
-      <div className="absolute inset-0 opacity-5" style={{
+      <div className="absolute inset-0 opacity-[0.03]" style={{
         backgroundImage: `radial-gradient(circle at 25% 25%, white 1px, transparent 1px),
                           radial-gradient(circle at 75% 75%, white 1px, transparent 1px)`,
         backgroundSize: '50px 50px'
       }} />
 
+      {/* Slider Navigation Arrows */}
+      <button
+        onClick={prev}
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
+        aria-label="Previous slide"
+      >
+        <ChevronLeft className="w-6 h-6" />
+      </button>
+      <button
+        onClick={next}
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
+        aria-label="Next slide"
+      >
+        <ChevronRight className="w-6 h-6" />
+      </button>
+
+      {/* Slide Indicators */}
+      <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+        {slides.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => goTo(i)}
+            className={`transition-all duration-300 rounded-full ${
+              i === current
+                ? 'w-8 h-3 bg-white'
+                : 'w-3 h-3 bg-white/40 hover:bg-white/60'
+            }`}
+            aria-label={`Go to slide ${i + 1}`}
+          />
+        ))}
+      </div>
+
       {/* Content */}
-      <div className="relative max-w-7xl mx-auto px-4 py-32 w-full">
+      <div className="relative max-w-7xl mx-auto px-4 py-32 w-full z-10">
         <div className="max-w-3xl">
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg md:text-xl text-white/85 mb-8 max-w-2xl leading-relaxed"
+            className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl leading-relaxed"
           >
             We connect students, graduates, interns, researchers, and volunteers with life-changing placement opportunities across healthcare, education, journalism, agriculture, and community development. With offices in four regional capitals across Ghana and expansion plans to Tanzania, Kenya, Nepal, and Zambia, your next adventure awaits.
           </motion.p>
@@ -45,7 +118,7 @@ export default function HeroSection() {
           >
             <Button
               size="lg"
-              className="bg-white text-cornell hover:bg-white/90 rounded-full px-8 text-base shadow-lg"
+              className="bg-cornell hover:bg-cornell-dark text-white rounded-full px-8 text-base shadow-lg"
               onClick={() => {
                 document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })
               }}
@@ -128,7 +201,7 @@ export default function HeroSection() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:block"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:block z-10"
       >
         <motion.div
           animate={{ y: [0, 10, 0] }}
