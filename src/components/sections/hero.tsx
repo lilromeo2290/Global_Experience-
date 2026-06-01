@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { ArrowRight, Heart, Users, Phone, MapPin, ChevronLeft, ChevronRight } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 const slides = [
   {
@@ -54,6 +55,7 @@ const slides = [
 ]
 
 export default function HeroSection() {
+  const router = useRouter()
   const [current, setCurrent] = useState(0)
 
   useEffect(() => {
@@ -148,7 +150,7 @@ export default function HeroSection() {
               size="lg"
               className="bg-cornell hover:bg-cornell-dark text-white rounded-full px-8 text-base shadow-lg"
               onClick={() => {
-                document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })
+                router.push('/apply')
               }}
             >
               Apply for Placement
