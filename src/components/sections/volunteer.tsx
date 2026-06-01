@@ -2,22 +2,31 @@
 
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import { ArrowRight, CheckCircle2, Shield, Home, Globe2, Heart, Users, BookOpen, MapPin } from 'lucide-react'
+import { ArrowRight, CheckCircle2, Shield, Home, Globe2, Heart, Users, BookOpen, MapPin, Building2 } from 'lucide-react'
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
+import { useState } from 'react'
+
+const branches = [
+  { city: 'Accra', type: 'Head Office', phone: '+233 244 207 278', email: 'accra@globalexperience.org' },
+  { city: 'Cape Coast', type: 'Regional Office', phone: '+233 234 567 890', email: 'capecoast@globalexperience.org' },
+  { city: 'Ho', type: 'Regional Office', phone: '+233 345 678 901', email: 'ho@globalexperience.org' },
+  { city: 'Takoradi', type: 'Regional Office', phone: '+233 456 789 012', email: 'takoradi@globalexperience.org' },
+]
 
 const opportunities = [
-  { title: 'Medical Placement in Teaching Hospitals', sector: 'Healthcare' },
-  { title: 'Teaching', sector: 'Education' },
-  { title: 'Journalism', sector: 'Media' },
-  { title: 'Community Outreach', sector: 'Development' },
-  { title: 'Sports', sector: 'Sports' },
-  { title: 'Office Administration', sector: 'Business' },
-  { title: 'Banking and Finance', sector: 'Finance' },
-  { title: 'Law Placements', sector: 'Law' },
-  { title: 'Agriculture Placement', sector: 'Agriculture' },
-  { title: 'Tourism and Ecotourism', sector: 'Tourism' },
-  { title: 'Community Projects — Building of Schools', sector: 'Development' },
-  { title: 'Bore Holes — Drinkable Water', sector: 'Infrastructure' },
-  { title: 'Gap Year', sector: 'Gap Year' },
+  { title: 'Medical Placement in Teaching Hospitals', sector: 'Healthcare', hasBranches: true },
+  { title: 'Teaching', sector: 'Education', hasBranches: false },
+  { title: 'Journalism', sector: 'Media', hasBranches: false },
+  { title: 'Community Outreach', sector: 'Development', hasBranches: false },
+  { title: 'Sports', sector: 'Sports', hasBranches: false },
+  { title: 'Office Administration', sector: 'Business', hasBranches: false },
+  { title: 'Banking and Finance', sector: 'Finance', hasBranches: false },
+  { title: 'Law Placements', sector: 'Law', hasBranches: false },
+  { title: 'Agriculture Placement', sector: 'Agriculture', hasBranches: false },
+  { title: 'Tourism and Ecotourism', sector: 'Tourism', hasBranches: false },
+  { title: 'Community Projects — Building of Schools', sector: 'Development', hasBranches: false },
+  { title: 'Bore Holes — Drinkable Water', sector: 'Infrastructure', hasBranches: false },
+  { title: 'Gap Year', sector: 'Gap Year', hasBranches: false },
 ]
 
 const process = [
@@ -48,6 +57,16 @@ const safetyFeatures = [
 ]
 
 export default function VolunteerSection() {
+  const [branchDialogOpen, setBranchDialogOpen] = useState(false)
+  const [selectedOpp, setSelectedOpp] = useState('')
+
+  const handleOppClick = (opp: { title: string; hasBranches: boolean }) => {
+    if (opp.hasBranches) {
+      setSelectedOpp(opp.title)
+      setBranchDialogOpen(true)
+    }
+  }
+
   return (
     <section id="volunteer" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4">
@@ -80,7 +99,8 @@ export default function VolunteerSection() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
                 whileHover={{ y: -3 }}
-                className="bg-white rounded-xl p-5 border border-border hover:border-vogue/30 hover:shadow-md transition-all group"
+                onClick={() => handleOppClick(opp)}
+                className={`bg-white rounded-xl p-5 border border-border hover:border-vogue/30 hover:shadow-md transition-all group ${opp.hasBranches ? 'cursor-pointer' : ''}`}
               >
                 <span className="text-xs bg-cornell/10 text-cornell font-medium px-2 py-0.5 rounded-full">{opp.sector}</span>
                 <h4 className="font-semibold text-cornell mt-2 group-hover:text-vogue transition-colors">{opp.title}</h4>
@@ -88,6 +108,36 @@ export default function VolunteerSection() {
             ))}
           </div>
         </div>
+
+        {/* Branch Selection Dialog */}
+        <Dialog open={branchDialogOpen} onOpenChange={setBranchDialogOpen}>
+          <DialogContent className="max-w-lg">
+            <DialogTitle className="text-xl font-bold text-cornell mb-1">Choose a Branch</DialogTitle>
+            <p className="text-sm text-charcoal mb-5">{selectedOpp} is available at multiple branches. Please select your preferred location:</p>
+            <div className="grid gap-3">
+              {branches.map((branch) => (
+                <a
+                  key={branch.city}
+                  href={`/apply?program=${encodeURIComponent(selectedOpp)}&branch=${encodeURIComponent(branch.city)}`}
+                  onClick={() => setBranchDialogOpen(false)}
+                  className="flex items-center gap-4 p-4 rounded-xl border border-border hover:border-cornell/30 hover:shadow-sm transition-all group"
+                >
+                  <div className="w-10 h-10 bg-cornell/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Building2 className="w-5 h-5 text-cornell" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                      <h4 className="font-semibold text-cornell group-hover:text-vogue transition-colors">{branch.city}</h4>
+                      <span className="text-[10px] bg-vogue/10 text-vogue px-2 py-0.5 rounded-full font-medium">{branch.type}</span>
+                    </div>
+                    <p className="text-xs text-charcoal mt-0.5">{branch.phone} · {branch.email}</p>
+                  </div>
+                  <ArrowRight className="w-4 h-4 text-charcoal/30 group-hover:text-cornell transition-colors flex-shrink-0" />
+                </a>
+              ))}
+            </div>
+          </DialogContent>
+        </Dialog>
 
         {/* Application Process */}
         <div className="mb-20">
