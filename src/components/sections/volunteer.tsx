@@ -14,19 +14,19 @@ const branches = [
 ]
 
 const opportunities = [
-  { title: 'Medical Placement in Teaching Hospitals', sector: 'Healthcare', hasBranches: true },
-  { title: 'Teaching', sector: 'Education', hasBranches: false },
-  { title: 'Journalism', sector: 'Media', hasBranches: false },
-  { title: 'Community Outreach', sector: 'Development', hasBranches: false },
-  { title: 'Sports', sector: 'Sports', hasBranches: false },
-  { title: 'Office Administration', sector: 'Business', hasBranches: false },
-  { title: 'Banking and Finance', sector: 'Finance', hasBranches: false },
-  { title: 'Law Placements', sector: 'Law', hasBranches: false },
-  { title: 'Agriculture Placement', sector: 'Agriculture', hasBranches: false },
-  { title: 'Tourism and Ecotourism', sector: 'Tourism', hasBranches: false },
-  { title: 'Community Projects — Building of Schools', sector: 'Development', hasBranches: false },
-  { title: 'Bore Holes — Drinkable Water', sector: 'Infrastructure', hasBranches: false },
-  { title: 'Gap Year', sector: 'Gap Year', hasBranches: false },
+  { title: 'Medical Placement in Teaching Hospitals', sector: 'Healthcare' },
+  { title: 'Teaching', sector: 'Education' },
+  { title: 'Journalism', sector: 'Media' },
+  { title: 'Community Outreach', sector: 'Development' },
+  { title: 'Sports', sector: 'Sports' },
+  { title: 'Office Administration', sector: 'Business' },
+  { title: 'Banking and Finance', sector: 'Finance' },
+  { title: 'Law Placements', sector: 'Law' },
+  { title: 'Agriculture Placement', sector: 'Agriculture' },
+  { title: 'Tourism and Ecotourism', sector: 'Tourism' },
+  { title: 'Community Projects — Building of Schools', sector: 'Development' },
+  { title: 'Bore Holes — Drinkable Water', sector: 'Infrastructure' },
+  { title: 'Gap Year', sector: 'Gap Year' },
 ]
 
 const process = [
@@ -60,11 +60,9 @@ export default function VolunteerSection() {
   const [branchDialogOpen, setBranchDialogOpen] = useState(false)
   const [selectedOpp, setSelectedOpp] = useState('')
 
-  const handleOppClick = (opp: { title: string; hasBranches: boolean }) => {
-    if (opp.hasBranches) {
-      setSelectedOpp(opp.title)
-      setBranchDialogOpen(true)
-    }
+  const handleOppClick = (opp: { title: string }) => {
+    setSelectedOpp(opp.title)
+    setBranchDialogOpen(true)
   }
 
   return (
@@ -100,7 +98,7 @@ export default function VolunteerSection() {
                 transition={{ delay: i * 0.05 }}
                 whileHover={{ y: -3 }}
                 onClick={() => handleOppClick(opp)}
-                className={`bg-white rounded-xl p-5 border border-border hover:border-vogue/30 hover:shadow-md transition-all group ${opp.hasBranches ? 'cursor-pointer' : ''}`}
+                className="bg-white rounded-xl p-5 border border-border hover:border-vogue/30 hover:shadow-md transition-all group cursor-pointer"
               >
                 <span className="text-xs bg-cornell/10 text-cornell font-medium px-2 py-0.5 rounded-full">{opp.sector}</span>
                 <h4 className="font-semibold text-cornell mt-2 group-hover:text-vogue transition-colors">{opp.title}</h4>
