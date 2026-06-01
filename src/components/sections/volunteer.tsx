@@ -5,12 +5,19 @@ import { Button } from '@/components/ui/button'
 import { ArrowRight, CheckCircle2, Shield, Home, Globe2, Heart, Users, BookOpen, MapPin } from 'lucide-react'
 
 const opportunities = [
-  { title: 'Community Health Volunteer', location: 'Accra, Ghana', duration: '4-12 weeks', sector: 'Healthcare' },
-  { title: 'English Teaching Assistant', location: 'Kumasi, Ghana', duration: '8-24 weeks', sector: 'Education' },
-  { title: 'Youth Sports Coach', location: 'Tamale, Ghana', duration: '4-16 weeks', sector: 'Sports' },
-  { title: 'Environmental Conservation', location: 'Cape Coast, Ghana', duration: '2-8 weeks', sector: 'Environment' },
-  { title: 'Community Builder', location: 'Volta Region, Ghana', duration: '2-6 weeks', sector: 'Development' },
-  { title: 'Media & Journalism Intern', location: 'Accra, Ghana', duration: '8-12 weeks', sector: 'Media' },
+  { title: 'Medical Placement in Teaching Hospitals', sector: 'Healthcare' },
+  { title: 'Teaching', sector: 'Education' },
+  { title: 'Journalism', sector: 'Media' },
+  { title: 'Community Outreach', sector: 'Development' },
+  { title: 'Sports', sector: 'Sports' },
+  { title: 'Office Administration', sector: 'Business' },
+  { title: 'Banking and Finance', sector: 'Finance' },
+  { title: 'Law Placements', sector: 'Law' },
+  { title: 'Agriculture Placement', sector: 'Agriculture' },
+  { title: 'Tourism and Ecotourism', sector: 'Tourism' },
+  { title: 'Community Projects — Building of Schools', sector: 'Development' },
+  { title: 'Bore Holes — Drinkable Water', sector: 'Infrastructure' },
+  { title: 'Gap Year', sector: 'Gap Year' },
 ]
 
 const process = [
@@ -75,14 +82,8 @@ export default function VolunteerSection() {
                 whileHover={{ y: -3 }}
                 className="bg-white rounded-xl p-5 border border-border hover:border-vogue/30 hover:shadow-md transition-all group"
               >
-                <div className="flex items-start justify-between mb-2">
-                  <span className="text-xs bg-cornell/10 text-cornell font-medium px-2 py-0.5 rounded-full">{opp.sector}</span>
-                  <span className="text-xs text-charcoal">{opp.duration}</span>
-                </div>
-                <h4 className="font-semibold text-cornell mb-1 group-hover:text-vogue transition-colors">{opp.title}</h4>
-                <p className="text-xs text-charcoal flex items-center gap-1">
-                  <MapPin className="w-3 h-3" /> {opp.location}
-                </p>
+                <span className="text-xs bg-cornell/10 text-cornell font-medium px-2 py-0.5 rounded-full">{opp.sector}</span>
+                <h4 className="font-semibold text-cornell mt-2 group-hover:text-vogue transition-colors">{opp.title}</h4>
               </motion.div>
             ))}
           </div>
