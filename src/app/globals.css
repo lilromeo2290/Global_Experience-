@@ -124,6 +124,15 @@
   --sidebar-accent-foreground: #0A1F12;
   --sidebar-border: #1A3A28;
   --sidebar-ring: #D43232;
+
+  /* Dark mode brand color overrides */
+  --color-cream: #0F1F15;
+  --color-charcoal: #E0E8E3;
+  --color-ivory: #122A1B;
+  --color-sage: #1A3A28;
+  --color-gold: #D4B95E;
+  --color-cornell-light: #E04848;
+  --color-vogue-light: #3A8B52;
 }
 
 @layer base {

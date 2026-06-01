@@ -40,7 +40,7 @@ const events = [
 
 export default function BlogSection() {
   return (
-    <section id="blog" className="py-20 bg-cream">
+    <section id="blog" className="py-20 bg-cream dark:bg-[#0F1F15]">
       <div className="max-w-7xl mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -121,7 +121,7 @@ export default function BlogSection() {
                       <span className="text-xs text-charcoal flex items-center gap-1">
                         <Calendar className="w-3 h-3" /> {event.date}
                       </span>
-                      <span className="text-xs text-charcoal">{event.location}</span>
+                      <span className="text-xs text-charcoal dark:text-white/80">{event.location}</span>
                     </div>
                   </div>
                 ))}

@@ -53,7 +53,7 @@ const accountabilityItems = [
 
 export default function DonateSection() {
   return (
-    <section id="donate" className="py-20 bg-white">
+    <section id="donate" className="py-20 bg-white dark:bg-[#0A1F12]">
       <div className="max-w-7xl mx-auto px-4">
         {/* Hero */}
         <motion.div

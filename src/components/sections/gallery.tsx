@@ -23,7 +23,7 @@ export default function GallerySection() {
   const filtered = filter === 'All' ? galleryItems : galleryItems.filter(item => item.category === filter)
 
   return (
-    <section id="gallery" className="py-20 bg-cream">
+    <section id="gallery" className="py-20 bg-cream dark:bg-[#0F1F15]">
       <div className="max-w-7xl mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -5,7 +5,7 @@ import { Linkedin, Mail } from 'lucide-react'
 
 export default function TeamSection() {
   return (
-    <section id="team" className="py-20 bg-white">
+    <section id="team" className="py-20 bg-white dark:bg-[#0A1F12]">
       <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
         <motion.div

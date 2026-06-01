@@ -19,7 +19,7 @@ export default function ContactSection() {
   }
 
   return (
-    <section id="contact" className="py-20 bg-sage">
+    <section id="contact" className="py-20 bg-sage dark:bg-[#122A1B]">
       <div className="max-w-7xl mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -55,7 +55,7 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <h4 className="text-sm font-semibold text-cornell">Location</h4>
-                    <p className="text-sm text-charcoal">123 Volunteer Lane, Osu, Accra, Ghana, West Africa</p>
+                    <p className="text-sm text-charcoal dark:text-white/80">123 Volunteer Lane, Osu, Accra, Ghana, West Africa</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -84,8 +84,8 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <h4 className="text-sm font-semibold text-cornell">Office Hours</h4>
-                    <p className="text-sm text-charcoal">Mon - Fri: 8:00 AM - 5:00 PM (GMT)</p>
-                    <p className="text-sm text-charcoal">Sat: 9:00 AM - 1:00 PM (GMT)</p>
+                    <p className="text-sm text-charcoal dark:text-white/80">Mon - Fri: 8:00 AM - 5:00 PM (GMT)</p>
+                    <p className="text-sm text-charcoal dark:text-white/80">Sat: 9:00 AM - 1:00 PM (GMT)</p>
                   </div>
                 </div>
               </div>

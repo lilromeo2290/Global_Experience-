@@ -66,7 +66,7 @@ export default function VolunteerSection() {
   }
 
   return (
-    <section id="volunteer" className="py-20 bg-white">
+    <section id="volunteer" className="py-20 bg-white dark:bg-[#0A1F12]">
       <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
         <motion.div
@@ -98,7 +98,7 @@ export default function VolunteerSection() {
                 transition={{ delay: i * 0.05 }}
                 whileHover={{ y: -3 }}
                 onClick={() => handleOppClick(opp)}
-                className="bg-white rounded-xl p-5 border border-border hover:border-vogue/30 hover:shadow-md transition-all group cursor-pointer"
+                className="bg-white rounded-xl p-5 border border-border dark:border-white/10 hover:border-vogue/30 hover:shadow-md transition-all group cursor-pointer"
               >
                 <span className="text-xs bg-cornell/10 text-cornell font-medium px-2 py-0.5 rounded-full">{opp.sector}</span>
                 <h4 className="font-semibold text-cornell mt-2 group-hover:text-vogue transition-colors">{opp.title}</h4>
@@ -148,7 +148,7 @@ export default function VolunteerSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
-                className="relative bg-white rounded-xl p-6 border border-border hover:border-cornell/20 hover:shadow-sm transition-all"
+                className="relative bg-white rounded-xl p-6 border border-border dark:border-white/10 hover:border-cornell/20 hover:shadow-sm transition-all"
               >
                 <div className="flex items-center gap-3 mb-3">
                   <span className="text-3xl font-bold text-cornell/15">{step.step}</span>
@@ -157,7 +157,7 @@ export default function VolunteerSection() {
                   </div>
                 </div>
                 <h4 className="font-semibold text-cornell mb-1">{step.title}</h4>
-                <p className="text-sm text-charcoal">{step.desc}</p>
+                <p className="text-sm text-charcoal dark:text-white/80">{step.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -177,7 +177,7 @@ export default function VolunteerSection() {
               {benefits.map((benefit) => (
                 <div key={benefit} className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-vogue mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-charcoal">{benefit}</span>
+                  <span className="text-sm text-charcoal dark:text-white/80">{benefit}</span>
                 </div>
               ))}
             </div>
@@ -203,7 +203,7 @@ export default function VolunteerSection() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-cornell text-sm">{feat.title}</h4>
-                    <p className="text-xs text-charcoal">{feat.desc}</p>
+                    <p className="text-xs text-charcoal dark:text-white/80">{feat.desc}</p>
                   </div>
                 </div>
               ))}

@@ -23,7 +23,7 @@ const milestones = [
 
 export default function AboutSection() {
   return (
-    <section id="about" className="py-20 bg-cream">
+    <section id="about" className="py-20 bg-cream dark:bg-[#0F1F15]">
       <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
         <motion.div
@@ -110,7 +110,7 @@ export default function AboutSection() {
                   <val.icon className="w-6 h-6 text-cornell group-hover:text-white transition-colors" />
                 </div>
                 <h4 className="font-semibold text-cornell mb-1">{val.title}</h4>
-                <p className="text-sm text-charcoal">{val.desc}</p>
+                <p className="text-sm text-charcoal dark:text-white/80">{val.desc}</p>
               </motion.div>
             ))}
           </div>

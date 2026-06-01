@@ -140,7 +140,7 @@ const colorMapText: Record<string, string> = {
 
 export default function ProgramsSection() {
   return (
-    <section id="programs" className="py-20 bg-sage">
+    <section id="programs" className="py-20 bg-sage dark:bg-[#122A1B]">
       <div className="max-w-7xl mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

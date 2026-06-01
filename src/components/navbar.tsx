@@ -4,8 +4,9 @@ import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet'
-import { Menu, Heart, Phone, ChevronDown, ChevronRight, X } from 'lucide-react'
+import { Menu, Heart, Phone, ChevronDown, ChevronRight, X, Sun, Moon } from 'lucide-react'
 import Link from 'next/link'
+import { useTheme } from '@/components/theme-provider'
 
 interface SubLink {
   label: string
@@ -48,6 +49,7 @@ const navLinks: NavLink[] = [
 ]
 
 export default function Navbar() {
+  const { theme, toggleTheme } = useTheme()
   const [scrolled, setScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -140,7 +142,7 @@ export default function Navbar() {
       transition={{ duration: 0.5 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-border'
+          ? 'bg-white/95 dark:bg-[#0A1F12]/95 backdrop-blur-md shadow-lg border-b border-border'
           : 'bg-transparent'
       }`}
     >
@@ -174,10 +176,10 @@ export default function Navbar() {
               className="w-10 h-10 rounded-full object-cover"
             />
             <div className="flex flex-col">
-              <span className={`font-bold text-lg leading-tight transition-colors ${scrolled ? 'text-cornell' : 'text-white'}`}>
+              <span className={`font-bold text-lg leading-tight transition-colors ${scrolled ? 'text-cornell dark:text-white' : 'text-white'}`}>
                 Global Experience
               </span>
-              <span className={`text-[10px] uppercase tracking-wider transition-colors ${scrolled ? 'text-charcoal' : 'text-white/70'}`}>
+              <span className={`text-[10px] uppercase tracking-wider transition-colors ${scrolled ? 'text-charcoal dark:text-white/70' : 'text-white/70'}`}>
                 Aligning Skills with Corporate Goals
               </span>
             </div>
@@ -201,10 +203,10 @@ export default function Navbar() {
                       className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center gap-1 cursor-pointer ${
                         activeSection === link.href.replace('#', '') || isDropdownActive(link)
                           ? scrolled
-                            ? 'text-cornell bg-cornell/10'
+                            ? 'text-cornell dark:text-white bg-cornell/10 dark:bg-white/20'
                             : 'text-white bg-white/20'
                           : scrolled
-                            ? 'text-charcoal hover:text-cornell hover:bg-cornell/5'
+                            ? 'text-charcoal dark:text-white/80 hover:text-cornell dark:hover:text-white hover:bg-cornell/5 dark:hover:bg-white/10'
                             : 'text-white/80 hover:text-white hover:bg-white/10'
                       }`}
                     >
@@ -219,7 +221,7 @@ export default function Navbar() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -8 }}
                         transition={{ duration: 0.15 }}
-                        className="absolute top-full left-0 mt-1 w-56 bg-white rounded-xl shadow-xl border border-border overflow-hidden z-50"
+                        className="absolute top-full left-0 mt-1 w-56 bg-white dark:bg-[#122A1B] rounded-xl shadow-xl border border-border overflow-hidden z-50"
                       >
                         <div className="py-2">
                           {link.subLinks.map((sub) => {
@@ -229,7 +231,7 @@ export default function Navbar() {
                                 key={sub.label}
                                 href={sub.href}
                                 onClick={() => setOpenDropdown(null)}
-                                className="flex items-center gap-2 px-4 py-2.5 text-sm text-charcoal hover:text-cornell hover:bg-cornell/5 transition-colors cursor-pointer"
+                                className="flex items-center gap-2 px-4 py-2.5 text-sm text-charcoal dark:text-white/80 hover:text-cornell dark:hover:text-white hover:bg-cornell/5 dark:hover:bg-white/10 transition-colors cursor-pointer"
                               >
                                 <ChevronRight className="w-3.5 h-3.5 text-vogue" />
                                 {sub.label}
@@ -242,7 +244,7 @@ export default function Navbar() {
                                   e.preventDefault()
                                   handleNavClick(sub.href)
                                 }}
-                                className="flex items-center gap-2 px-4 py-2.5 text-sm text-charcoal hover:text-cornell hover:bg-cornell/5 transition-colors cursor-pointer"
+                                className="flex items-center gap-2 px-4 py-2.5 text-sm text-charcoal dark:text-white/80 hover:text-cornell dark:hover:text-white hover:bg-cornell/5 dark:hover:bg-white/10 transition-colors cursor-pointer"
                               >
                                 <ChevronRight className="w-3.5 h-3.5 text-vogue" />
                                 {sub.label}
@@ -265,10 +267,10 @@ export default function Navbar() {
                   className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
                     activeSection === link.href.replace('#', '')
                       ? scrolled
-                        ? 'text-cornell bg-cornell/10'
+                        ? 'text-cornell dark:text-white bg-cornell/10 dark:bg-white/20'
                         : 'text-white bg-white/20'
                       : scrolled
-                        ? 'text-charcoal hover:text-cornell hover:bg-cornell/5'
+                        ? 'text-charcoal dark:text-white/80 hover:text-cornell dark:hover:text-white hover:bg-cornell/5 dark:hover:bg-white/10'
                         : 'text-white/80 hover:text-white hover:bg-white/10'
                   }`}
                 >
@@ -279,7 +281,20 @@ export default function Navbar() {
           </div>
 
           {/* CTA + Mobile */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            {/* Theme Toggle - Desktop */}
+            <button
+              onClick={toggleTheme}
+              className="hidden sm:flex items-center justify-center w-9 h-9 rounded-full hover:bg-white/20 transition-colors"
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? (
+                <Sun className={`w-5 h-5 ${scrolled ? 'text-white' : 'text-white'}`} />
+              ) : (
+                <Moon className={`w-5 h-5 ${scrolled ? 'text-cornell' : 'text-white'}`} />
+              )}
+            </button>
+
             {/* Apply Now - Desktop */}
             <div className="hidden sm:flex items-center">
               <Button
@@ -293,11 +308,11 @@ export default function Navbar() {
             {/* Mobile Menu */}
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
               <SheetTrigger asChild className="lg:hidden">
-                <Button variant="ghost" size="icon" className={scrolled ? 'text-cornell' : 'text-white'}>
+                <Button variant="ghost" size="icon" className={`${scrolled ? 'text-cornell dark:text-white' : 'text-white'}`}>
                   <Menu className="w-6 h-6" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-80 bg-white p-0">
+              <SheetContent side="right" className="w-80 bg-white dark:bg-[#0A1F12] p-0">
                 <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                 <div className="flex flex-col h-full">
                   <div className="flex items-center justify-between p-4 border-b">
@@ -387,6 +402,13 @@ export default function Navbar() {
                     })}
                   </div>
                   <div className="p-4 border-t">
+                    <button
+                      onClick={toggleTheme}
+                      className="w-full flex items-center justify-center gap-2 py-2.5 mb-3 rounded-full border border-border dark:border-white/20 text-sm font-medium text-charcoal dark:text-white/80 hover:bg-cornell/5 dark:hover:bg-white/10 transition-colors"
+                    >
+                      {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                      {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+                    </button>
                     <Button
                       onClick={() => { setMobileOpen(false); setMobileOpenDropdown(null); handleNavClick('#volunteer') }}
                       className="w-full bg-cornell hover:bg-cornell-dark text-white rounded-full"
