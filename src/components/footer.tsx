@@ -170,11 +170,9 @@ export default function Footer() {
           <p className="text-xs text-white/40">
             &copy; {new Date().getFullYear()} Global Experience Placements. All rights reserved.
           </p>
-          <div className="flex gap-4 text-xs text-white/40">
-            <a href="#" className="hover:text-vogue transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-vogue transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-vogue transition-colors">Cookie Policy</a>
-          </div>
+          <p className="text-xs text-white/40">
+            Designed and Powered by Clipe233 Engineers
+          </p>
         </div>
       </div>
     </footer>
