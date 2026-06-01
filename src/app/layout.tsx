@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Global Experience Placements" }],
   icons: {
-    icon: "/images/logo.jpg",
+    icon: "/images/logo.png",
   },
   openGraph: {
     title: "Global Experience Placements | Empowering Communities",

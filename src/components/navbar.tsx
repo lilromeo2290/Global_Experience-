@@ -163,7 +163,7 @@ export default function Navbar() {
           {/* Logo */}
           <a href="#home" onClick={(e) => { e.preventDefault(); handleNavClick('#home') }} className="flex items-center gap-2">
             <img
-              src="/images/logo.jpg"
+              src="/images/logo.png"
               alt="Global Experience Placements Logo"
               className="w-10 h-10 rounded-full object-cover"
             />
@@ -300,7 +300,7 @@ export default function Navbar() {
                   <div className="flex items-center justify-between p-4 border-b">
                     <div className="flex items-center gap-2">
                       <img
-                        src="/images/logo.jpg"
+                        src="/images/logo.png"
                         alt="Global Experience Placements Logo"
                         className="w-8 h-8 rounded-full object-cover"
                       />
