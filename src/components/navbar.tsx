@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet'
-import { Menu, Heart, Phone, ChevronDown, ChevronRight } from 'lucide-react'
+import { Menu, Heart, Phone, ChevronDown, ChevronRight, X } from 'lucide-react'
 import Link from 'next/link'
 
 interface SubLink {
@@ -53,7 +53,9 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
   const [mobileOpenDropdown, setMobileOpenDropdown] = useState<string | null>(null)
+  const [applyOpen, setApplyOpen] = useState(false)
   const dropdownRefs = useRef<Record<string, HTMLDivElement | null>>({})
+  const applyRef = useRef<HTMLDivElement | null>(null)
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
@@ -86,6 +88,10 @@ export default function Navbar() {
       )
       if (!anyOpen) {
         setOpenDropdown(null)
+      }
+      // Close apply dropdown when clicking outside
+      if (applyRef.current && !applyRef.current.contains(e.target as Node)) {
+        setApplyOpen(false)
       }
     }
     document.addEventListener('mousedown', handleClickOutside)
@@ -274,17 +280,54 @@ export default function Navbar() {
 
           {/* CTA + Mobile */}
           <div className="flex items-center gap-3">
-            <div className="hidden sm:flex flex-col items-center">
+            {/* Apply Now Dropdown - Desktop */}
+            <div className="hidden sm:block relative" ref={applyRef}>
               <Button
-                onClick={() => handleNavClick('#contact')}
-                className="bg-cornell hover:bg-cornell-dark text-white rounded-full px-5"
+                onClick={() => setApplyOpen(!applyOpen)}
+                className="bg-cornell hover:bg-cornell-dark text-white rounded-full px-5 flex items-center gap-1.5"
               >
                 Apply Now
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${applyOpen ? 'rotate-180' : ''}`} />
               </Button>
-              <div className="mt-1.5 text-center">
-                <p className={`font-semibold text-[10px] leading-tight transition-colors ${scrolled ? 'text-cornell' : 'text-white'}`}>Medical · Teaching · Journalism</p>
-                <p className={`text-[9px] leading-tight transition-colors ${scrolled ? 'text-charcoal' : 'text-white/70'}`}>Agriculture · Sports · Community · Law</p>
-              </div>
+              {applyOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute top-full right-0 mt-2 w-72 bg-white rounded-xl shadow-xl border border-border overflow-hidden z-50"
+                >
+                  <div className="px-4 py-3 bg-cornell text-white">
+                    <p className="font-semibold text-sm">Placement Programs</p>
+                    <p className="text-[11px] text-white/70">Select a program to apply</p>
+                  </div>
+                  <div className="py-1 max-h-80 overflow-y-auto">
+                    {[
+                      { label: 'Medical Placement in Teaching Hospitals', href: '/placements' },
+                      { label: 'Teaching', href: '/placements' },
+                      { label: 'Journalism', href: '/placements' },
+                      { label: 'Community Outreach', href: '/placements' },
+                      { label: 'Sports', href: '/placements' },
+                      { label: 'Office Administration', href: '/placements' },
+                      { label: 'Banking and Finance', href: '/placements' },
+                      { label: 'Law Placements', href: '/placements' },
+                      { label: 'Agriculture Placement', href: '/placements' },
+                      { label: 'Tourism and Ecotourism', href: '/placements' },
+                      { label: 'Community Projects — Building of Schools', href: '/placements' },
+                      { label: 'Bore Holes — Drinkable Water', href: '/placements' },
+                    ].map((program) => (
+                      <Link
+                        key={program.label}
+                        href={program.href}
+                        onClick={() => setApplyOpen(false)}
+                        className="flex items-center gap-2 px-4 py-2.5 text-sm text-charcoal hover:text-cornell hover:bg-cornell/5 transition-colors cursor-pointer"
+                      >
+                        <ChevronRight className="w-3.5 h-3.5 text-vogue flex-shrink-0" />
+                        {program.label}
+                      </Link>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
             </div>
 
             {/* Mobile Menu */}
@@ -384,17 +427,49 @@ export default function Navbar() {
                     })}
                   </div>
                   <div className="p-4 border-t">
-                    <Button
-                      onClick={() => handleNavClick('#contact')}
-                      className="w-full bg-cornell hover:bg-cornell-dark text-white rounded-full"
+                    <button
+                      onClick={() => setMobileOpenDropdown(mobileOpenDropdown === 'apply' ? null : 'apply')}
+                      className="w-full bg-cornell hover:bg-cornell-dark text-white rounded-full py-2 px-4 text-sm font-medium flex items-center justify-center gap-1.5"
                     >
                       Apply Now
-                    </Button>
-                    <div className="mt-3 text-center">
-                      <p className="font-semibold text-cornell text-xs">Medical · Teaching · Journalism</p>
-                      <p className="text-charcoal text-[11px] leading-relaxed mt-0.5">Agriculture · Sports · Community · Law · Finance · Tourism</p>
-                      <p className="text-vogue text-[10px] mt-1">Starting from $295 deposit</p>
-                    </div>
+                      <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${mobileOpenDropdown === 'apply' ? 'rotate-180' : ''}`} />
+                    </button>
+                    {mobileOpenDropdown === 'apply' && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        transition={{ duration: 0.2 }}
+                        className="mt-2 bg-cream/60 rounded-lg overflow-hidden"
+                      >
+                        {[
+                          { label: 'Medical Placement in Teaching Hospitals', href: '/placements' },
+                          { label: 'Teaching', href: '/placements' },
+                          { label: 'Journalism', href: '/placements' },
+                          { label: 'Community Outreach', href: '/placements' },
+                          { label: 'Sports', href: '/placements' },
+                          { label: 'Office Administration', href: '/placements' },
+                          { label: 'Banking and Finance', href: '/placements' },
+                          { label: 'Law Placements', href: '/placements' },
+                          { label: 'Agriculture Placement', href: '/placements' },
+                          { label: 'Tourism and Ecotourism', href: '/placements' },
+                          { label: 'Community Projects — Building of Schools', href: '/placements' },
+                          { label: 'Bore Holes — Drinkable Water', href: '/placements' },
+                        ].map((program) => (
+                          <Link
+                            key={program.label}
+                            href={program.href}
+                            onClick={() => {
+                              setMobileOpen(false)
+                              setMobileOpenDropdown(null)
+                            }}
+                            className="flex items-center gap-2 pl-4 pr-3 py-2.5 text-sm text-charcoal hover:text-cornell hover:bg-cornell/5 transition-colors"
+                          >
+                            <ChevronRight className="w-3.5 h-3.5 text-vogue flex-shrink-0" />
+                            {program.label}
+                          </Link>
+                        ))}
+                      </motion.div>
+                    )}
                   </div>
                 </div>
               </SheetContent>
