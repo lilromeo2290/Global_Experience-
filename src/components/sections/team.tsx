@@ -25,18 +25,18 @@ export default function TeamSection() {
           </p>
         </motion.div>
 
-        {/* CEO Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="max-w-3xl mx-auto"
-        >
-          <div className="bg-white dark:bg-[#122A1B] rounded-2xl overflow-hidden shadow-md border border-border hover:shadow-xl hover:border-vogue/30 transition-all duration-300 group">
-            <div className="grid md:grid-cols-2 gap-0">
+        {/* Team Grid */}
+        <div className="grid md:grid-cols-2 gap-8">
+          {/* CEO Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="bg-white dark:bg-[#122A1B] rounded-2xl overflow-hidden shadow-md border border-border hover:shadow-xl hover:border-vogue/30 transition-all duration-300 group">
               {/* Photo */}
-              <div className="aspect-square md:aspect-auto md:min-h-[420px] bg-ivory overflow-hidden relative">
+              <div className="aspect-[4/3] bg-ivory overflow-hidden relative">
                 <img
                   src="/images/team-ceo.jpg"
                   alt="John Success Akotia"
@@ -53,43 +53,38 @@ export default function TeamSection() {
               </div>
 
               {/* Info */}
-              <div className="p-8 md:p-10 flex flex-col justify-center">
+              <div className="p-6 md:p-8">
                 <span className="text-vogue font-semibold text-sm uppercase tracking-wider">Leadership</span>
-                <h3 className="text-2xl md:text-3xl font-bold text-cornell mt-2 mb-1">John Success Akotia</h3>
-                <p className="text-vogue font-medium text-lg mb-4">Chief Executive Officer (CEO)</p>
-                <p className="text-charcoal dark:text-white/80 leading-relaxed mb-6">
+                <h3 className="text-xl md:text-2xl font-bold text-cornell mt-2 mb-1">John Success Akotia</h3>
+                <p className="text-vogue font-medium mb-3">Chief Executive Officer (CEO)</p>
+                <p className="text-charcoal dark:text-white/80 text-sm leading-relaxed mb-4">
                   As the founder and driving force behind Global Experience Placements, John Success Akotia
                   leads the organization with a clear vision: to deliver high-quality placement and support
                   services that connect students, graduates, volunteers, and professionals with impactful
-                  opportunities across diverse sectors worldwide. With deep expertise in international
-                  volunteer coordination and community development, he has built a trusted organization
-                  that fosters professional growth, global partnerships, and community transformation.
+                  opportunities across diverse sectors worldwide.
                 </p>
-                <div className="flex items-center gap-4">
-                  <a href="#" className="w-10 h-10 bg-cornell/10 rounded-full flex items-center justify-center hover:bg-cornell hover:text-white transition-all group/icon">
-                    <Linkedin className="w-5 h-5 text-cornell group-hover/icon:text-white" />
+                <div className="flex items-center gap-3">
+                  <a href="#" className="w-9 h-9 bg-cornell/10 rounded-full flex items-center justify-center hover:bg-cornell hover:text-white transition-all group/icon">
+                    <Linkedin className="w-4 h-4 text-cornell group-hover/icon:text-white" />
                   </a>
-                  <a href="mailto:info@globalexperiencegh.org" className="w-10 h-10 bg-cornell/10 rounded-full flex items-center justify-center hover:bg-cornell hover:text-white transition-all group/icon">
-                    <Mail className="w-5 h-5 text-cornell group-hover/icon:text-white" />
+                  <a href="mailto:info@globalexperiencegh.org" className="w-9 h-9 bg-cornell/10 rounded-full flex items-center justify-center hover:bg-cornell hover:text-white transition-all group/icon">
+                    <Mail className="w-4 h-4 text-cornell group-hover/icon:text-white" />
                   </a>
                 </div>
               </div>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
 
-        {/* IT Director Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="max-w-3xl mx-auto mt-8"
-        >
-          <div className="bg-white dark:bg-[#122A1B] rounded-2xl overflow-hidden shadow-md border border-border hover:shadow-xl hover:border-vogue/30 transition-all duration-300 group">
-            <div className="grid md:grid-cols-2 gap-0">
+          {/* IT Director Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <div className="bg-white dark:bg-[#122A1B] rounded-2xl overflow-hidden shadow-md border border-border hover:shadow-xl hover:border-vogue/30 transition-all duration-300 group">
               {/* Photo */}
-              <div className="aspect-square md:aspect-auto md:min-h-[420px] bg-ivory overflow-hidden relative">
+              <div className="aspect-[4/3] bg-ivory overflow-hidden relative">
                 <img
                   src="/images/team-it-director.png"
                   alt="Raymond Romeo Dravie"
@@ -106,33 +101,33 @@ export default function TeamSection() {
               </div>
 
               {/* Info */}
-              <div className="p-8 md:p-10 flex flex-col justify-center">
+              <div className="p-6 md:p-8">
                 <span className="text-vogue font-semibold text-sm uppercase tracking-wider">Technology</span>
-                <h3 className="text-2xl md:text-3xl font-bold text-cornell mt-2 mb-1">Raymond Romeo Dravie</h3>
-                <p className="text-vogue font-medium text-lg mb-4">Director of IT</p>
-                <p className="text-charcoal dark:text-white/80 leading-relaxed mb-4">
+                <h3 className="text-xl md:text-2xl font-bold text-cornell mt-2 mb-1">Raymond Romeo Dravie</h3>
+                <p className="text-vogue font-medium mb-3">Director of IT</p>
+                <p className="text-charcoal dark:text-white/80 text-sm leading-relaxed mb-3">
                   Has more than 10 years experience in ICT with a strong background in Algorithmic Designs,
                   Data Centers, IT Infrastructure, Software Development, Network, Management and Leadership.
                 </p>
                 <div className="mb-4">
-                  <h4 className="text-sm font-semibold text-cornell mb-2">Expertise:</h4>
-                  <p className="text-charcoal dark:text-white/80 text-sm leading-relaxed">
+                  <h4 className="text-xs font-semibold text-cornell mb-1.5">Expertise:</h4>
+                  <p className="text-charcoal dark:text-white/80 text-xs leading-relaxed">
                     Knowledge and experience in Networking, Programming &amp; Databases: C++, PHP, CSS, JavaScript,
                     VB.NET, Java, MySQL, Website Development
                   </p>
                 </div>
-                <div className="flex items-center gap-4">
-                  <a href="#" className="w-10 h-10 bg-cornell/10 rounded-full flex items-center justify-center hover:bg-cornell hover:text-white transition-all group/icon">
-                    <Linkedin className="w-5 h-5 text-cornell group-hover/icon:text-white" />
+                <div className="flex items-center gap-3">
+                  <a href="#" className="w-9 h-9 bg-cornell/10 rounded-full flex items-center justify-center hover:bg-cornell hover:text-white transition-all group/icon">
+                    <Linkedin className="w-4 h-4 text-cornell group-hover/icon:text-white" />
                   </a>
-                  <a href="mailto:info@globalexperiencegh.org" className="w-10 h-10 bg-cornell/10 rounded-full flex items-center justify-center hover:bg-cornell hover:text-white transition-all group/icon">
-                    <Mail className="w-5 h-5 text-cornell group-hover/icon:text-white" />
+                  <a href="mailto:info@globalexperiencegh.org" className="w-9 h-9 bg-cornell/10 rounded-full flex items-center justify-center hover:bg-cornell hover:text-white transition-all group/icon">
+                    <Mail className="w-4 h-4 text-cornell group-hover/icon:text-white" />
                   </a>
                 </div>
               </div>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
 
         {/* Join Team CTA */}
         <motion.div
