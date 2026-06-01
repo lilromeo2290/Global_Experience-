@@ -280,54 +280,14 @@ export default function Navbar() {
 
           {/* CTA + Mobile */}
           <div className="flex items-center gap-3">
-            {/* Apply Now Dropdown - Desktop */}
-            <div className="hidden sm:block relative" ref={applyRef}>
+            {/* Apply Now - Desktop */}
+            <div className="hidden sm:flex items-center">
               <Button
-                onClick={() => setApplyOpen(!applyOpen)}
-                className="bg-cornell hover:bg-cornell-dark text-white rounded-full px-5 flex items-center gap-1.5"
+                onClick={() => { setApplyOpen(false); handleNavClick('#volunteer') }}
+                className="bg-cornell hover:bg-cornell-dark text-white rounded-full px-5"
               >
                 Apply Now
-                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${applyOpen ? 'rotate-180' : ''}`} />
               </Button>
-              {applyOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: -8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.15 }}
-                  className="absolute top-full right-0 mt-2 w-72 bg-white rounded-xl shadow-xl border border-border overflow-hidden z-50"
-                >
-                  <div className="px-4 py-3 bg-cornell text-white">
-                    <p className="font-semibold text-sm">Placement Programs</p>
-                    <p className="text-[11px] text-white/70">Select a program to apply</p>
-                  </div>
-                  <div className="py-1 max-h-80 overflow-y-auto">
-                    {[
-                      'Medical Placement in Teaching Hospitals',
-                      'Teaching',
-                      'Journalism',
-                      'Community Outreach',
-                      'Sports',
-                      'Office Administration',
-                      'Banking and Finance',
-                      'Law Placements',
-                      'Agriculture Placement',
-                      'Tourism and Ecotourism',
-                      'Community Projects — Building of Schools',
-                      'Bore Holes — Drinkable Water',
-                    ].map((program) => (
-                      <Link
-                        key={program}
-                        href={`/apply?program=${encodeURIComponent(program)}`}
-                        onClick={() => setApplyOpen(false)}
-                        className="flex items-center gap-2 px-4 py-2.5 text-sm text-charcoal hover:text-cornell hover:bg-cornell/5 transition-colors cursor-pointer"
-                      >
-                        <ChevronRight className="w-3.5 h-3.5 text-vogue flex-shrink-0" />
-                        {program}
-                      </Link>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
             </div>
 
             {/* Mobile Menu */}
@@ -427,49 +387,12 @@ export default function Navbar() {
                     })}
                   </div>
                   <div className="p-4 border-t">
-                    <button
-                      onClick={() => setMobileOpenDropdown(mobileOpenDropdown === 'apply' ? null : 'apply')}
-                      className="w-full bg-cornell hover:bg-cornell-dark text-white rounded-full py-2 px-4 text-sm font-medium flex items-center justify-center gap-1.5"
+                    <Button
+                      onClick={() => { setMobileOpen(false); setMobileOpenDropdown(null); handleNavClick('#volunteer') }}
+                      className="w-full bg-cornell hover:bg-cornell-dark text-white rounded-full"
                     >
                       Apply Now
-                      <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${mobileOpenDropdown === 'apply' ? 'rotate-180' : ''}`} />
-                    </button>
-                    {mobileOpenDropdown === 'apply' && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        transition={{ duration: 0.2 }}
-                        className="mt-2 bg-cream/60 rounded-lg overflow-hidden"
-                      >
-                        {[
-                          'Medical Placement in Teaching Hospitals',
-                          'Teaching',
-                          'Journalism',
-                          'Community Outreach',
-                          'Sports',
-                          'Office Administration',
-                          'Banking and Finance',
-                          'Law Placements',
-                          'Agriculture Placement',
-                          'Tourism and Ecotourism',
-                          'Community Projects — Building of Schools',
-                          'Bore Holes — Drinkable Water',
-                        ].map((program) => (
-                          <Link
-                            key={program}
-                            href={`/apply?program=${encodeURIComponent(program)}`}
-                            onClick={() => {
-                              setMobileOpen(false)
-                              setMobileOpenDropdown(null)
-                            }}
-                            className="flex items-center gap-2 pl-4 pr-3 py-2.5 text-sm text-charcoal hover:text-cornell hover:bg-cornell/5 transition-colors"
-                          >
-                            <ChevronRight className="w-3.5 h-3.5 text-vogue flex-shrink-0" />
-                            {program}
-                          </Link>
-                        ))}
-                      </motion.div>
-                    )}
+                    </Button>
                   </div>
                 </div>
               </SheetContent>
