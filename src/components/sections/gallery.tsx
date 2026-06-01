@@ -9,6 +9,9 @@ const galleryItems: { src: string; alt: string; category: string }[] = [
   { src: '/gallery/gallery-1.jpg', alt: 'Volunteers making an impact in Ghana', category: 'Volunteering' },
   { src: '/gallery/gallery-2.jpg', alt: 'Community outreach and engagement', category: 'Community' },
   { src: '/gallery/gallery-3.jpg', alt: 'Experiencing the beauty of Ghana', category: 'Experience' },
+  { src: '/gallery/gallery-4.jpg', alt: 'Global Experience team in action', category: 'Volunteering' },
+  { src: '/gallery/gallery-5.jpg', alt: 'Connecting with local communities', category: 'Community' },
+  { src: '/gallery/gallery-6.jpg', alt: 'Immersive cultural experience', category: 'Experience' },
 ]
 
 const categories = ['All', 'Volunteering', 'Community', 'Experience']
