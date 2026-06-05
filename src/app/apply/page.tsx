@@ -197,10 +197,6 @@ function ApplyPage() {
                   <Mail className="w-4 h-4 text-vogue" />
                   globalexperiencegh@gmail.com
                 </a>
-                <a href="tel:+233244207278" className="flex items-center gap-2 text-sm text-charcoal hover:text-cornell transition-colors">
-                  <Phone className="w-4 h-4 text-vogue" />
-                  +233 244 207 278
-                </a>
                 <a href="tel:+233544129556" className="flex items-center gap-2 text-sm text-charcoal hover:text-cornell transition-colors">
                   <Phone className="w-4 h-4 text-vogue" />
                   +233 544 129 556

@@ -75,8 +75,6 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <h4 className="text-sm font-semibold text-cornell">Phone</h4>
-                    <a href="tel:+233244207278" className="text-sm text-vogue hover:text-cornell transition-colors">+233 244 207 278</a>
-                    <br />
                     <a href="tel:+233544129556" className="text-sm text-vogue hover:text-cornell transition-colors">+233 544 129 556</a>
                   </div>
                 </div>
@@ -95,18 +93,6 @@ export default function ContactSection() {
 
             {/* WhatsApp */}
             <div className="flex flex-col gap-2">
-              <a
-                href="https://wa.me/233244207278"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 bg-green-600 hover:bg-green-700 text-white rounded-xl p-4 shadow-sm transition-colors"
-              >
-                <MessageCircle className="w-6 h-6" />
-                <div>
-                  <div className="font-semibold text-sm">Chat on WhatsApp</div>
-                  <div className="text-xs text-white/80">+233 244 207 278</div>
-                </div>
-              </a>
               <a
                 href="https://wa.me/233544129556"
                 target="_blank"
