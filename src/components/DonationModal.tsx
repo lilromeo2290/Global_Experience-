@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -8,16 +8,19 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
-import { Heart, CheckCircle2, X, CreditCard, User, Mail, Phone } from 'lucide-react'
-import dynamic from 'next/dynamic'
-
-const usePaystackPayment = dynamic(
-  () => import('react-paystack').then((mod) => mod.usePaystackPayment),
-  { ssr: false }
-)
+import { Heart, CheckCircle2, X, CreditCard, User, Mail, Phone, AlertCircle } from 'lucide-react'
 
 const presetAmounts = [50, 100, 250, 500, 1000, 5000]
 const currencies = ['GHS', 'USD']
+
+// Extend Window type for Paystack
+declare global {
+  interface Window {
+    PaystackPop: {
+      setup: (config: Record<string, unknown>) => { openIframe: () => void }
+    }
+  }
+}
 
 function DonationModalInner({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [amount, setAmount] = useState('')
@@ -28,33 +31,45 @@ function DonationModalInner({ open, onClose }: { open: boolean; onClose: () => v
   const [step, setStep] = useState<'form' | 'success' | 'error'>('form')
   const [paymentDetails, setPaymentDetails] = useState<{ amount: number; reference: string } | null>(null)
   const [errorMessage, setErrorMessage] = useState('')
+  const [validationError, setValidationError] = useState('')
+  const [paystackLoaded, setPaystackLoaded] = useState(false)
 
   const publicKey = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || ''
 
   const numericAmount = parseFloat(amount) || 0
 
-  const config = {
-    reference: `GEP-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-    email: email,
-    amount: numericAmount * 100,
-    publicKey: publicKey,
-    currency: currency,
-    metadata: {
-      name,
-      phone,
-      custom_fields: [
-        { display_name: 'Donor Name', variable_name: 'name', value: name },
-        { display_name: 'Donor Phone', variable_name: 'phone', value: phone },
-      ],
-    },
-  }
+  // Load Paystack inline script
+  useEffect(() => {
+    if (typeof window === 'undefined') return
 
-  const onSuccess = async (reference: { reference: string }) => {
+    // Check if already loaded
+    if (window.PaystackPop) {
+      setPaystackLoaded(true)
+      return
+    }
+
+    const script = document.createElement('script')
+    script.src = 'https://js.paystack.co/v2/inline.js'
+    script.async = true
+    script.onload = () => {
+      setPaystackLoaded(true)
+    }
+    script.onerror = () => {
+      console.error('Failed to load Paystack script')
+    }
+    document.body.appendChild(script)
+
+    return () => {
+      // Don't remove script on cleanup as it may be needed again
+    }
+  }, [])
+
+  const onSuccess = useCallback(async (reference: string) => {
     try {
       const res = await fetch('/api/donate/verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ reference: reference.reference }),
+        body: JSON.stringify({ reference }),
       })
       const data = await res.json()
 
@@ -72,21 +87,74 @@ function DonationModalInner({ open, onClose }: { open: boolean; onClose: () => v
       setErrorMessage('Could not verify payment. Please contact us with your reference.')
       setStep('error')
     }
-  }
+  }, [])
 
-  const onClosePaystack = () => {
-    // User closed the Paystack popup
-  }
+  const openPaystackPopup = useCallback(() => {
+    if (!window.PaystackPop) {
+      setValidationError('Payment system is still loading. Please wait a moment and try again.')
+      return
+    }
 
-  const initializePayment = usePaystackPayment(config)
+    const reference = `GEP-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+
+    const handler = window.PaystackPop.setup({
+      key: publicKey,
+      email: email,
+      amount: numericAmount * 100, // Paystack expects amount in kobo/cents
+      currency: currency,
+      ref: reference,
+      metadata: {
+        name,
+        phone,
+        custom_fields: [
+          { display_name: 'Donor Name', variable_name: 'name', value: name },
+          { display_name: 'Donor Phone', variable_name: 'phone', value: phone },
+        ],
+      },
+      callback: (response: { reference: string }) => {
+        onSuccess(response.reference)
+      },
+      onClose: () => {
+        // User closed the Paystack popup - do nothing, stay on form
+      },
+    })
+
+    handler.openIframe()
+  }, [publicKey, email, numericAmount, currency, name, phone, onSuccess])
 
   const handleDonate = () => {
-    if (!email || !name || numericAmount <= 0) return
+    setValidationError('')
 
-    initializePayment({
-      onSuccess: (reference: unknown) => onSuccess(reference as { reference: string }),
-      onClose: onClosePaystack,
-    })
+    // Validate fields
+    if (!name.trim()) {
+      setValidationError('Please enter your full name.')
+      return
+    }
+    if (!email.trim()) {
+      setValidationError('Please enter your email address.')
+      return
+    }
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      setValidationError('Please enter a valid email address.')
+      return
+    }
+    if (numericAmount <= 0) {
+      setValidationError('Please select or enter a donation amount.')
+      return
+    }
+    if (numericAmount < 1) {
+      setValidationError('Minimum donation amount is ' + (currency === 'GHS' ? '₵1' : '$1') + '.')
+      return
+    }
+
+    if (!paystackLoaded) {
+      setValidationError('Payment system is still loading. Please wait a moment and try again.')
+      return
+    }
+
+    openPaystackPopup()
   }
 
   const resetAndClose = () => {
@@ -97,6 +165,7 @@ function DonationModalInner({ open, onClose }: { open: boolean; onClose: () => v
     setStep('form')
     setPaymentDetails(null)
     setErrorMessage('')
+    setValidationError('')
     onClose()
   }
 
@@ -132,7 +201,7 @@ function DonationModalInner({ open, onClose }: { open: boolean; onClose: () => v
                   {currencies.map((c) => (
                     <button
                       key={c}
-                      onClick={() => setCurrency(c)}
+                      onClick={() => { setCurrency(c); setAmount('') }}
                       className={`flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all ${
                         currency === c
                           ? 'bg-white text-cornell shadow-md'
@@ -182,7 +251,7 @@ function DonationModalInner({ open, onClose }: { open: boolean; onClose: () => v
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
                     placeholder="Enter amount"
-                    className="pl-8 bg-white/10 border-white/20 text-white placeholder:text-white/40"
+                    className="pl-8 bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:ring-white/30"
                   />
                 </div>
               </div>
@@ -193,6 +262,14 @@ function DonationModalInner({ open, onClose }: { open: boolean; onClose: () => v
               <h3 className="text-lg font-bold text-cornell dark:text-white mb-1">Your Information</h3>
               <p className="text-xs text-charcoal dark:text-white/50 mb-5">Fill in your details to proceed with payment</p>
 
+              {/* Validation Error */}
+              {validationError && (
+                <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-start gap-2">
+                  <AlertCircle className="w-4 h-4 text-red-500 mt-0.5 shrink-0" />
+                  <p className="text-sm text-red-700 dark:text-red-300">{validationError}</p>
+                </div>
+              )}
+
               <div className="space-y-4 flex-1">
                 <div>
                   <label className="text-xs font-medium text-charcoal dark:text-white/70 mb-1 block">Full Name *</label>
@@ -200,7 +277,7 @@ function DonationModalInner({ open, onClose }: { open: boolean; onClose: () => v
                     <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-charcoal/50 dark:text-white/40" />
                     <Input
                       value={name}
-                      onChange={(e) => setName(e.target.value)}
+                      onChange={(e) => { setName(e.target.value); setValidationError('') }}
                       placeholder="Enter your full name"
                       className="pl-9 bg-cream dark:bg-[#122A1B] border-border"
                     />
@@ -213,7 +290,7 @@ function DonationModalInner({ open, onClose }: { open: boolean; onClose: () => v
                     <Input
                       type="email"
                       value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={(e) => { setEmail(e.target.value); setValidationError('') }}
                       placeholder="Enter your email"
                       className="pl-9 bg-cream dark:bg-[#122A1B] border-border"
                     />
@@ -237,7 +314,7 @@ function DonationModalInner({ open, onClose }: { open: boolean; onClose: () => v
               {/* Pay Button */}
               <Button
                 onClick={handleDonate}
-                disabled={!email || !name || numericAmount <= 0}
+                disabled={!email || !name || numericAmount <= 0 || !paystackLoaded}
                 className="w-full bg-cornell hover:bg-cornell-dark text-white rounded-full py-3 text-base font-semibold mt-5 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <CreditCard className="w-4 h-4 mr-2" />
