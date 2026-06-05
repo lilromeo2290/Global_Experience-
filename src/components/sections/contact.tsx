@@ -112,7 +112,7 @@ export default function ContactSection() {
               <h3 className="font-bold text-cornell text-sm mb-3">Follow Us</h3>
               <div className="flex gap-3">
                 {[
-                  { icon: Facebook, href: '#', label: 'Facebook' },
+                  { icon: Facebook, href: 'https://web.facebook.com/profile.php?id=61590352813546', label: 'Facebook' },
                   { icon: Twitter, href: '#', label: 'Twitter' },
                   { icon: Instagram, href: '#', label: 'Instagram' },
                   { icon: Linkedin, href: '#', label: 'LinkedIn' },
