@@ -6,30 +6,19 @@ import Link from 'next/link'
 
 const currentDestinations = [
   {
-    city: 'Accra',
-    country: 'Ghana',
-    type: 'Head Office',
-    description: 'Our headquarters and primary coordination centre, managing all placement programs across Ghana and West Africa. The Accra office oversees volunteer onboarding, partner relations, and serves as the main hub for airport pickups and orientation programs.',
-    highlights: ['Volunteer Onboarding', 'Program Coordination', 'Airport Pickups', 'Orientation Programs'],
-    image: '/images/accra.jpg',
-    color: 'cornell',
-  },
-  {
     city: 'Cape Coast',
     country: 'Ghana',
     type: 'Regional Office',
     description: 'Located in the historic Central Region, our Cape Coast office coordinates placements in teaching hospitals, schools, and community outreach programs. It also manages school building projects and bore hole water initiatives in surrounding communities.',
     highlights: ['Medical Placements', 'Teaching Programs', 'School Building', 'Community Outreach'],
-    image: '/images/cape-coast.jpg',
     color: 'vogue',
   },
   {
-    city: 'Ho',
+    city: 'Volta – HO',
     country: 'Ghana',
     type: 'Regional Office',
     description: 'Our Volta Regional office manages placements across one of Ghana\'s most scenic and culturally rich regions. This branch specializes in agriculture placements, ecotourism programs, and community development projects amid breathtaking natural landscapes.',
     highlights: ['Agriculture Placements', 'Ecotourism Programs', 'Community Development', 'Bore Hole Projects'],
-    image: '/images/ho.jpg',
     color: 'vogue',
   },
   {
@@ -38,7 +27,14 @@ const currentDestinations = [
     type: 'Regional Office',
     description: 'Serving the Western Region, our Takoradi office coordinates placements in banking and finance, office administration, and law. The region\'s growing commercial activity provides unique opportunities for professional placements in corporate and legal settings.',
     highlights: ['Banking & Finance', 'Office Administration', 'Law Placements', 'Sports Programs'],
-    image: '/images/takoradi.jpg',
+    color: 'cornell',
+  },
+  {
+    city: 'Accra',
+    country: 'Ghana',
+    type: 'Head Office',
+    description: 'Our headquarters and primary coordination centre, managing all placement programs across Ghana and West Africa. The Accra office oversees volunteer onboarding, partner relations, and serves as the main hub for airport pickups and orientation programs.',
+    highlights: ['Volunteer Onboarding', 'Program Coordination', 'Airport Pickups', 'Orientation Programs'],
     color: 'cornell',
   },
 ]
