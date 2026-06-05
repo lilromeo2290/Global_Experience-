@@ -7,10 +7,10 @@ import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 import { useState } from 'react'
 
 const branches = [
-  { city: 'Accra', type: 'Head Office', phone: '+233 544 129 556', email: 'accra@globalexperience.org' },
+  { city: 'Ho', type: 'Head Office', phone: '+233 544 129 556', email: 'ho@globalexperience.org' },
   { city: 'Cape Coast', type: 'Regional Office', phone: '+233 234 567 890', email: 'capecoast@globalexperience.org' },
-  { city: 'Ho', type: 'Regional Office', phone: '+233 345 678 901', email: 'ho@globalexperience.org' },
   { city: 'Takoradi', type: 'Regional Office', phone: '+233 456 789 012', email: 'takoradi@globalexperience.org' },
+  { city: 'Accra', type: 'Regional Office', phone: '+233 544 129 556', email: 'accra@globalexperience.org' },
 ]
 
 const opportunities = [

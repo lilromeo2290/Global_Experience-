@@ -10,13 +10,13 @@ import Footer from '@/components/footer'
 const branches = [
   {
     country: 'Ghana',
-    city: 'Accra',
+    city: 'Ho',
     type: 'Head Office',
-    address: '123 Volunteer Lane, Osu, Accra, Ghana',
+    address: '12 Volta Avenue, Ho, Volta Region, Ghana',
     phone: '+233 544 129 556',
-    email: 'accra@globalexperience.org',
+    email: 'ho@globalexperience.org',
     hours: 'Mon–Fri: 8:00 AM – 5:00 PM | Sat: 9:00 AM – 1:00 PM',
-    description: 'Our headquarters and primary coordination centre, managing all placement programs across Ghana and West Africa. The Accra office oversees volunteer onboarding, partner relations, program development, and serves as the main hub for airport pickups and orientation programs for all arriving volunteers.',
+    description: 'Our headquarters and primary coordination centre in the Volta Region, managing all placement programs across Ghana and West Africa. The Ho office oversees volunteer onboarding, partner relations, program development, and serves as the main hub for airport pickups and orientation programs for all arriving volunteers.',
     services: ['Volunteer Onboarding', 'Program Coordination', 'Partner Relations', 'Orientation Programs', 'Airport Pickups'],
     color: 'cornell',
   },
@@ -34,14 +34,14 @@ const branches = [
   },
   {
     country: 'Ghana',
-    city: 'Ho',
+    city: 'Accra',
     type: 'Regional Office',
-    address: '12 Volta Avenue, Ho, Volta Region, Ghana',
-    phone: '+233 345 678 901',
-    email: 'ho@globalexperience.org',
+    address: '123 Volunteer Lane, Osu, Accra, Ghana',
+    phone: '+233 544 129 556',
+    email: 'accra@globalexperience.org',
     hours: 'Mon–Fri: 8:30 AM – 4:30 PM',
-    description: 'Our Volta Regional office in Ho manages placements across one of Ghana\'s most scenic and culturally rich regions. This branch specializes in agriculture placements, ecotourism programs, and community development projects, leveraging the region\'s natural beauty and farming heritage for impactful volunteer experiences.',
-    services: ['Agriculture Placements', 'Ecotourism Programs', 'Community Development', 'Bore Hole Projects'],
+    description: 'Our Accra office in the Greater Accra Region coordinates placements across the capital city, focusing on professional placements in corporate, legal, and administrative settings. Accra\'s vibrant economy and diverse industries provide excellent opportunities for volunteer and professional development.',
+    services: ['Corporate Placements', 'Office Administration', 'Law Placements', 'Finance'],
     color: 'vogue-light',
   },
   {
@@ -181,7 +181,7 @@ export default function BranchesPage() {
             <div className="grid lg:grid-cols-3 gap-0">
               <div className="lg:col-span-1 bg-gradient-to-br from-cornell to-cornell-dark p-8 text-white flex flex-col justify-center">
                 <span className="text-white/60 text-xs uppercase tracking-wider mb-2">Head Office</span>
-                <h3 className="text-2xl font-bold mb-1">Accra, Ghana</h3>
+                <h3 className="text-2xl font-bold mb-1">Ho, Volta Region</h3>
                 <p className="text-white/70 text-sm">National Headquarters</p>
               </div>
               <div className="lg:col-span-2 p-8">
