@@ -28,7 +28,6 @@ const navLinks: NavLink[] = [
     key: 'about',
     subLinks: [
       { label: 'Mission and Vision', href: '#mission-vision' },
-      { label: 'Our Branches', href: '/about/branches' },
       { label: 'Our Team', href: '#team' },
     ],
   },
