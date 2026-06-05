@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import {
@@ -7,6 +8,7 @@ import {
   Stethoscope, BookOpen, Trophy, Monitor,
   Sprout, GraduationCap, Users, Wrench, Building2,
 } from 'lucide-react'
+import DonationModal from '@/components/DonationModal'
 
 const donationAreas = [
   { icon: Stethoscope, title: 'Medical Equipment and Items', desc: 'Essential medical supplies and equipment for clinics and hospitals serving underserved communities.' },
@@ -21,6 +23,8 @@ const donationAreas = [
 ]
 
 export default function DonateSection() {
+  const [donateOpen, setDonateOpen] = useState(false)
+
   return (
     <section id="donate" className="py-20 bg-white dark:bg-[#0A1F12]">
       <div className="max-w-7xl mx-auto px-4">
@@ -113,6 +117,7 @@ export default function DonateSection() {
               <Button
                 size="lg"
                 className="bg-white text-cornell hover:bg-white/90 rounded-full px-8"
+                onClick={() => setDonateOpen(true)}
               >
                 Donate Now
                 <ArrowRight className="ml-2 w-4 h-4" />
@@ -170,6 +175,7 @@ export default function DonateSection() {
               <Button
                 size="lg"
                 className="bg-cornell hover:bg-cornell-dark text-white rounded-full px-8"
+                onClick={() => setDonateOpen(true)}
               >
                 Donate Now
                 <ArrowRight className="ml-2 w-4 h-4" />
@@ -178,6 +184,9 @@ export default function DonateSection() {
           </motion.div>
         </div>
       </div>
+
+      {/* Donation Modal */}
+      <DonationModal open={donateOpen} onClose={() => setDonateOpen(false)} />
     </section>
   )
 }
