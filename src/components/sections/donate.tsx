@@ -171,7 +171,6 @@ export default function DonateSection() {
               <Button
                 size="lg"
                 className="bg-cornell hover:bg-cornell-dark text-white rounded-full px-8"
-                onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 Donate Now
                 <ArrowRight className="ml-2 w-4 h-4" />
