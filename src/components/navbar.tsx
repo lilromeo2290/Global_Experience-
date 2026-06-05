@@ -95,6 +95,11 @@ export default function Navbar() {
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
+      // Check if click is on a nav link or dropdown item - don't close
+      const target = e.target as HTMLElement
+      if (target.closest('a[href^="#"]') || target.closest('button')) {
+        return
+      }
       const anyOpen = Object.values(dropdownRefs.current).some(
         ref => ref && ref.contains(e.target as Node)
       )
@@ -111,13 +116,19 @@ export default function Navbar() {
   }, [])
 
   const handleNavClick = (href: string) => {
+    // Close menus first
     setMobileOpen(false)
-    setOpenDropdown(null)
     setMobileOpenDropdown(null)
 
     if (href.startsWith('/')) {
+      setOpenDropdown(null)
       return
     }
+
+    // Delay closing dropdown slightly so click registers before unmount
+    setTimeout(() => {
+      setOpenDropdown(null)
+    }, 50)
 
     const el = document.querySelector(href)
     if (el) {
