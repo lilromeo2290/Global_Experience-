@@ -9,7 +9,6 @@ const quickLinks = [
   { label: 'Home', href: '#home' },
   { label: 'About Us', href: '#about' },
   { label: 'Mission and Vision', href: '#mission-vision' },
-  { label: 'Our Branches', href: '/about/branches' },
   { label: 'Our Team', href: '#team' },
   { label: 'Our Services', href: '#services' },
   { label: 'Gallery', href: '#gallery' },

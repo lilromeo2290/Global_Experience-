@@ -1,8 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { MapPin, ArrowRight, Building2, Globe, Palmtree, Mountain } from 'lucide-react'
-import Link from 'next/link'
+import { MapPin, Building2, Globe, Palmtree, Mountain } from 'lucide-react'
 
 const currentDestinations = [
   {
@@ -210,21 +209,7 @@ export default function DestinationsSection() {
           </div>
         </motion.div>
 
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center"
-        >
-          <Link
-            href="/about/branches"
-            className="inline-flex items-center gap-2 text-cornell dark:text-white font-semibold hover:gap-3 transition-all duration-300 group"
-          >
-            View All Branch Details
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </motion.div>
+
       </div>
     </section>
   )
