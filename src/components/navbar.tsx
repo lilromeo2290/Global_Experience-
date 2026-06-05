@@ -36,10 +36,10 @@ const navLinks: NavLink[] = [
     href: '#destinations',
     key: 'destinations',
     subLinks: [
-      { label: 'Cape Coast', href: '#destinations' },
-      { label: 'Volta – HO', href: '#destinations' },
-      { label: 'Takoradi', href: '#destinations' },
-      { label: 'Accra', href: '#destinations' },
+      { label: 'Cape Coast', href: '#cape-coast' },
+      { label: 'Volta – HO', href: '#volta-ho' },
+      { label: 'Takoradi', href: '#takoradi' },
+      { label: 'Accra', href: '#accra' },
     ],
   },
   {

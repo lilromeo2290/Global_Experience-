@@ -6,6 +6,7 @@ import { MapPin, Building2, Globe, Palmtree, Mountain } from 'lucide-react'
 const currentDestinations = [
   {
     city: 'Cape Coast',
+    slug: 'cape-coast',
     country: 'Ghana',
     type: 'Regional Office',
     description: 'Located in the historic Central Region, our Cape Coast office coordinates placements in teaching hospitals, schools, and community outreach programs. It also manages school building projects and bore hole water initiatives in surrounding communities.',
@@ -14,6 +15,7 @@ const currentDestinations = [
   },
   {
     city: 'Volta – HO',
+    slug: 'volta-ho',
     country: 'Ghana',
     type: 'Regional Office',
     description: 'Our Volta Regional office manages placements across one of Ghana\'s most scenic and culturally rich regions. This branch specializes in agriculture placements, ecotourism programs, and community development projects amid breathtaking natural landscapes.',
@@ -22,6 +24,7 @@ const currentDestinations = [
   },
   {
     city: 'Takoradi',
+    slug: 'takoradi',
     country: 'Ghana',
     type: 'Regional Office',
     description: 'Serving the Western Region, our Takoradi office coordinates placements in banking and finance, office administration, and law. The region\'s growing commercial activity provides unique opportunities for professional placements in corporate and legal settings.',
@@ -30,6 +33,7 @@ const currentDestinations = [
   },
   {
     city: 'Accra',
+    slug: 'accra',
     country: 'Ghana',
     type: 'Head Office',
     description: 'Our headquarters and primary coordination centre, managing all placement programs across Ghana and West Africa. The Accra office oversees volunteer onboarding, partner relations, and serves as the main hub for airport pickups and orientation programs.',
@@ -96,6 +100,7 @@ export default function DestinationsSection() {
           {currentDestinations.map((dest, i) => (
             <motion.div
               key={dest.city}
+              id={dest.slug}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
