@@ -55,7 +55,7 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <h4 className="text-sm font-semibold text-cornell">Location</h4>
-                    <p className="text-sm text-charcoal dark:text-white/80">123 Volunteer Lane, Osu, Accra, Ghana, West Africa</p>
+                    <p className="text-sm text-charcoal dark:text-white/80">PMB Ho, Volta Region, Ghana, West Africa</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">

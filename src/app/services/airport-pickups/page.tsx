@@ -460,7 +460,7 @@ function AirportPickupForm() {
               name="accommodationAddress"
               value={formData.accommodationAddress}
               onChange={handleChange}
-              placeholder="e.g. 123 Volunteer Lane, Accra"
+              placeholder="e.g. PMB Ho, Volta Region"
               className="rounded-lg border-border focus:border-mahogany focus:ring-mahogany/20"
             />
           </div>

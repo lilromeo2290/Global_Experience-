@@ -36,7 +36,7 @@ const branches = [
     country: 'Ghana',
     city: 'Accra',
     type: 'Regional Office',
-    address: '123 Volunteer Lane, Osu, Accra, Ghana',
+    address: 'PMB Ho, Volta Region, Ghana',
     phone: '+233 544 129 556',
     email: 'accra@globalexperience.org',
     hours: 'Mon–Fri: 8:30 AM – 4:30 PM',

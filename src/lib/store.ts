@@ -71,7 +71,7 @@ const pickupRequests: PickupRequest[] = [
     destinationAirport: 'Kotoka International Airport (ACC)',
     numberOfLuggage: '2',
     accommodationName: 'Global Experience Volunteer House',
-    accommodationAddress: '123 Volunteer Lane, Osu, Accra',
+    accommodationAddress: 'PMB Ho, Volta Region',
     specialRequirements: 'Vegetarian meals preferred',
     status: 'pending',
     createdAt: '2025-06-20T10:30:00Z',

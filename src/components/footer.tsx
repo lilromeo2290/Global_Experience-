@@ -136,7 +136,7 @@ export default function Footer() {
             <ul className="space-y-3">
               <li className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 mt-0.5 text-vogue flex-shrink-0" />
-                <span className="text-sm text-white/60">123 Volunteer Lane, Accra, Ghana, West Africa</span>
+                <span className="text-sm text-white/60">PMB Ho, Volta Region, Ghana, West Africa</span>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-vogue flex-shrink-0" />
