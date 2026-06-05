@@ -121,6 +121,8 @@ export default function ContactSection() {
                     key={s.label}
                     href={s.href}
                     aria-label={s.label}
+                    target={s.href.startsWith('http') ? '_blank' : undefined}
+                    rel={s.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                     className="w-10 h-10 bg-cornell/10 hover:bg-cornell hover:text-white rounded-lg flex items-center justify-center text-cornell transition-colors"
                   >
                     <s.icon className="w-5 h-5" />
