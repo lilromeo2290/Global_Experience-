@@ -173,6 +173,7 @@ export default function Navbar() {
           <div className="max-w-7xl mx-auto px-4 flex justify-between items-center h-9">
             <div className="flex items-center gap-4">
               <a href="mailto:info@globalexperiencegh.org" className="hover:text-vogue-light transition-colors">info@globalexperiencegh.org</a>
+              <a href="mailto:globalexperiencegh@gmail.com" className="hover:text-vogue-light transition-colors">globalexperiencegh@gmail.com</a>
               <a href="tel:+233244207278" className="flex items-center gap-1 hover:text-vogue-light transition-colors">
                 <Phone className="w-3 h-3" /> +233 244 207 278
               </a>

@@ -65,6 +65,8 @@ export default function ContactSection() {
                   <div>
                     <h4 className="text-sm font-semibold text-cornell">Email</h4>
                     <a href="mailto:info@globalexperiencegh.org" className="text-sm text-vogue hover:text-cornell transition-colors">info@globalexperiencegh.org</a>
+                    <br />
+                    <a href="mailto:globalexperiencegh@gmail.com" className="text-sm text-vogue hover:text-cornell transition-colors">globalexperiencegh@gmail.com</a>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">

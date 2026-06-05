@@ -144,6 +144,10 @@ export default function Footer() {
                 <Mail className="w-4 h-4 text-vogue flex-shrink-0" />
                 <a href="mailto:info@globalexperiencegh.org" className="text-sm text-white/60 hover:text-vogue transition-colors">info@globalexperiencegh.org</a>
               </li>
+              <li className="flex items-center gap-2">
+                <Mail className="w-4 h-4 text-vogue flex-shrink-0" />
+                <a href="mailto:globalexperiencegh@gmail.com" className="text-sm text-white/60 hover:text-vogue transition-colors">globalexperiencegh@gmail.com</a>
+              </li>
             </ul>
 
             {/* Newsletter mini */}
