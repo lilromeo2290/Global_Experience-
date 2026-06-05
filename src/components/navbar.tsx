@@ -32,6 +32,7 @@ const navLinks: NavLink[] = [
       { label: 'Our Team', href: '#team' },
     ],
   },
+  { label: 'Destinations', href: '#destinations', key: 'destinations' },
   {
     label: 'Services',
     href: '#services',
