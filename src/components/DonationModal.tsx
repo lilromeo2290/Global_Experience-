@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -33,6 +33,11 @@ function DonationModalInner({ open, onClose }: { open: boolean; onClose: () => v
   const [errorMessage, setErrorMessage] = useState('')
   const [validationError, setValidationError] = useState('')
   const [paystackLoaded, setPaystackLoaded] = useState(false)
+
+  // Track when Paystack popup is active so we hide our dialog overlay
+  const [paystackActive, setPaystackActive] = useState(false)
+  // Prevent onOpenChange from resetting state when we close dialog for Paystack
+  const skipCloseRef = useRef(false)
 
   const publicKey = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || ''
 
@@ -87,11 +92,14 @@ function DonationModalInner({ open, onClose }: { open: boolean; onClose: () => v
       setErrorMessage('Could not verify payment. Please contact us with your reference.')
       setStep('error')
     }
+    // Reopen our dialog with the result
+    setPaystackActive(false)
   }, [])
 
   const openPaystackPopup = useCallback(() => {
     if (!window.PaystackPop) {
       setValidationError('Payment system is still loading. Please wait a moment and try again.')
+      setPaystackActive(false)
       return
     }
 
@@ -115,7 +123,8 @@ function DonationModalInner({ open, onClose }: { open: boolean; onClose: () => v
         onSuccess(response.reference)
       },
       onClose: () => {
-        // User closed the Paystack popup - do nothing, stay on form
+        // User closed the Paystack popup — bring our dialog back
+        setPaystackActive(false)
       },
     })
 
@@ -154,7 +163,14 @@ function DonationModalInner({ open, onClose }: { open: boolean; onClose: () => v
       return
     }
 
-    openPaystackPopup()
+    // Hide our dialog so Paystack popup is fully interactive
+    setPaystackActive(true)
+    skipCloseRef.current = true
+
+    // Small delay to let our dialog close first, then open Paystack
+    setTimeout(() => {
+      openPaystackPopup()
+    }, 100)
   }
 
   const resetAndClose = () => {
@@ -166,11 +182,27 @@ function DonationModalInner({ open, onClose }: { open: boolean; onClose: () => v
     setPaymentDetails(null)
     setErrorMessage('')
     setValidationError('')
+    setPaystackActive(false)
     onClose()
   }
 
+  // Handle Dialog open/close changes
+  const handleOpenChange = (isOpen: boolean) => {
+    if (!isOpen && skipCloseRef.current) {
+      // This close was triggered by us (for Paystack), ignore it
+      skipCloseRef.current = false
+      return
+    }
+    if (!isOpen) {
+      resetAndClose()
+    }
+  }
+
+  // Dialog is open when parent says so AND Paystack popup is not active
+  const isDialogOpen = open && !paystackActive
+
   return (
-    <Dialog open={open} onOpenChange={resetAndClose}>
+    <Dialog open={isDialogOpen} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-3xl bg-white dark:bg-[#0A1F12] p-0 overflow-hidden">
         <DialogTitle className="sr-only">Make a Donation</DialogTitle>
 
