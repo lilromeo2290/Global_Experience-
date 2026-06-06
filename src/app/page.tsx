@@ -12,9 +12,8 @@ import GallerySection from '@/components/sections/gallery'
 import DonateSection from '@/components/sections/donate'
 import TestimonialsSection from '@/components/sections/testimonials'
 import BlogSection from '@/components/sections/blog'
-import NewsletterSection from '@/components/sections/newsletter'
-import PartnersSection from '@/components/sections/partners'
 import ContactSection from '@/components/sections/contact'
+import PartnersSection from '@/components/sections/partners'
 
 export default function Home() {
   return (
@@ -33,7 +32,6 @@ export default function Home() {
         <DonateSection />
         <BlogSection />
         <ContactSection />
-        <NewsletterSection />
       </main>
       <Footer />
 

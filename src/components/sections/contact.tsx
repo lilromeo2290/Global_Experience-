@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Mail, Phone, MapPin, Clock, MessageCircle, Facebook, Twitter, Instagram, Linkedin, Send } from 'lucide-react'
+import { Mail, Phone, MapPin, Clock, MessageCircle, Facebook, Twitter, Instagram, Linkedin, Send, ArrowRight } from 'lucide-react'
 import { useState } from 'react'
 
 export default function ContactSection() {
@@ -234,6 +234,36 @@ export default function ContactSection() {
                   <Send className="ml-2 w-4 h-4" />
                 </Button>
               </form>
+            </div>
+
+            {/* Stay Connected With Our Mission */}
+            <div className="bg-gradient-to-r from-cornell via-cornell-dark to-cornell rounded-2xl p-6 text-white relative overflow-hidden mt-6">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
+              <div className="relative">
+                <div className="flex items-center gap-2 mb-2">
+                  <Mail className="w-5 h-5" />
+                  <h3 className="font-bold text-lg">Stay Connected With Our Mission</h3>
+                </div>
+                <p className="text-white/70 text-sm mb-4 leading-relaxed">
+                  Subscribe to our newsletter for inspiring stories, program updates, and community impact reports delivered directly to your inbox.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Input
+                    placeholder="Enter your email address"
+                    type="email"
+                    className="bg-white/10 border-white/20 text-white placeholder:text-white/50 rounded-full px-6 py-2.5 focus:border-white/40 focus:ring-white/20"
+                  />
+                  <Button
+                    className="bg-white text-cornell hover:bg-white/90 rounded-full px-6 shadow-lg flex-shrink-0"
+                  >
+                    Subscribe
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Button>
+                </div>
+                <p className="text-xs text-white/40 mt-2">
+                  We respect your privacy. Unsubscribe at any time.
+                </p>
+              </div>
             </div>
           </motion.div>
         </div>
