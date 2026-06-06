@@ -7,10 +7,6 @@ const partners = [
   { name: 'WHO', desc: 'Health programs' },
   { name: 'UNESCO', desc: 'Cultural exchange' },
   { name: 'Red Cross', desc: 'Humanitarian support' },
-  { name: 'African Union', desc: 'Continental development' },
-  { name: 'British Council', desc: 'Educational partnerships' },
-  { name: 'USAID', desc: 'Development assistance' },
-  { name: 'GIZ', desc: 'International cooperation' },
 ]
 
 export default function PartnersSection() {
