@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Mail, Phone, MapPin, Clock, MessageCircle, Facebook, Twitter, Instagram, Linkedin, Send } from 'lucide-react'
+import { Mail, Phone, MapPin, Clock, MessageCircle, Send } from 'lucide-react'
 import { useState } from 'react'
 
 export default function ContactSection() {
@@ -105,30 +105,6 @@ export default function ContactSection() {
                   <div className="text-xs text-white/80">+233 544 129 556</div>
                 </div>
               </a>
-            </div>
-
-            {/* Social Links */}
-            <div className="bg-white rounded-2xl p-6 shadow-sm border border-border">
-              <h3 className="font-bold text-cornell text-sm mb-3">Follow Us</h3>
-              <div className="flex gap-3">
-                {[
-                  { icon: Facebook, href: 'https://web.facebook.com/profile.php?id=61590352813546', label: 'Facebook' },
-                  { icon: Twitter, href: '#', label: 'Twitter' },
-                  { icon: Instagram, href: '#', label: 'Instagram' },
-                  { icon: Linkedin, href: '#', label: 'LinkedIn' },
-                ].map((s) => (
-                  <a
-                    key={s.label}
-                    href={s.href}
-                    aria-label={s.label}
-                    target={s.href.startsWith('http') ? '_blank' : undefined}
-                    rel={s.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    className="w-10 h-10 bg-cornell/10 hover:bg-cornell hover:text-white rounded-lg flex items-center justify-center text-cornell transition-colors"
-                  >
-                    <s.icon className="w-5 h-5" />
-                  </a>
-                ))}
-              </div>
             </div>
 
             {/* Map */}
