@@ -23,24 +23,6 @@ const testimonials = [
     text: 'Working at a local radio station gave me real-world reporting experience that transformed my career. I covered stories that mattered, learned from seasoned journalists, and built a portfolio that helped me land my dream job. The cultural immersion was an added bonus.',
     rating: 5,
   },
-  {
-    name: 'Daniel Asante',
-    role: 'Community Development Volunteer, Ghana',
-    text: 'Being part of the borehole water project was the most fulfilling experience of my life. Seeing clean water flow for the first time in a village that had struggled for decades — the joy on people\'s faces is something I will carry with me forever. This organization truly delivers on its promises.',
-    rating: 5,
-  },
-  {
-    name: 'Maria Garcia',
-    role: 'Sports Coach, Spain',
-    text: 'Coaching football to youth in the community taught me as much about myself as it did about coaching. The children\'s enthusiasm was infectious, and the structured program ensured I could make a real impact. I returned home with new perspectives and lifelong friendships.',
-    rating: 5,
-  },
-  {
-    name: 'Liam Chen',
-    role: 'Finance Intern, Singapore',
-    text: 'My banking placement exceeded all expectations. Working in an emerging market gave me insights into financial systems and microfinance that no textbook could provide. The professional mentorship was exceptional, and the cultural experience enriched both my career and personal growth.',
-    rating: 5,
-  },
 ]
 
 export default function TestimonialsSection() {
