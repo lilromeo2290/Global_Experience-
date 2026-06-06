@@ -7,6 +7,7 @@ import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/s
 import { Menu, Heart, Phone, ChevronDown, ChevronRight, X, Sun, Moon } from 'lucide-react'
 import Link from 'next/link'
 import { useTheme } from '@/components/theme-provider'
+import DestinationProgramModal from '@/components/DestinationProgramModal'
 
 interface SubLink {
   label: string
@@ -37,7 +38,7 @@ const navLinks: NavLink[] = [
     key: 'destinations',
     subLinks: [
       { label: 'Cape Coast', href: '#cape-coast' },
-      { label: 'Volta – HO', href: '#volta-ho' },
+      { label: 'Volta \u2013 HO', href: '#volta-ho' },
       { label: 'Takoradi', href: '#takoradi' },
       { label: 'Accra', href: '#accra' },
     ],
@@ -66,6 +67,7 @@ export default function Navbar() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
   const [mobileOpenDropdown, setMobileOpenDropdown] = useState<string | null>(null)
   const [applyOpen, setApplyOpen] = useState(false)
+  const [destinationModal, setDestinationModal] = useState<string>('')
   const dropdownRefs = useRef<Record<string, HTMLDivElement | null>>({})
   const applyRef = useRef<HTMLDivElement | null>(null)
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null)
@@ -92,10 +94,8 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      // Check if click is on a nav link or dropdown item - don't close
       const target = e.target as HTMLElement
       if (target.closest('a[href^="#"]') || target.closest('button')) {
         return
@@ -106,7 +106,6 @@ export default function Navbar() {
       if (!anyOpen) {
         setOpenDropdown(null)
       }
-      // Close apply dropdown when clicking outside
       if (applyRef.current && !applyRef.current.contains(e.target as Node)) {
         setApplyOpen(false)
       }
@@ -116,7 +115,6 @@ export default function Navbar() {
   }, [])
 
   const handleNavClick = (href: string) => {
-    // Close menus first
     setMobileOpen(false)
     setMobileOpenDropdown(null)
 
@@ -125,7 +123,6 @@ export default function Navbar() {
       return
     }
 
-    // Delay closing dropdown slightly so click registers before unmount
     setTimeout(() => {
       setOpenDropdown(null)
     }, 50)
@@ -154,6 +151,17 @@ export default function Navbar() {
 
   const isDropdownActive = (link: NavLink) => {
     return openDropdown === link.key
+  }
+
+  const handleSubLinkClick = (link: NavLink, sub: SubLink) => {
+    if (link.key === 'destinations') {
+      setOpenDropdown(null)
+      setMobileOpen(false)
+      setMobileOpenDropdown(null)
+      setDestinationModal(sub.href.replace('#', ''))
+    } else {
+      handleNavClick(sub.href)
+    }
   }
 
   return (
@@ -248,23 +256,26 @@ export default function Navbar() {
                         <div className="py-2">
                           {link.subLinks.map((sub) => {
                             const isExternalPage = sub.href.startsWith('/')
-                            return isExternalPage ? (
-                              <Link
-                                key={sub.label}
-                                href={sub.href}
-                                onClick={() => setOpenDropdown(null)}
-                                className="flex items-center gap-2 px-4 py-2.5 text-sm text-charcoal dark:text-white/80 hover:text-cornell dark:hover:text-white hover:bg-cornell/5 dark:hover:bg-white/10 transition-colors cursor-pointer"
-                              >
-                                <ChevronRight className="w-3.5 h-3.5 text-vogue" />
-                                {sub.label}
-                              </Link>
-                            ) : (
+                            if (isExternalPage) {
+                              return (
+                                <Link
+                                  key={sub.label}
+                                  href={sub.href}
+                                  onClick={() => setOpenDropdown(null)}
+                                  className="flex items-center gap-2 px-4 py-2.5 text-sm text-charcoal dark:text-white/80 hover:text-cornell dark:hover:text-white hover:bg-cornell/5 dark:hover:bg-white/10 transition-colors cursor-pointer"
+                                >
+                                  <ChevronRight className="w-3.5 h-3.5 text-vogue" />
+                                  {sub.label}
+                                </Link>
+                              )
+                            }
+                            return (
                               <a
                                 key={sub.label}
                                 href={sub.href}
                                 onClick={(e) => {
                                   e.preventDefault()
-                                  handleNavClick(sub.href)
+                                  handleSubLinkClick(link, sub)
                                 }}
                                 className="flex items-center gap-2 px-4 py-2.5 text-sm text-charcoal dark:text-white/80 hover:text-cornell dark:hover:text-white hover:bg-cornell/5 dark:hover:bg-white/10 transition-colors cursor-pointer"
                               >
@@ -280,7 +291,6 @@ export default function Navbar() {
                 )
               }
 
-              // Regular menu item
               return (
                 <a
                   key={link.key}
@@ -304,7 +314,6 @@ export default function Navbar() {
 
           {/* CTA + Mobile */}
           <div className="flex items-center gap-2">
-            {/* Theme Toggle - Desktop */}
             <button
               onClick={toggleTheme}
               className="hidden sm:flex items-center justify-center w-9 h-9 rounded-full hover:bg-white/20 transition-colors"
@@ -317,7 +326,6 @@ export default function Navbar() {
               )}
             </button>
 
-            {/* Apply Now - Desktop */}
             <div className="hidden sm:flex items-center">
               <Button
                 onClick={() => { setApplyOpen(false); handleNavClick('#volunteer') }}
@@ -373,26 +381,29 @@ export default function Navbar() {
                               >
                                 {link.subLinks.map((sub) => {
                                   const isExternalPage = sub.href.startsWith('/')
-                                  return isExternalPage ? (
-                                    <Link
-                                      key={sub.label}
-                                      href={sub.href}
-                                      onClick={() => {
-                                        setMobileOpen(false)
-                                        setMobileOpenDropdown(null)
-                                      }}
-                                      className="flex items-center gap-2 pl-10 pr-6 py-2.5 text-sm text-charcoal hover:text-cornell hover:bg-cornell/5 transition-colors"
-                                    >
-                                      <ChevronRight className="w-3.5 h-3.5 text-vogue" />
-                                      {sub.label}
-                                    </Link>
-                                  ) : (
+                                  if (isExternalPage) {
+                                    return (
+                                      <Link
+                                        key={sub.label}
+                                        href={sub.href}
+                                        onClick={() => {
+                                          setMobileOpen(false)
+                                          setMobileOpenDropdown(null)
+                                        }}
+                                        className="flex items-center gap-2 pl-10 pr-6 py-2.5 text-sm text-charcoal hover:text-cornell hover:bg-cornell/5 transition-colors"
+                                      >
+                                        <ChevronRight className="w-3.5 h-3.5 text-vogue" />
+                                        {sub.label}
+                                      </Link>
+                                    )
+                                  }
+                                  return (
                                     <a
                                       key={sub.label}
                                       href={sub.href}
                                       onClick={(e) => {
                                         e.preventDefault()
-                                        handleNavClick(sub.href)
+                                        handleSubLinkClick(link, sub)
                                       }}
                                       className="flex items-center gap-2 pl-10 pr-6 py-2.5 text-sm text-charcoal hover:text-cornell hover:bg-cornell/5 transition-colors"
                                     >
@@ -444,6 +455,13 @@ export default function Navbar() {
           </div>
         </div>
       </div>
+
+      {/* Destination Program Modal */}
+      <DestinationProgramModal
+        open={!!destinationModal}
+        onClose={() => setDestinationModal('')}
+        destination={destinationModal}
+      />
     </motion.nav>
   )
 }
