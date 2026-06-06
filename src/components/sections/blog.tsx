@@ -31,41 +31,44 @@ export default function BlogSection() {
           </p>
         </motion.div>
 
-        <div className="max-w-7xl mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="max-w-md mx-auto"
-          >
-            <div className="bg-white dark:bg-[#122A1B] rounded-xl p-6 shadow-sm border border-border">
-              <h3 className="font-bold text-cornell text-lg mb-4 flex items-center gap-2">
-                <Calendar className="w-5 h-5 text-vogue" /> Upcoming Events
-              </h3>
-              <div className="space-y-4">
-                {events.map((event) => (
-                  <div key={event.title} className="border-l-3 border-cornell pl-4 py-1">
-                    <span className="text-[10px] uppercase tracking-wider text-vogue font-semibold">{event.type}</span>
-                    <h4 className="font-semibold text-cornell text-sm mt-0.5">{event.title}</h4>
-                    <div className="flex items-center gap-3 mt-1">
-                      <span className="text-xs text-charcoal flex items-center gap-1">
-                        <Calendar className="w-3 h-3" /> {event.date}
-                      </span>
-                      <span className="text-xs text-charcoal dark:text-white/80">{event.location}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <Button
-                variant="outline"
-                size="sm"
-                className="w-full mt-4 border-cornell text-cornell hover:bg-cornell hover:text-white rounded-full"
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <div className="flex items-center gap-2 mb-6">
+            <Calendar className="w-5 h-5 text-vogue" />
+            <h3 className="font-bold text-cornell text-lg">Upcoming Events</h3>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {events.map((event, i) => (
+              <motion.div
+                key={event.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-white dark:bg-[#122A1B] rounded-xl p-5 shadow-sm border border-border hover:shadow-md hover:border-vogue/30 transition-all"
               >
-                View All Events
-              </Button>
-            </div>
-          </motion.div>
-        </div>
+                <span className="text-[10px] uppercase tracking-wider text-vogue font-semibold bg-vogue/10 px-2 py-0.5 rounded-full">{event.type}</span>
+                <h4 className="font-semibold text-cornell text-sm mt-3 mb-2">{event.title}</h4>
+                <div className="flex items-center gap-1 text-xs text-charcoal dark:text-white/70 mb-1">
+                  <Calendar className="w-3 h-3" /> {event.date}
+                </div>
+                <p className="text-xs text-charcoal/70 dark:text-white/50">{event.location}</p>
+              </motion.div>
+            ))}
+          </div>
+          <div className="text-center mt-8">
+            <Button
+              variant="outline"
+              size="sm"
+              className="border-cornell text-cornell hover:bg-cornell hover:text-white rounded-full px-8"
+            >
+              View All Events
+            </Button>
+          </div>
+        </motion.div>
       </div>
     </section>
   )
