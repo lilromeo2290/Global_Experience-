@@ -155,9 +155,9 @@ export default function TeamSection() {
 
               {/* Info */}
               <div className="p-6 md:p-8">
-                <span className="text-vogue font-semibold text-sm uppercase tracking-wider">Operations</span>
+                <span className="text-vogue font-semibold text-sm uppercase tracking-wider">Leadership</span>
                 <h3 className="text-xl md:text-2xl font-bold text-cornell mt-2 mb-1">Joycelyn Ankomah</h3>
-                <p className="text-vogue font-medium mb-3">Operations Coordinator</p>
+                <p className="text-vogue font-medium mb-3">Director</p>
                 <p className="text-charcoal dark:text-white/80 text-sm leading-relaxed mb-4">
                   Joycelyn plays a vital role in ensuring the smooth coordination of placements, logistics,
                   and on-the-ground operations. With a strong commitment to organizational excellence, she
