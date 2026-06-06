@@ -75,18 +75,6 @@ export default function DestinationProgramModal({
     }
   }
 
-  const handleViewAll = () => {
-    onClose()
-    setSelectedProgram('')
-    // Scroll to placements or services section
-    const el = document.querySelector('#services')
-    if (el) {
-      const offset = 80
-      const top = el.getBoundingClientRect().top + window.scrollY - offset
-      window.scrollTo({ top, behavior: 'smooth' })
-    }
-  }
-
   const handleClose = () => {
     setSelectedProgram('')
     onClose()
@@ -141,25 +129,15 @@ export default function DestinationProgramModal({
             </Select>
           </div>
 
-          {/* Action Buttons */}
-          <div className="flex flex-col gap-3">
-            <Button
-              onClick={handleApply}
-              disabled={!selectedProgram}
-              className="w-full bg-cornell hover:bg-cornell-dark text-white rounded-full py-3 text-base font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Apply Now
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
-
-            <Button
-              onClick={handleViewAll}
-              variant="outline"
-              className="w-full rounded-full py-2.5 text-sm border-cornell text-cornell hover:bg-cornell/5 dark:border-white/30 dark:text-white/80 dark:hover:bg-white/10"
-            >
-              View All Programs
-            </Button>
-          </div>
+          {/* Action Button */}
+          <Button
+            onClick={handleApply}
+            disabled={!selectedProgram}
+            className="w-full bg-cornell hover:bg-cornell-dark text-white rounded-full py-3 text-base font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Apply Now
+            <ArrowRight className="w-4 h-4 ml-2" />
+          </Button>
 
           <p className="text-[10px] text-center text-charcoal/50 dark:text-white/30 mt-4">
             Select a program and click Apply Now to start your application for {info.name}.
