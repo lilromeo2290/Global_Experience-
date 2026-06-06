@@ -30,22 +30,6 @@ export default function DonateSection() {
   return (
     <section id="donate" className="py-20 bg-white dark:bg-[#0A1F12]">
       <div className="max-w-7xl mx-auto px-4">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <span className="text-vogue font-semibold text-sm uppercase tracking-wider">Support Our Mission</span>
-          <h2 className="text-3xl md:text-4xl font-bold text-cornell mt-2 mb-4">Donation</h2>
-          <p className="text-charcoal dark:text-white/70 max-w-3xl mx-auto leading-relaxed">
-            Our organization can continue its mission because of your support and generosity toward our services to Ghanaians at large.
-            Global Experience, Ghana welcomes donations from NGOs, Corporate Organizations, Government Institutions, and Individuals
-            for the organization&apos;s Outreach Program.
-          </p>
-        </motion.div>
-
         {/* Donation Areas */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
