@@ -32,6 +32,7 @@ const equipmentCategories = [
   'PPE & Protective Gear',
   'Pharmaceutical Supplies',
   'Other Medical Equipment',
+  'Others',
 ]
 
 export default function MedicalEquipmentDonationModal({
