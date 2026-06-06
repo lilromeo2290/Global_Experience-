@@ -8,6 +8,7 @@ import { Menu, Heart, Phone, ChevronDown, ChevronRight, X, Sun, Moon } from 'luc
 import Link from 'next/link'
 import { useTheme } from '@/components/theme-provider'
 import DestinationProgramModal from '@/components/DestinationProgramModal'
+import DonationModal from '@/components/DonationModal'
 
 interface SubLink {
   label: string
@@ -68,6 +69,7 @@ export default function Navbar() {
   const [mobileOpenDropdown, setMobileOpenDropdown] = useState<string | null>(null)
   const [applyOpen, setApplyOpen] = useState(false)
   const [destinationModal, setDestinationModal] = useState<string>('')
+  const [donateOpen, setDonateOpen] = useState(false)
   const dropdownRefs = useRef<Record<string, HTMLDivElement | null>>({})
   const applyRef = useRef<HTMLDivElement | null>(null)
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null)
@@ -187,7 +189,7 @@ export default function Navbar() {
               </a>
             </div>
             <div className="flex items-center gap-3">
-              <a href="#donate" onClick={(e) => { e.preventDefault(); handleNavClick('#donate') }} className="flex items-center gap-1 hover:text-vogue-light transition-colors">
+              <a href="#" onClick={(e) => { e.preventDefault(); setDonateOpen(true) }} className="flex items-center gap-1 hover:text-vogue-light transition-colors">
                 <Heart className="w-3 h-3" /> Donate Now
               </a>
             </div>
@@ -462,6 +464,9 @@ export default function Navbar() {
         onClose={() => setDestinationModal('')}
         destination={destinationModal}
       />
+
+      {/* Donation Modal */}
+      <DonationModal open={donateOpen} onClose={() => setDonateOpen(false)} />
     </motion.nav>
   )
 }
