@@ -64,14 +64,25 @@ export default function DestinationProgramModal({
 
   const handleApply = () => {
     if (!selectedProgram) return
+    const program = selectedProgram
     onClose()
     setSelectedProgram('')
-    // Scroll to volunteer/apply section
-    const el = document.querySelector('#volunteer')
-    if (el) {
-      const offset = 80
-      const top = el.getBoundingClientRect().top + window.scrollY - offset
-      window.scrollTo({ top, behavior: 'smooth' })
+
+    // Dispatch a custom event so the Volunteer section can open the exact program card
+    const event = new CustomEvent('destination-apply', { detail: { program } })
+    window.dispatchEvent(event)
+
+    // Scroll to the exact program card in the volunteer section
+    const programIndex = placementPrograms.indexOf(program)
+    if (programIndex >= 0) {
+      setTimeout(() => {
+        const card = document.getElementById(`opp-${programIndex}`)
+        if (card) {
+          const offset = 100
+          const top = card.getBoundingClientRect().top + window.scrollY - offset
+          window.scrollTo({ top, behavior: 'smooth' })
+        }
+      }, 150)
     }
   }
 

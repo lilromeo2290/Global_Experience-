@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { ArrowRight, CheckCircle2, Shield, Home, Globe2, Heart, Users, BookOpen, MapPin, Building2 } from 'lucide-react'
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const branches = [
   { city: 'Ho', type: 'Head Office', phone: '+233 544 129 556', email: 'ho@globalexperience.org' },
@@ -59,6 +59,32 @@ const safetyFeatures = [
 export default function VolunteerSection() {
   const [branchDialogOpen, setBranchDialogOpen] = useState(false)
   const [selectedOpp, setSelectedOpp] = useState('')
+  const [highlightedOpp, setHighlightedOpp] = useState<string | null>(null)
+
+  // Listen for the destination-apply custom event
+  useEffect(() => {
+    const handleDestinationApply = (e: Event) => {
+      const customEvent = e as CustomEvent<{ program: string }>
+      const program = customEvent.detail.program
+      // Find the matching opportunity and open its branch dialog
+      const match = opportunities.find(o => o.title === program)
+      if (match) {
+        // Highlight the card briefly
+        setHighlightedOpp(match.title)
+        // Open the branch dialog after a short delay for scrolling
+        setTimeout(() => {
+          setSelectedOpp(match.title)
+          setBranchDialogOpen(true)
+        }, 800)
+        // Remove highlight after 2 seconds
+        setTimeout(() => {
+          setHighlightedOpp(null)
+        }, 2500)
+      }
+    }
+    window.addEventListener('destination-apply', handleDestinationApply)
+    return () => window.removeEventListener('destination-apply', handleDestinationApply)
+  }, [])
 
   const handleOppClick = (opp: { title: string }) => {
     setSelectedOpp(opp.title)
@@ -92,13 +118,18 @@ export default function VolunteerSection() {
             {opportunities.map((opp, i) => (
               <motion.div
                 key={opp.title}
+                id={`opp-${i}`}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
                 whileHover={{ y: -3 }}
                 onClick={() => handleOppClick(opp)}
-                className="bg-white rounded-xl p-5 border border-border dark:border-white/10 hover:border-vogue/30 hover:shadow-md transition-all group cursor-pointer"
+                className={`bg-white rounded-xl p-5 border transition-all group cursor-pointer ${
+                  highlightedOpp === opp.title
+                    ? 'border-cornell shadow-lg ring-2 ring-cornell/30 scale-[1.02]'
+                    : 'border-border dark:border-white/10 hover:border-vogue/30 hover:shadow-md'
+                }`}
               >
                 <span className="text-xs bg-cornell/10 text-cornell font-medium px-2 py-0.5 rounded-full">{opp.sector}</span>
                 <h4 className="font-semibold text-cornell mt-2 group-hover:text-vogue transition-colors">{opp.title}</h4>
