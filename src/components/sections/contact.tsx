@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Mail, Phone, MapPin, Clock, MessageCircle, Send } from 'lucide-react'
+import { Mail, Phone, MapPin, Clock, Send } from 'lucide-react'
 import { useState } from 'react'
 
 export default function ContactSection() {
@@ -89,22 +89,6 @@ export default function ContactSection() {
                   </div>
                 </div>
               </div>
-            </div>
-
-            {/* WhatsApp */}
-            <div className="flex flex-col gap-2">
-              <a
-                href="https://wa.me/233544129556"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 bg-green-600 hover:bg-green-700 text-white rounded-xl p-4 shadow-sm transition-colors"
-              >
-                <MessageCircle className="w-6 h-6" />
-                <div>
-                  <div className="font-semibold text-sm">Chat on WhatsApp</div>
-                  <div className="text-xs text-white/80">+233 544 129 556</div>
-                </div>
-              </a>
             </div>
 
             {/* Map */}
