@@ -131,18 +131,6 @@ export default function ContactSection() {
               </div>
             </div>
 
-            {/* Map */}
-            <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-border">
-              <div className="h-48 bg-ivory flex items-center justify-center">
-                <iframe
-                  src="https://maps.google.com/maps?q=Ho,+Volta+Region,+Ghana&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                  className="w-full h-full border-0"
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Head Office Location - Ho, Volta Region, Ghana"
-                />
-              </div>
-            </div>
           </motion.div>
 
           {/* Contact Form */}
@@ -234,6 +222,19 @@ export default function ContactSection() {
                   <Send className="ml-2 w-4 h-4" />
                 </Button>
               </form>
+            </div>
+
+            {/* Map */}
+            <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-border mt-6">
+              <div className="h-64 bg-ivory flex items-center justify-center">
+                <iframe
+                  src="https://maps.google.com/maps?q=Ho,+Volta+Region,+Ghana&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                  className="w-full h-full border-0"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Head Office Location - Ho, Volta Region, Ghana"
+                />
+              </div>
             </div>
           </motion.div>
         </div>
