@@ -135,10 +135,11 @@ export default function ContactSection() {
             <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-border">
               <div className="h-48 bg-ivory flex items-center justify-center">
                 <iframe
-                  src="https://www.openstreetmap.org/export/embed.html?bbox=-0.2%2C5.5%2C-0.1%2C5.6&layer=mapnik"
+                  src="https://maps.google.com/maps?q=Ho,+Volta+Region,+Ghana&t=&z=13&ie=UTF8&iwloc=&output=embed"
                   className="w-full h-full border-0"
                   loading="lazy"
-                  title="Office Location Map"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Head Office Location - Ho, Volta Region, Ghana"
                 />
               </div>
             </div>
