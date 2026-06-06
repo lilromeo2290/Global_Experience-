@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import { ArrowRight, CheckCircle2, Shield, Home, Globe2, Heart, Users, BookOpen, MapPin } from 'lucide-react'
+import { ArrowRight, CheckCircle2, Shield, Home, Heart, Users, MapPin } from 'lucide-react'
 import { useState, useEffect } from 'react'
 
 const opportunities = [
@@ -19,15 +19,6 @@ const opportunities = [
   { title: 'Community Projects — Building of Schools', sector: 'Development' },
   { title: 'Bore Holes — Drinkable Water', sector: 'Infrastructure' },
   { title: 'Gap Year', sector: 'Gap Year' },
-]
-
-const process = [
-  { step: '01', title: 'Choose Your Program', desc: 'Browse our placement categories and find the opportunity that matches your skills, interests, and availability.', icon: Globe2 },
-  { step: '02', title: 'Submit Application', desc: 'Complete our online application form with your details, preferences, and supporting documents.', icon: BookOpen },
-  { step: '03', title: 'Interview & Matching', desc: 'Our team reviews your application and matches you with the ideal placement based on your profile.', icon: Users },
-  { step: '04', title: 'Prepare & Travel', desc: 'Receive comprehensive pre-departure information, packing guidance, and travel arrangements support.', icon: MapPin },
-  { step: '05', title: 'Arrive & Orientate', desc: 'Get picked up at the airport, attend local orientation, and settle into your accommodation.', icon: Home },
-  { step: '06', title: 'Make Impact', desc: 'Begin your placement, contribute to the community, and experience the transformation of a lifetime.', icon: Heart },
 ]
 
 const benefits = [
@@ -119,32 +110,6 @@ export default function VolunteerSection() {
               >
                 <span className="text-xs bg-cornell/10 text-cornell font-medium px-2 py-0.5 rounded-full">{opp.sector}</span>
                 <h4 className="font-semibold text-cornell mt-2 group-hover:text-vogue transition-colors">{opp.title}</h4>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        {/* Application Process */}
-        <div className="mb-20">
-          <h3 className="text-2xl font-bold text-cornell mb-6 text-center">Application Process</h3>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {process.map((step, i) => (
-              <motion.div
-                key={step.step}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-                className="relative bg-white rounded-xl p-6 border border-border dark:border-white/10 hover:border-cornell/20 hover:shadow-sm transition-all"
-              >
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="text-3xl font-bold text-cornell/15">{step.step}</span>
-                  <div className="w-10 h-10 bg-cornell/10 rounded-lg flex items-center justify-center">
-                    <step.icon className="w-5 h-5 text-cornell" />
-                  </div>
-                </div>
-                <h4 className="font-semibold text-cornell mb-1">{step.title}</h4>
-                <p className="text-sm text-charcoal dark:text-white/80">{step.desc}</p>
               </motion.div>
             ))}
           </div>
