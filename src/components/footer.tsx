@@ -1,8 +1,6 @@
 'use client'
 
 import { Heart, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, Youtube } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import Link from 'next/link'
 
 const quickLinks = [
@@ -152,19 +150,6 @@ export default function Footer() {
               </li>
             </ul>
 
-            {/* Newsletter mini */}
-            <div className="mt-6">
-              <p className="text-sm text-white/60 mb-2">Stay updated</p>
-              <div className="flex gap-2">
-                <Input
-                  placeholder="Your email"
-                  className="bg-white/10 border-white/20 text-white placeholder:text-white/40 text-sm rounded-full"
-                />
-                <Button size="sm" className="bg-cornell hover:bg-cornell-dark text-white rounded-full px-4">
-                  Join
-                </Button>
-              </div>
-            </div>
           </div>
         </div>
       </div>
