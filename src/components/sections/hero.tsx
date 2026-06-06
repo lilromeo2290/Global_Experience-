@@ -42,6 +42,11 @@ const slides = [
     alt: 'Discover New Horizons',
     position: 'center center',
   },
+  {
+    src: '/images/slider-forklift-1.jpg',
+    alt: 'Global Experience - Forklift Operations',
+    position: 'center center',
+  },
 ]
 
 export default function HeroSection() {
