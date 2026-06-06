@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import { ArrowLeft, CheckCircle2, Send, User, Mail, Phone, MapPin, Calendar, Globe2, FileText } from 'lucide-react'
+import { ArrowLeft, CheckCircle2, Send, User, Mail, Phone, MapPin, Calendar, Globe2, FileText, CalendarCheck } from 'lucide-react'
 import Link from 'next/link'
 
 const programs = [
@@ -24,13 +24,28 @@ const programs = [
 ]
 
 const durations = [
-  '2-4 weeks',
-  '4-8 weeks',
-  '8-12 weeks',
-  '12-16 weeks',
-  '16-24 weeks',
-  '6+ months',
+  '1 Week',
+  '2 Weeks',
+  '3 Weeks',
+  '4 Weeks',
+  '6 Weeks',
+  '8 Weeks',
+  '3 Months',
+  '6 Months',
+  '12 Months',
 ]
+
+const durationDaysMap: Record<string, number> = {
+  '1 Week': 7,
+  '2 Weeks': 14,
+  '3 Weeks': 21,
+  '4 Weeks': 28,
+  '6 Weeks': 42,
+  '8 Weeks': 56,
+  '3 Months': 90,
+  '6 Months': 180,
+  '12 Months': 365,
+}
 
 const howDidYouHear = [
   'Google Search',
@@ -61,11 +76,30 @@ function ApplyPage() {
     phone: '',
     nationality: '',
     program: '',
+    branch: '',
     duration: '',
     startDate: '',
+    endDate: '',
     message: '',
     referral: '',
   })
+
+  // Calculate end date from start date + duration
+  const calculateEndDate = (startDate: string, duration: string): string => {
+    if (!startDate || !duration) return ''
+    const start = new Date(startDate)
+    const days = durationDaysMap[duration]
+    if (!days) return ''
+    const end = new Date(start)
+    end.setDate(end.getDate() + days)
+    return end.toISOString().split('T')[0]
+  }
+
+  const formatDate = (dateStr: string): string => {
+    if (!dateStr) return ''
+    const date = new Date(dateStr + 'T00:00:00')
+    return date.toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' })
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -79,7 +113,7 @@ function ApplyPage() {
     }
     const branchParam = searchParams.get('branch')
     if (branchParam) {
-      // Could be used to pre-fill a branch field if needed
+      setFormData(prev => ({ ...prev, branch: branchParam }))
     }
     const startDateParam = searchParams.get('startDate')
     if (startDateParam) {
@@ -89,7 +123,21 @@ function ApplyPage() {
     if (durationParam && durations.includes(durationParam)) {
       setFormData(prev => ({ ...prev, duration: durationParam }))
     }
+    const endDateParam = searchParams.get('endDate')
+    if (endDateParam) {
+      setFormData(prev => ({ ...prev, endDate: endDateParam }))
+    }
   }, [searchParams])
+
+  // Auto-calculate end date when start date or duration changes
+  useEffect(() => {
+    if (formData.startDate && formData.duration) {
+      const calculated = calculateEndDate(formData.startDate, formData.duration)
+      if (calculated !== formData.endDate) {
+        setFormData(prev => ({ ...prev, endDate: calculated }))
+      }
+    }
+  }, [formData.startDate, formData.duration])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -310,6 +358,22 @@ function ApplyPage() {
                 </div>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="sm:col-span-2">
+                    <label className="block text-sm font-medium text-charcoal mb-1.5">Preferred Branch / Location *</label>
+                    <select
+                      name="branch"
+                      required
+                      value={formData.branch}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cornell/20 focus:border-cornell transition-colors"
+                    >
+                      <option value="">Select a branch</option>
+                      <option value="Ho">Ho (Head Office)</option>
+                      <option value="Cape Coast">Cape Coast (Regional Office)</option>
+                      <option value="Takoradi">Takoradi (Regional Office)</option>
+                      <option value="Accra">Accra (Regional Office)</option>
+                    </select>
+                  </div>
+                  <div className="sm:col-span-2">
                     <label className="block text-sm font-medium text-charcoal mb-1.5">Preferred Placement Program *</label>
                     <select
                       name="program"
@@ -347,9 +411,33 @@ function ApplyPage() {
                       required
                       value={formData.startDate}
                       onChange={handleChange}
+                      min={new Date().toISOString().split('T')[0]}
                       className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cornell/20 focus:border-cornell transition-colors"
                     />
                   </div>
+                  {/* End Date (Auto-calculated) */}
+                  {formData.endDate && (
+                    <div className="sm:col-span-2">
+                      <div className="bg-vogue/5 border border-vogue/20 rounded-xl p-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 bg-vogue/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <CalendarCheck className="w-5 h-5 text-vogue" />
+                          </div>
+                          <div>
+                            <label className="text-xs font-medium text-vogue mb-0.5 block">
+                              End Date
+                            </label>
+                            <p className="text-sm font-semibold text-cornell">
+                              {formatDate(formData.endDate)}
+                            </p>
+                            <p className="text-[10px] text-charcoal/50 mt-0.5">
+                              Auto-calculated from start date + {formData.duration.toLowerCase()}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
 

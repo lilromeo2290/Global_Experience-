@@ -2,16 +2,8 @@
 
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import { ArrowRight, CheckCircle2, Shield, Home, Globe2, Heart, Users, BookOpen, MapPin, Building2 } from 'lucide-react'
-import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
+import { ArrowRight, CheckCircle2, Shield, Home, Globe2, Heart, Users, BookOpen, MapPin } from 'lucide-react'
 import { useState, useEffect } from 'react'
-
-const branches = [
-  { city: 'Ho', type: 'Head Office', phone: '+233 544 129 556', email: 'ho@globalexperience.org' },
-  { city: 'Cape Coast', type: 'Regional Office', phone: '+233 234 567 890', email: 'capecoast@globalexperience.org' },
-  { city: 'Takoradi', type: 'Regional Office', phone: '+233 456 789 012', email: 'takoradi@globalexperience.org' },
-  { city: 'Accra', type: 'Regional Office', phone: '+233 544 129 556', email: 'accra@globalexperience.org' },
-]
 
 const opportunities = [
   { title: 'Medical Placement in Teaching Hospitals', sector: 'Healthcare' },
@@ -57,8 +49,6 @@ const safetyFeatures = [
 ]
 
 export default function VolunteerSection() {
-  const [branchDialogOpen, setBranchDialogOpen] = useState(false)
-  const [selectedOpp, setSelectedOpp] = useState('')
   const [highlightedOpp, setHighlightedOpp] = useState<string | null>(null)
 
   // Listen for the destination-apply custom event
@@ -66,16 +56,11 @@ export default function VolunteerSection() {
     const handleDestinationApply = (e: Event) => {
       const customEvent = e as CustomEvent<{ program: string }>
       const program = customEvent.detail.program
-      // Find the matching opportunity and open its branch dialog
+      // Find the matching opportunity and highlight it
       const match = opportunities.find(o => o.title === program)
       if (match) {
         // Highlight the card briefly
         setHighlightedOpp(match.title)
-        // Open the branch dialog after a short delay for scrolling
-        setTimeout(() => {
-          setSelectedOpp(match.title)
-          setBranchDialogOpen(true)
-        }, 800)
         // Remove highlight after 2 seconds
         setTimeout(() => {
           setHighlightedOpp(null)
@@ -87,8 +72,9 @@ export default function VolunteerSection() {
   }, [])
 
   const handleOppClick = (opp: { title: string }) => {
-    setSelectedOpp(opp.title)
-    setBranchDialogOpen(true)
+    // Navigate to the apply page with the selected program
+    const params = new URLSearchParams({ program: opp.title })
+    window.location.href = `/apply?${params.toString()}`
   }
 
   return (
@@ -125,7 +111,7 @@ export default function VolunteerSection() {
                 transition={{ delay: i * 0.05 }}
                 whileHover={{ y: -3 }}
                 onClick={() => handleOppClick(opp)}
-                className={`bg-white rounded-xl p-5 border transition-all group cursor-pointer ${
+                className={`bg-cream dark:bg-[#122A1B] rounded-xl p-5 border transition-all group cursor-pointer ${
                   highlightedOpp === opp.title
                     ? 'border-cornell shadow-lg ring-2 ring-cornell/30 scale-[1.02]'
                     : 'border-border dark:border-white/10 hover:border-vogue/30 hover:shadow-md'
@@ -137,36 +123,6 @@ export default function VolunteerSection() {
             ))}
           </div>
         </div>
-
-        {/* Branch Selection Dialog */}
-        <Dialog open={branchDialogOpen} onOpenChange={setBranchDialogOpen}>
-          <DialogContent className="max-w-lg">
-            <DialogTitle className="text-xl font-bold text-cornell mb-1">Choose a Branch</DialogTitle>
-            <p className="text-sm text-charcoal mb-5">{selectedOpp} is available at multiple branches. Please select your preferred location:</p>
-            <div className="grid gap-3">
-              {branches.map((branch) => (
-                <a
-                  key={branch.city}
-                  href={`/apply?program=${encodeURIComponent(selectedOpp)}&branch=${encodeURIComponent(branch.city)}`}
-                  onClick={() => setBranchDialogOpen(false)}
-                  className="flex items-center gap-4 p-4 rounded-xl border border-border hover:border-cornell/30 hover:shadow-sm transition-all group"
-                >
-                  <div className="w-10 h-10 bg-cornell/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Building2 className="w-5 h-5 text-cornell" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <h4 className="font-semibold text-cornell group-hover:text-vogue transition-colors">{branch.city}</h4>
-                      <span className="text-[10px] bg-vogue/10 text-vogue px-2 py-0.5 rounded-full font-medium">{branch.type}</span>
-                    </div>
-                    <p className="text-xs text-charcoal mt-0.5">{branch.phone} · {branch.email}</p>
-                  </div>
-                  <ArrowRight className="w-4 h-4 text-charcoal/30 group-hover:text-cornell transition-colors flex-shrink-0" />
-                </a>
-              ))}
-            </div>
-          </DialogContent>
-        </Dialog>
 
         {/* Application Process */}
         <div className="mb-20">

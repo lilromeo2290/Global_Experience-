@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/dialog'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Label } from '@/components/ui/label'
-import { MapPin, Briefcase, ArrowRight, Calendar, Clock, X, ChevronLeft } from 'lucide-react'
+import { MapPin, Briefcase, ArrowRight, Calendar, Clock, X, ChevronLeft, CalendarCheck } from 'lucide-react'
 
 const placementPrograms = [
   'Medical Placement in Teaching Hospitals',
@@ -78,6 +78,36 @@ export default function DestinationProgramModal({
 
   const info = destinationInfo[destination]
 
+  // Calculate end date based on start date + duration
+  const calculateEndDate = (): string => {
+    if (!startDate || !selectedDuration) return ''
+    const start = new Date(startDate)
+    const durationMap: Record<string, number> = {
+      '1 Week': 7,
+      '2 Weeks': 14,
+      '3 Weeks': 21,
+      '4 Weeks': 28,
+      '6 Weeks': 42,
+      '8 Weeks': 56,
+      '3 Months': 90,
+      '6 Months': 180,
+      '12 Months': 365,
+    }
+    const days = durationMap[selectedDuration]
+    if (!days) return ''
+    const end = new Date(start)
+    end.setDate(end.getDate() + days)
+    return end.toISOString().split('T')[0]
+  }
+
+  const endDate = calculateEndDate()
+
+  const formatDate = (dateStr: string): string => {
+    if (!dateStr) return ''
+    const date = new Date(dateStr + 'T00:00:00')
+    return date.toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' })
+  }
+
   // Reset state when destination changes
   useEffect(() => {
     setStep(1)
@@ -106,6 +136,7 @@ export default function DestinationProgramModal({
       branch: info?.name || dest,
       startDate: date,
       duration,
+      endDate,
     })
     window.location.href = `/apply?${params.toString()}`
   }
@@ -247,6 +278,28 @@ export default function DestinationProgramModal({
                   </SelectContent>
                 </Select>
               </div>
+
+              {/* End Date (Auto-calculated) */}
+              {endDate && (
+                <div className="bg-vogue/5 dark:bg-vogue/10 border border-vogue/20 rounded-xl p-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-vogue/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <CalendarCheck className="w-5 h-5 text-vogue" />
+                    </div>
+                    <div>
+                      <Label className="text-xs font-medium text-vogue mb-0.5 block">
+                        End Date
+                      </Label>
+                      <p className="text-sm font-semibold text-cornell dark:text-white">
+                        {formatDate(endDate)}
+                      </p>
+                      <p className="text-[10px] text-charcoal/50 dark:text-white/40 mt-0.5">
+                        Auto-calculated from start date + {selectedDuration.toLowerCase()}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Action Buttons */}
