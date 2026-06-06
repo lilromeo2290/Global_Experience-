@@ -77,6 +77,18 @@ function ApplyPage() {
     if (programParam && programs.includes(programParam)) {
       setFormData(prev => ({ ...prev, program: programParam }))
     }
+    const branchParam = searchParams.get('branch')
+    if (branchParam) {
+      // Could be used to pre-fill a branch field if needed
+    }
+    const startDateParam = searchParams.get('startDate')
+    if (startDateParam) {
+      setFormData(prev => ({ ...prev, startDate: startDateParam }))
+    }
+    const durationParam = searchParams.get('duration')
+    if (durationParam && durations.includes(durationParam)) {
+      setFormData(prev => ({ ...prev, duration: durationParam }))
+    }
   }, [searchParams])
 
   const handleSubmit = (e: React.FormEvent) => {
