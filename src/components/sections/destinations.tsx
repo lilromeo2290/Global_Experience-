@@ -1,7 +1,9 @@
 'use client'
 
+import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { MapPin, Building2, Globe, Palmtree, Mountain } from 'lucide-react'
+import { MapPin, Building2, Globe, Palmtree, Mountain, Briefcase } from 'lucide-react'
+import DestinationProgramModal from '@/components/DestinationProgramModal'
 
 const currentDestinations = [
   {
@@ -14,7 +16,7 @@ const currentDestinations = [
     color: 'vogue',
   },
   {
-    city: 'Volta – HO',
+    city: 'Volta \u2013 HO',
     slug: 'volta-ho',
     country: 'Ghana',
     type: 'Head Office',
@@ -45,28 +47,28 @@ const currentDestinations = [
 const comingSoonDestinations = [
   {
     country: 'Tanzania',
-    flag: '🇹🇿',
+    flag: '\uD83C\uDDF9\uD83C\uDDFF',
     description: 'Ecotourism placements, community health outreach, and education programs near the Serengeti and Mount Kilimanjaro.',
     focus: ['Ecotourism', 'Community Health', 'Education', 'Wildlife Conservation'],
     icon: Mountain,
   },
   {
     country: 'Kenya',
-    flag: '🇰🇪',
+    flag: '\uD83C\uDDF0\uD83C\uDDEA',
     description: 'Journalism, banking and finance, and tourism placements in a dynamic economy with world-famous national parks.',
     focus: ['Journalism & Media', 'Banking & Finance', 'Tourism', 'Sports Development'],
     icon: Globe,
   },
   {
     country: 'Nepal',
-    flag: '🇳🇵',
+    flag: '\uD83C\uDDF3\uD83C\uDDF5',
     description: 'Community development, teaching, and healthcare placements amid breathtaking Himalayan landscapes and resilient communities.',
     focus: ['Teaching', 'Healthcare', 'Community Development', 'Mountain Ecotourism'],
     icon: Mountain,
   },
   {
     country: 'Zambia',
-    flag: '🇿🇲',
+    flag: '\uD83C\uDDFF\uD83C\uDDF2',
     description: 'Agriculture placements, school building projects, and bore hole water initiatives near the stunning Victoria Falls.',
     focus: ['Agriculture', 'School Building', 'Bore Hole Projects', 'Community Outreach'],
     icon: Palmtree,
@@ -74,6 +76,8 @@ const comingSoonDestinations = [
 ]
 
 export default function DestinationsSection() {
+  const [selectedDestination, setSelectedDestination] = useState('')
+
   return (
     <section id="destinations" className="py-20 bg-white dark:bg-[#0A1F12]">
       <div className="max-w-7xl mx-auto px-4">
@@ -138,7 +142,7 @@ export default function DestinationsSection() {
                 <p className="text-charcoal dark:text-white/70 text-sm leading-relaxed mb-4">
                   {dest.description}
                 </p>
-                <div className="mb-4">
+                <div className="mb-5">
                   <div className="flex flex-wrap gap-2">
                     {dest.highlights.map((h) => (
                       <span
@@ -154,6 +158,19 @@ export default function DestinationsSection() {
                     ))}
                   </div>
                 </div>
+
+                {/* Select Program Button */}
+                <button
+                  onClick={() => setSelectedDestination(dest.slug)}
+                  className={`w-full flex items-center justify-center gap-2 py-3 rounded-full text-sm font-semibold transition-all duration-200 ${
+                    dest.type === 'Head Office'
+                      ? 'bg-cornell hover:bg-cornell-dark text-white'
+                      : 'bg-vogue hover:bg-vogue-dark text-white'
+                  }`}
+                >
+                  <Briefcase className="w-4 h-4" />
+                  Select a Placement Program
+                </button>
               </div>
             </motion.div>
           ))}
@@ -214,8 +231,14 @@ export default function DestinationsSection() {
           </div>
         </motion.div>
 
-
       </div>
+
+      {/* Destination Program Modal */}
+      <DestinationProgramModal
+        open={!!selectedDestination}
+        onClose={() => setSelectedDestination('')}
+        destination={selectedDestination}
+      />
     </section>
   )
 }
