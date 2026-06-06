@@ -69,6 +69,7 @@ function ApplyPage() {
   const searchParams = useSearchParams()
 
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -139,9 +140,36 @@ function ApplyPage() {
     }
   }, [formData.startDate, formData.duration])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSubmitted(true)
+    if (submitting) return
+    setSubmitting(true)
+    try {
+      const res = await fetch('/api/applications', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          phone: formData.phone,
+          nationality: formData.nationality,
+          program: formData.program,
+          branch: formData.branch,
+          duration: formData.duration,
+          startDate: formData.startDate,
+          endDate: formData.endDate,
+          message: formData.message,
+        }),
+      })
+      if (res.ok) {
+        setSubmitted(true)
+      }
+    } catch (err) {
+      console.error('Application submission failed:', err)
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   if (submitted) {
@@ -495,10 +523,11 @@ function ApplyPage() {
               <Button
                 type="submit"
                 size="lg"
+                disabled={submitting}
                 className="w-full bg-cornell hover:bg-cornell-dark text-white rounded-full text-base py-3"
               >
                 <Send className="w-4 h-4 mr-2" />
-                Submit Application
+                {submitting ? 'Submitting...' : 'Submit Application'}
               </Button>
 
               <p className="text-[11px] text-charcoal/50 text-center mt-4">

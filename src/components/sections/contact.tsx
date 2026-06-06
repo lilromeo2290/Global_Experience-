@@ -11,11 +11,41 @@ import { useState } from 'react'
 
 export default function ContactSection() {
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    inquiry: '',
+    program: '',
+    message: '',
+  })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 4000)
+    if (submitting) return
+    setSubmitting(true)
+    try {
+      const res = await fetch('/api/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+      if (res.ok) {
+        setSubmitted(true)
+        setFormData({ firstName: '', lastName: '', email: '', phone: '', inquiry: '', program: '', message: '' })
+        setTimeout(() => setSubmitted(false), 4000)
+      }
+    } catch (err) {
+      console.error('Message send failed:', err)
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -118,59 +148,59 @@ export default function ContactSection() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="firstName" className="text-sm text-cornell font-medium">First Name *</Label>
-                    <Input id="firstName" placeholder="John" required className="mt-1 rounded-lg border-border focus:border-cornell focus:ring-cornell" />
+                    <Input id="firstName" name="firstName" placeholder="John" required value={formData.firstName} onChange={handleChange} className="mt-1 rounded-lg border-border focus:border-cornell focus:ring-cornell" />
                   </div>
                   <div>
                     <Label htmlFor="lastName" className="text-sm text-cornell font-medium">Last Name *</Label>
-                    <Input id="lastName" placeholder="Doe" required className="mt-1 rounded-lg border-border focus:border-cornell focus:ring-cornell" />
+                    <Input id="lastName" name="lastName" placeholder="Doe" required value={formData.lastName} onChange={handleChange} className="mt-1 rounded-lg border-border focus:border-cornell focus:ring-cornell" />
                   </div>
                 </div>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="email" className="text-sm text-cornell font-medium">Email *</Label>
-                    <Input id="email" type="email" placeholder="john@example.com" required className="mt-1 rounded-lg border-border focus:border-cornell focus:ring-cornell" />
+                    <Input id="email" name="email" type="email" placeholder="john@example.com" required value={formData.email} onChange={handleChange} className="mt-1 rounded-lg border-border focus:border-cornell focus:ring-cornell" />
                   </div>
                   <div>
                     <Label htmlFor="phone" className="text-sm text-cornell font-medium">Phone</Label>
-                    <Input id="phone" type="tel" placeholder="+1 234 567 890" className="mt-1 rounded-lg border-border focus:border-cornell focus:ring-cornell" />
+                    <Input id="phone" name="phone" type="tel" placeholder="+1 234 567 890" value={formData.phone} onChange={handleChange} className="mt-1 rounded-lg border-border focus:border-cornell focus:ring-cornell" />
                   </div>
                 </div>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="inquiry" className="text-sm text-cornell font-medium">Inquiry Type *</Label>
-                    <Select>
+                    <Select value={formData.inquiry} onValueChange={(val) => setFormData({ ...formData, inquiry: val })}>
                       <SelectTrigger className="mt-1 rounded-lg border-border focus:border-cornell">
                         <SelectValue placeholder="Select inquiry type" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="placement">Placement Inquiry</SelectItem>
-                        <SelectItem value="volunteer">Volunteer Application</SelectItem>
-                        <SelectItem value="donation">Donation Query</SelectItem>
-                        <SelectItem value="partnership">Partnership Opportunity</SelectItem>
-                        <SelectItem value="media">Media / Press</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
+                        <SelectItem value="Placement Inquiry">Placement Inquiry</SelectItem>
+                        <SelectItem value="Volunteer Application">Volunteer Application</SelectItem>
+                        <SelectItem value="Donation Query">Donation Query</SelectItem>
+                        <SelectItem value="Partnership Opportunity">Partnership Opportunity</SelectItem>
+                        <SelectItem value="Media / Press">Media / Press</SelectItem>
+                        <SelectItem value="Other">Other</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                   <div>
                     <Label htmlFor="program" className="text-sm text-cornell font-medium">Interested Program</Label>
-                    <Select>
+                    <Select value={formData.program} onValueChange={(val) => setFormData({ ...formData, program: val })}>
                       <SelectTrigger className="mt-1 rounded-lg border-border focus:border-cornell">
                         <SelectValue placeholder="Select a program" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="medical">Medical Placement in Teaching Hospitals</SelectItem>
-                        <SelectItem value="teaching">Teaching</SelectItem>
-                        <SelectItem value="journalism">Journalism</SelectItem>
-                        <SelectItem value="community">Community Outreach</SelectItem>
-                        <SelectItem value="sports">Sports</SelectItem>
-                        <SelectItem value="admin">Office Administration</SelectItem>
-                        <SelectItem value="finance">Banking and Finance</SelectItem>
-                        <SelectItem value="law">Law Placements</SelectItem>
-                        <SelectItem value="agriculture">Agriculture Placement</SelectItem>
-                        <SelectItem value="tourism">Tourism and Ecotourism</SelectItem>
-                        <SelectItem value="schools">Community Projects — Building of Schools</SelectItem>
-                        <SelectItem value="boreholes">Bore Holes — Drinkable Water</SelectItem>
+                        <SelectItem value="Medical Placement in Teaching Hospitals">Medical Placement in Teaching Hospitals</SelectItem>
+                        <SelectItem value="Teaching">Teaching</SelectItem>
+                        <SelectItem value="Journalism">Journalism</SelectItem>
+                        <SelectItem value="Community Outreach">Community Outreach</SelectItem>
+                        <SelectItem value="Sports">Sports</SelectItem>
+                        <SelectItem value="Office Administration">Office Administration</SelectItem>
+                        <SelectItem value="Banking and Finance">Banking and Finance</SelectItem>
+                        <SelectItem value="Law Placements">Law Placements</SelectItem>
+                        <SelectItem value="Agriculture Placement">Agriculture Placement</SelectItem>
+                        <SelectItem value="Tourism and Ecotourism">Tourism and Ecotourism</SelectItem>
+                        <SelectItem value="Community Projects — Building of Schools">Community Projects — Building of Schools</SelectItem>
+                        <SelectItem value="Bore Holes — Drinkable Water">Bore Holes — Drinkable Water</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -179,24 +209,26 @@ export default function ContactSection() {
                   <Label htmlFor="message" className="text-sm text-cornell font-medium">Message *</Label>
                   <Textarea
                     id="message"
+                    name="message"
                     placeholder="Tell us about yourself and how we can help..."
                     required
                     rows={5}
+                    value={formData.message}
+                    onChange={handleChange}
                     className="mt-1 rounded-lg border-border focus:border-cornell focus:ring-cornell"
                   />
                 </div>
                 <Button
                   type="submit"
                   size="lg"
+                  disabled={submitting}
                   className="w-full bg-cornell hover:bg-cornell-dark text-white rounded-full text-base"
                 >
-                  {submitted ? 'Message Sent!' : 'Send Message'}
+                  {submitted ? 'Message Sent!' : submitting ? 'Sending...' : 'Send Message'}
                   <Send className="ml-2 w-4 h-4" />
                 </Button>
               </form>
             </div>
-
-
           </motion.div>
         </div>
       </div>

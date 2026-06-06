@@ -117,3 +117,56 @@ model SiteSetting {
   value     String
   updatedAt DateTime @updatedAt
 }
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  firstName String
+  lastName  String
+  email     String
+  phone     String?
+  inquiry   String?
+  program   String?
+  message   String
+  status    String   @default("unread")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PickupRequest {
+  id              String   @id @default(cuid())
+  fullName        String
+  email           String
+  phone           String
+  nationality     String
+  flightNumber    String?
+  airline         String?
+  arrivalDate     String?
+  arrivalTime     String?
+  airport         String?
+  accommodation   String?
+  specialRequests String?
+  status          String   @default("pending")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model OutreachDonation {
+  id             String   @id @default(cuid())
+  programArea    String
+  fullName       String
+  email          String
+  phone          String
+  organization   String?
+  country        String
+  city           String
+  category       String
+  itemCondition  String?
+  quantity       String?
+  description    String
+  deliveryMethod String
+  pickupAddress  String?
+  message        String?
+  status         String   @default("pending")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}

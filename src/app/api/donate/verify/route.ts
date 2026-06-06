@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { sendEmail, formatDonationEmail } from '@/lib/email'
 
 export async function POST(request: NextRequest) {
   try {
@@ -31,16 +32,31 @@ export async function POST(request: NextRequest) {
 
     // Check if transaction was successful
     if (data.data.status === 'success') {
+      const donationData = {
+        name: data.data.metadata?.name || '',
+        email: data.data.customer.email,
+        phone: data.data.metadata?.phone || '',
+        amount: data.data.amount / 100, // Paystack returns amount in kobo/cents
+        currency: data.data.currency,
+        reference: data.data.reference,
+      }
+
+      // Send email notification
+      await sendEmail({
+        subject: `New Donation Received — ${donationData.currency} ${donationData.amount} from ${donationData.name || donationData.email}`,
+        html: formatDonationEmail(donationData),
+      })
+
       return NextResponse.json({
         success: true,
         message: 'Payment verified successfully',
         data: {
           reference: data.data.reference,
-          amount: data.data.amount / 100, // Paystack returns amount in kobo/cents
+          amount: donationData.amount,
           currency: data.data.currency,
           email: data.data.customer.email,
-          name: data.data.metadata?.name || '',
-          phone: data.data.metadata?.phone || '',
+          name: donationData.name,
+          phone: donationData.phone,
           paid_at: data.data.paid_at,
         },
       })

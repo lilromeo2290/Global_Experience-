@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
+import { sendEmail, formatPickupRequestEmail } from '@/lib/email'
 
 export async function GET() {
   const pickups = await db.pickupRequest.findMany({ orderBy: { createdAt: 'desc' } })
@@ -9,6 +10,13 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   const data = await req.json()
   const pickup = await db.pickupRequest.create({ data })
+
+  // Send email notification
+  await sendEmail({
+    subject: `New Airport Pickup Request from ${data.fullName}`,
+    html: formatPickupRequestEmail(data),
+  })
+
   return NextResponse.json(pickup)
 }
 

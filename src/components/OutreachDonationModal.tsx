@@ -265,6 +265,7 @@ export default function OutreachDonationModal({
 }) {
   const config = programConfigs[programArea]
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -285,9 +286,24 @@ export default function OutreachDonationModal({
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSubmitted(true)
+    if (submitting) return
+    setSubmitting(true)
+    try {
+      const res = await fetch('/api/outreach-donations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...formData, programArea }),
+      })
+      if (res.ok) {
+        setSubmitted(true)
+      }
+    } catch (err) {
+      console.error('Outreach donation submission failed:', err)
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   const handleClose = () => {
@@ -647,10 +663,10 @@ export default function OutreachDonationModal({
           {/* Submit */}
           <Button
             type="submit"
-            disabled={!formData.category || !formData.deliveryMethod || (config.showCondition && !formData.itemCondition)}
+            disabled={!formData.category || !formData.deliveryMethod || (config.showCondition && !formData.itemCondition) || submitting}
             className="w-full bg-cornell hover:bg-cornell-dark text-white rounded-full py-3 text-base font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Submit Donation Offer
+            {submitting ? 'Submitting...' : 'Submit Donation Offer'}
             <ArrowRight className="w-4 h-4 ml-2" />
           </Button>
 
