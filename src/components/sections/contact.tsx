@@ -175,43 +175,45 @@ export default function ContactSection() {
                     <Input id="phone" type="tel" placeholder="+1 234 567 890" className="mt-1 rounded-lg border-border focus:border-cornell focus:ring-cornell" />
                   </div>
                 </div>
-                <div>
-                  <Label htmlFor="inquiry" className="text-sm text-cornell font-medium">Inquiry Type *</Label>
-                  <Select>
-                    <SelectTrigger className="mt-1 rounded-lg border-border focus:border-cornell">
-                      <SelectValue placeholder="Select inquiry type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="placement">Placement Inquiry</SelectItem>
-                      <SelectItem value="volunteer">Volunteer Application</SelectItem>
-                      <SelectItem value="donation">Donation Query</SelectItem>
-                      <SelectItem value="partnership">Partnership Opportunity</SelectItem>
-                      <SelectItem value="media">Media / Press</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <Label htmlFor="program" className="text-sm text-cornell font-medium">Interested Program</Label>
-                  <Select>
-                    <SelectTrigger className="mt-1 rounded-lg border-border focus:border-cornell">
-                      <SelectValue placeholder="Select a program" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="medical">Medical Placement in Teaching Hospitals</SelectItem>
-                      <SelectItem value="teaching">Teaching</SelectItem>
-                      <SelectItem value="journalism">Journalism</SelectItem>
-                      <SelectItem value="community">Community Outreach</SelectItem>
-                      <SelectItem value="sports">Sports</SelectItem>
-                      <SelectItem value="admin">Office Administration</SelectItem>
-                      <SelectItem value="finance">Banking and Finance</SelectItem>
-                      <SelectItem value="law">Law Placements</SelectItem>
-                      <SelectItem value="agriculture">Agriculture Placement</SelectItem>
-                      <SelectItem value="tourism">Tourism and Ecotourism</SelectItem>
-                      <SelectItem value="schools">Community Projects — Building of Schools</SelectItem>
-                      <SelectItem value="boreholes">Bore Holes — Drinkable Water</SelectItem>
-                    </SelectContent>
-                  </Select>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="inquiry" className="text-sm text-cornell font-medium">Inquiry Type *</Label>
+                    <Select>
+                      <SelectTrigger className="mt-1 rounded-lg border-border focus:border-cornell">
+                        <SelectValue placeholder="Select inquiry type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="placement">Placement Inquiry</SelectItem>
+                        <SelectItem value="volunteer">Volunteer Application</SelectItem>
+                        <SelectItem value="donation">Donation Query</SelectItem>
+                        <SelectItem value="partnership">Partnership Opportunity</SelectItem>
+                        <SelectItem value="media">Media / Press</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <Label htmlFor="program" className="text-sm text-cornell font-medium">Interested Program</Label>
+                    <Select>
+                      <SelectTrigger className="mt-1 rounded-lg border-border focus:border-cornell">
+                        <SelectValue placeholder="Select a program" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="medical">Medical Placement in Teaching Hospitals</SelectItem>
+                        <SelectItem value="teaching">Teaching</SelectItem>
+                        <SelectItem value="journalism">Journalism</SelectItem>
+                        <SelectItem value="community">Community Outreach</SelectItem>
+                        <SelectItem value="sports">Sports</SelectItem>
+                        <SelectItem value="admin">Office Administration</SelectItem>
+                        <SelectItem value="finance">Banking and Finance</SelectItem>
+                        <SelectItem value="law">Law Placements</SelectItem>
+                        <SelectItem value="agriculture">Agriculture Placement</SelectItem>
+                        <SelectItem value="tourism">Tourism and Ecotourism</SelectItem>
+                        <SelectItem value="schools">Community Projects — Building of Schools</SelectItem>
+                        <SelectItem value="boreholes">Bore Holes — Drinkable Water</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
                 <div>
                   <Label htmlFor="message" className="text-sm text-cornell font-medium">Message *</Label>
