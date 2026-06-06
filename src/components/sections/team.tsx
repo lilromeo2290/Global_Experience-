@@ -26,7 +26,7 @@ export default function TeamSection() {
         </motion.div>
 
         {/* Team Grid */}
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* CEO Card */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -116,6 +116,54 @@ export default function TeamSection() {
                     VB.NET, Java, MySQL, Website Development
                   </p>
                 </div>
+                <div className="flex items-center gap-3">
+                  <a href="#" className="w-9 h-9 bg-cornell/10 rounded-full flex items-center justify-center hover:bg-cornell hover:text-white transition-all group/icon">
+                    <Linkedin className="w-4 h-4 text-cornell group-hover/icon:text-white" />
+                  </a>
+                  <a href="mailto:info@globalexperiencegh.org" className="w-9 h-9 bg-cornell/10 rounded-full flex items-center justify-center hover:bg-cornell hover:text-white transition-all group/icon">
+                    <Mail className="w-4 h-4 text-cornell group-hover/icon:text-white" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Joycelyn Ankomah Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            <div className="bg-white dark:bg-[#122A1B] rounded-2xl overflow-hidden shadow-md border border-border hover:shadow-xl hover:border-vogue/30 transition-all duration-300 group">
+              {/* Photo */}
+              <div className="aspect-[4/3] bg-ivory overflow-hidden relative">
+                <img
+                  src="/images/team-joycelyn-ankomah.jpg"
+                  alt="Joycelyn Ankomah"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6 gap-4">
+                  <a href="#" aria-label="Joycelyn Ankomah LinkedIn" className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/40 transition-colors">
+                    <Linkedin className="w-5 h-5 text-white" />
+                  </a>
+                  <a href="mailto:info@globalexperiencegh.org" aria-label="Email Joycelyn Ankomah" className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/40 transition-colors">
+                    <Mail className="w-5 h-5 text-white" />
+                  </a>
+                </div>
+              </div>
+
+              {/* Info */}
+              <div className="p-6 md:p-8">
+                <span className="text-vogue font-semibold text-sm uppercase tracking-wider">Operations</span>
+                <h3 className="text-xl md:text-2xl font-bold text-cornell mt-2 mb-1">Joycelyn Ankomah</h3>
+                <p className="text-vogue font-medium mb-3">Operations Coordinator</p>
+                <p className="text-charcoal dark:text-white/80 text-sm leading-relaxed mb-4">
+                  Joycelyn plays a vital role in ensuring the smooth coordination of placements, logistics,
+                  and on-the-ground operations. With a strong commitment to organizational excellence, she
+                  helps bridge the gap between international volunteers and local communities, ensuring every
+                  experience is seamless and impactful.
+                </p>
                 <div className="flex items-center gap-3">
                   <a href="#" className="w-9 h-9 bg-cornell/10 rounded-full flex items-center justify-center hover:bg-cornell hover:text-white transition-all group/icon">
                     <Linkedin className="w-4 h-4 text-cornell group-hover/icon:text-white" />
