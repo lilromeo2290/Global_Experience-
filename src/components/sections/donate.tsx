@@ -9,6 +9,7 @@ import {
   Sprout, GraduationCap, Users, Wrench, Building2,
 } from 'lucide-react'
 import DonationModal from '@/components/DonationModal'
+import MedicalEquipmentDonationModal from '@/components/MedicalEquipmentDonationModal'
 
 const donationAreas = [
   { icon: Stethoscope, title: 'Medical Equipment and Items', desc: 'Essential medical supplies and equipment for clinics and hospitals serving underserved communities.' },
@@ -24,6 +25,7 @@ const donationAreas = [
 
 export default function DonateSection() {
   const [donateOpen, setDonateOpen] = useState(false)
+  const [medicalEquipOpen, setMedicalEquipOpen] = useState(false)
 
   return (
     <section id="donate" className="py-20 bg-white dark:bg-[#0A1F12]">
@@ -64,13 +66,26 @@ export default function DonateSection() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
                 whileHover={{ y: -4 }}
-                className="bg-cream dark:bg-[#122A1B] rounded-xl p-6 shadow-sm border border-border hover:shadow-md hover:border-vogue/30 transition-all group"
+                onClick={() => {
+                  if (area.title === 'Medical Equipment and Items') {
+                    setMedicalEquipOpen(true)
+                  }
+                }}
+                className={`bg-cream dark:bg-[#122A1B] rounded-xl p-6 shadow-sm border border-border hover:shadow-md hover:border-vogue/30 transition-all group ${
+                  area.title === 'Medical Equipment and Items' ? 'cursor-pointer' : ''
+                }`}
               >
                 <div className="w-12 h-12 bg-cornell/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-cornell group-hover:text-white transition-colors">
                   <area.icon className="w-6 h-6 text-cornell group-hover:text-white transition-colors" />
                 </div>
                 <h4 className="font-bold text-cornell dark:text-white mb-2 text-sm">{area.title}</h4>
                 <p className="text-xs text-charcoal dark:text-white/70 leading-relaxed">{area.desc}</p>
+                {area.title === 'Medical Equipment and Items' && (
+                  <div className="mt-3 flex items-center gap-1 text-cornell text-xs font-semibold">
+                    <span>Click to donate</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </div>
+                )}
               </motion.div>
             ))}
           </div>
@@ -187,6 +202,9 @@ export default function DonateSection() {
 
       {/* Donation Modal */}
       <DonationModal open={donateOpen} onClose={() => setDonateOpen(false)} />
+
+      {/* Medical Equipment Donation Modal */}
+      <MedicalEquipmentDonationModal open={medicalEquipOpen} onClose={() => setMedicalEquipOpen(false)} />
     </section>
   )
 }
