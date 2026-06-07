@@ -46,26 +46,40 @@ export default function LanguageSwitcher({ scrolled = false, className = '' }: L
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
+  // Detect current language from Google Translate cookie on mount
+  useEffect(() => {
+    const match = document.cookie.match(/googtrans=\/en\/([^;]+)/)
+    if (match && match[1]) {
+      setCurrentLang(match[1])
+    }
+  }, [])
+
+  const clearGoogleTranslateCookies = () => {
+    const domains = [window.location.hostname, '.' + window.location.hostname]
+    const paths = ['/', '']
+    domains.forEach(domain => {
+      paths.forEach(path => {
+        document.cookie = `googtrans=;expires=Thu, 01 Jan 1970 00:00:00 GMT;domain=${domain};path=${path}`
+        document.cookie = `googtrans=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=${path}`
+      })
+    })
+    window.location.hash = ''
+  }
+
   const handleLanguageChange = (langCode: string) => {
     setCurrentLang(langCode)
     setOpen(false)
 
-    // Use Google Translate if available
-    const googleTranslateElement = document.querySelector('.goog-te-combo') as HTMLSelectElement | null
-    if (googleTranslateElement) {
-      googleTranslateElement.value = langCode
-      googleTranslateElement.dispatchEvent(new Event('change', { bubbles: true }))
-    } else {
-      // Fallback: reload with Google Translate hash
-      if (langCode !== 'en') {
-        window.location.hash = `googtrans(en|${langCode})`
-        window.location.reload()
-      } else {
-        // Reset to English
-        window.location.hash = ''
-        window.location.reload()
-      }
+    if (langCode === 'en') {
+      // Switching back to English: clear all Google Translate cookies and reload
+      clearGoogleTranslateCookies()
+      window.location.reload()
+      return
     }
+
+    // For other languages, set the Google Translate cookie and reload
+    document.cookie = `googtrans=/en/${langCode};path=/`
+    window.location.reload()
   }
 
   const currentLanguage = languages.find(l => l.code === currentLang)
