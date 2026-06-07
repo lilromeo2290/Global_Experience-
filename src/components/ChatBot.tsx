@@ -91,29 +91,42 @@ export default function ChatBot() {
   return (
     <>
       {/* Chat Button */}
-      <motion.button
-        onClick={() => setOpen(!open)}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-vogue hover:bg-vogue-light text-white shadow-lg shadow-vogue/30 flex items-center justify-center transition-colors"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        aria-label="Open chat"
-      >
-        <AnimatePresence mode="wait">
-          {open ? (
-            <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}>
-              <X className="w-6 h-6" />
-            </motion.div>
-          ) : (
-            <motion.div key="open" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}>
-              <MessageCircle className="w-6 h-6" />
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.button>
+      <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+        {!open && (
+          <motion.div
+            initial={{ opacity: 0, x: 10 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="bg-white dark:bg-[#122A1B] rounded-full px-4 py-2 shadow-lg border border-border flex items-center gap-2 cursor-pointer"
+            onClick={() => setOpen(true)}
+          >
+            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+            <span className="text-sm font-medium text-charcoal dark:text-white/90 whitespace-nowrap">Live Chat</span>
+          </motion.div>
+        )}
+        <motion.button
+          onClick={() => setOpen(!open)}
+          className="w-14 h-14 rounded-full bg-vogue hover:bg-vogue-light text-white shadow-lg shadow-vogue/30 flex items-center justify-center transition-colors"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          aria-label="Open chat"
+        >
+          <AnimatePresence mode="wait">
+            {open ? (
+              <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}>
+                <X className="w-6 h-6" />
+              </motion.div>
+            ) : (
+              <motion.div key="open" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}>
+                <MessageCircle className="w-6 h-6" />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.button>
+      </div>
 
       {/* Unread indicator dot */}
       {!open && (
-        <div className="fixed bottom-[4.5rem] right-7 z-50 w-3 h-3 bg-cornell rounded-full animate-pulse" />
+        <div className="fixed bottom-[4.5rem] right-6 z-50 w-3 h-3 bg-cornell rounded-full animate-pulse" />
       )}
 
       {/* Chat Window */}
