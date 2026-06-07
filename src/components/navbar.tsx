@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet'
 import { Menu, Heart, Phone, ChevronDown, ChevronRight, X, Sun, Moon } from 'lucide-react'
+import LanguageSwitcher from '@/components/LanguageSwitcher'
 import Link from 'next/link'
 import { useTheme } from '@/components/theme-provider'
 import DestinationProgramModal from '@/components/DestinationProgramModal'
@@ -316,6 +317,7 @@ export default function Navbar() {
 
           {/* CTA + Mobile */}
           <div className="flex items-center gap-2">
+            <LanguageSwitcher scrolled={scrolled} className="hidden sm:block" />
             <button
               onClick={toggleTheme}
               className="hidden sm:flex items-center justify-center w-9 h-9 rounded-full hover:bg-white/20 transition-colors"
@@ -437,6 +439,9 @@ export default function Navbar() {
                     })}
                   </div>
                   <div className="p-4 border-t">
+                    <div className="mb-3">
+                      <LanguageSwitcher className="w-full" />
+                    </div>
                     <button
                       onClick={toggleTheme}
                       className="w-full flex items-center justify-center gap-2 py-2.5 mb-3 rounded-full border border-border dark:border-white/20 text-sm font-medium text-charcoal dark:text-white/80 hover:bg-cornell/5 dark:hover:bg-white/10 transition-colors"
