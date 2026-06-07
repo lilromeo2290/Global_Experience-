@@ -15,7 +15,6 @@ import TestimonialsSection from '@/components/sections/testimonials'
 import BlogSection from '@/components/sections/blog'
 import ContactSection from '@/components/sections/contact'
 import PartnersSection from '@/components/sections/partners'
-import PersonalizedRecommendations from '@/components/PersonalizedRecommendations'
 import VisitorOnboarding from '@/components/VisitorOnboarding'
 import { addViewedSection } from '@/lib/personalization'
 
@@ -48,7 +47,6 @@ export default function Home() {
       <Navbar />
       <main className="flex-1">
         <HeroSection />
-        <PersonalizedRecommendations />
         <AboutSection />
         <DestinationsSection />
         <ServicesSection />
