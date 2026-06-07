@@ -21,6 +21,7 @@ import {
   Globe,
   X,
   ChevronLeft,
+  Headphones,
 } from 'lucide-react'
 
 const navItems = [
@@ -31,6 +32,7 @@ const navItems = [
   { href: '/admin/gallery', label: 'Gallery', icon: GalleryHorizontal },
   { href: '/admin/faqs', label: 'FAQs', icon: HelpCircle },
   { href: '/admin/applications', label: 'Applications', icon: FileText },
+  { href: '/admin/live-chat', label: 'Live Chat', icon: Headphones },
   { href: '/admin/settings', label: 'Settings', icon: Settings },
 ]
 

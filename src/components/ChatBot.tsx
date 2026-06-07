@@ -1,11 +1,12 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { MessageCircle, X, Send, Bot, User, Loader2 } from 'lucide-react'
+import { MessageCircle, X, Send, Bot, User, Loader2, Headphones } from 'lucide-react'
 
 interface Message {
-  role: 'user' | 'assistant'
+  id?: string
+  role: 'user' | 'assistant' | 'agent'
   content: string
 }
 
@@ -22,25 +23,91 @@ export default function ChatBot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: 'Hello! 👋 Welcome to Global Experience Placements. I\'m your virtual assistant. How can I help you today? You can ask me about our volunteer programs, destinations, services, or how to get involved!',
+      content: 'Hello! Welcome to Global Experience Placements. I\'m your virtual assistant. How can I help you today?',
     },
   ])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
+  const [sessionId, setSessionId] = useState<string | null>(null)
+  const [liveAgent, setLiveAgent] = useState(false)
+  const [requestingAgent, setRequestingAgent] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
-  useEffect(() => {
+  const scrollToBottom = useCallback(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
     }
-  }, [messages])
+  }, [])
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages, scrollToBottom])
 
   useEffect(() => {
     if (open && inputRef.current) {
       inputRef.current.focus()
     }
   }, [open])
+
+  // Create a chat session when the chat is opened for the first time
+  useEffect(() => {
+    if (open && !sessionId) {
+      fetch('/api/chat/sessions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ visitorName: 'Visitor' }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setSessionId(data.id)
+        })
+        .catch(console.error)
+    }
+  }, [open, sessionId])
+
+  // Poll for new messages when live agent is connected
+  useEffect(() => {
+    if (!sessionId || !liveAgent || !open) return
+
+    const pollInterval = setInterval(async () => {
+      try {
+        const res = await fetch(`/api/chat/sessions/${sessionId}`)
+        const session = await res.json()
+
+        if (session.status === 'closed') {
+          setLiveAgent(false)
+          setMessages((prev) => [
+            ...prev,
+            { role: 'agent', content: 'The agent has ended this chat session. Thank you for reaching out!' },
+          ])
+          setSessionId(null)
+          return
+        }
+
+        // Fetch all messages and sync
+        const msgRes = await fetch(`/api/chat/sessions/${sessionId}/messages`)
+        const dbMessages = await msgRes.json()
+
+        // Find agent messages we don't have yet
+        const currentContent = new Set(messages.map((m) => m.content))
+        const newAgentMessages = dbMessages
+          .filter((m: any) => m.sender === 'agent' && !currentContent.has(m.content))
+          .map((m: any) => ({
+            role: 'agent' as const,
+            content: m.content,
+          }))
+
+        if (newAgentMessages.length > 0) {
+          setMessages((prev) => [...prev, ...newAgentMessages])
+        }
+      } catch (err) {
+        console.error('Polling error:', err)
+      }
+    }, 3000)
+
+    return () => clearInterval(pollInterval)
+  }, [sessionId, liveAgent, open, messages])
 
   const sendMessage = async (text: string) => {
     if (!text.trim() || loading) return
@@ -52,17 +119,24 @@ export default function ChatBot() {
 
     try {
       const chatMessages = [...messages, userMessage].map((m) => ({
-        role: m.role,
+        role: m.role === 'user' ? 'user' : 'assistant',
         content: m.content,
       }))
 
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: chatMessages }),
+        body: JSON.stringify({ messages: chatMessages, sessionId }),
       })
 
       const data = await res.json()
+
+      if (data.liveAgent) {
+        // Message saved to DB but no AI response (agent will respond)
+        setLoading(false)
+        return
+      }
+
       const assistantMessage: Message = {
         role: 'assistant',
         content: data.reply,
@@ -79,6 +153,38 @@ export default function ChatBot() {
     }
   }
 
+  const handleRequestLiveAgent = async () => {
+    if (!sessionId) return
+    setRequestingAgent(true)
+
+    try {
+      // Update session status to waiting
+      await fetch(`/api/chat/sessions/${sessionId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: 'waiting' }),
+      })
+
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: 'assistant',
+          content: 'You\'ve requested to chat with a live agent. Please wait while we connect you... A team member will be with you shortly.',
+        },
+      ])
+    } catch {
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: 'assistant',
+          content: 'Sorry, there was an error requesting a live agent. Please try again or email us at info@globalexperiencegh.org.',
+        },
+      ])
+    } finally {
+      setRequestingAgent(false)
+    }
+  }
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     sendMessage(input)
@@ -87,6 +193,45 @@ export default function ChatBot() {
   const handleSuggestedQuestion = (question: string) => {
     sendMessage(question)
   }
+
+  // Check for live agent status periodically
+  useEffect(() => {
+    if (!sessionId || !open) return
+
+    const checkStatus = setInterval(async () => {
+      try {
+        const res = await fetch(`/api/chat/sessions/${sessionId}`)
+        const session = await res.json()
+
+        if (session.status === 'connected' && !liveAgent) {
+          setLiveAgent(true)
+          setMessages((prev) => [
+            ...prev,
+            {
+              role: 'agent',
+              content: 'A live agent has joined the chat. You are now speaking with a team member from Global Experience Placements.',
+            },
+          ])
+        }
+
+        if (session.status === 'closed' && liveAgent) {
+          setLiveAgent(false)
+          setMessages((prev) => [
+            ...prev,
+            {
+              role: 'agent',
+              content: 'The agent has ended this chat session. Thank you for reaching out!',
+            },
+          ])
+          setSessionId(null)
+        }
+      } catch (err) {
+        console.error('Status check error:', err)
+      }
+    }, 5000)
+
+    return () => clearInterval(checkStatus)
+  }, [sessionId, open, liveAgent])
 
   return (
     <>
@@ -142,30 +287,58 @@ export default function ChatBot() {
             {/* Header */}
             <div className="bg-vogue text-white px-5 py-4 flex items-center gap-3 shrink-0">
               <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                <Bot className="w-5 h-5" />
+                {liveAgent ? <Headphones className="w-5 h-5" /> : <Bot className="w-5 h-5" />}
               </div>
-              <div>
-                <h3 className="font-semibold text-sm">Global Experience Assistant</h3>
-                <p className="text-white/70 text-xs">Always here to help</p>
+              <div className="flex-1">
+                <h3 className="font-semibold text-sm">
+                  {liveAgent ? 'Live Agent' : 'Global Experience Assistant'}
+                </h3>
+                <div className="flex items-center gap-1.5">
+                  <div className={`w-1.5 h-1.5 rounded-full ${liveAgent ? 'bg-green-400' : 'bg-white/50'}`} />
+                  <p className="text-white/70 text-xs">
+                    {liveAgent ? 'Agent connected' : 'AI Assistant'}
+                  </p>
+                </div>
               </div>
+              {!liveAgent && (
+                <button
+                  onClick={handleRequestLiveAgent}
+                  disabled={requestingAgent}
+                  className="text-xs bg-white/20 hover:bg-white/30 px-3 py-1.5 rounded-full transition-colors flex items-center gap-1 disabled:opacity-50"
+                >
+                  <Headphones className="w-3 h-3" />
+                  {requestingAgent ? 'Connecting...' : 'Live Agent'}
+                </button>
+              )}
             </div>
 
             {/* Messages */}
             <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3">
               {messages.map((msg, i) => (
                 <div key={i} className={`flex gap-2 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  {msg.role === 'assistant' && (
-                    <div className="w-7 h-7 rounded-full bg-vogue/10 flex items-center justify-center shrink-0 mt-1">
-                      <Bot className="w-3.5 h-3.5 text-vogue" />
+                  {(msg.role === 'assistant' || msg.role === 'agent') && (
+                    <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 mt-1 ${
+                      msg.role === 'agent' ? 'bg-cornell/10' : 'bg-vogue/10'
+                    }`}>
+                      {msg.role === 'agent' ? (
+                        <Headphones className="w-3.5 h-3.5 text-cornell" />
+                      ) : (
+                        <Bot className="w-3.5 h-3.5 text-vogue" />
+                      )}
                     </div>
                   )}
                   <div
                     className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
                       msg.role === 'user'
                         ? 'bg-cornell text-white rounded-br-md'
+                        : msg.role === 'agent'
+                        ? 'bg-cornell/10 text-charcoal dark:text-white/90 rounded-bl-md border border-cornell/20'
                         : 'bg-gray-100 dark:bg-[#122A1B] text-charcoal dark:text-white/90 rounded-bl-md'
                     }`}
                   >
+                    {msg.role === 'agent' && (
+                      <p className="text-[10px] font-semibold text-cornell mb-0.5 uppercase tracking-wider">Live Agent</p>
+                    )}
                     {msg.content}
                   </div>
                   {msg.role === 'user' && (
@@ -191,7 +364,7 @@ export default function ChatBot() {
             </div>
 
             {/* Suggested Questions */}
-            {messages.length <= 1 && (
+            {messages.length <= 1 && !liveAgent && (
               <div className="px-4 pb-2 shrink-0">
                 <p className="text-xs text-charcoal/60 dark:text-white/40 mb-2">Quick questions:</p>
                 <div className="flex flex-wrap gap-1.5">
@@ -216,7 +389,7 @@ export default function ChatBot() {
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="Type your message..."
+                  placeholder={liveAgent ? 'Type a message to the agent...' : 'Type your message...'}
                   className="flex-1 bg-gray-100 dark:bg-[#122A1B] rounded-full px-4 py-2.5 text-sm text-charcoal dark:text-white/90 placeholder:text-charcoal/40 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-vogue/30"
                   disabled={loading}
                 />

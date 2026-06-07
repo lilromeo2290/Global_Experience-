@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import ZAI from 'z-ai-web-dev-sdk'
+import { db } from '@/lib/db'
 
 const SYSTEM_PROMPT = `You are the AI assistant for Global Experience Placements, an international volunteer and placement organization based in Ghana, West Africa. Your role is to help visitors learn about the organization, its programs, and services.
 
@@ -55,10 +56,32 @@ Key information about Global Experience Placements:
 
 export async function POST(req: NextRequest) {
   try {
-    const { messages } = await req.json()
+    const { messages, sessionId } = await req.json()
 
     if (!messages || !Array.isArray(messages)) {
       return NextResponse.json({ error: 'Messages are required' }, { status: 400 })
+    }
+
+    // Get the last user message
+    const lastUserMessage = messages.filter((m: any) => m.role === 'user').pop()
+    if (lastUserMessage && sessionId) {
+      // Save visitor message to DB
+      await db.chatMessage.create({
+        data: {
+          sessionId,
+          sender: 'visitor',
+          content: lastUserMessage.content,
+        },
+      })
+    }
+
+    // Check if session is connected to a live agent
+    if (sessionId) {
+      const session = await db.chatSession.findUnique({ where: { id: sessionId } })
+      if (session?.status === 'connected') {
+        // Don't generate AI response when live agent is connected
+        return NextResponse.json({ reply: '', liveAgent: true })
+      }
     }
 
     const zai = await ZAI.create()
@@ -74,11 +97,22 @@ export async function POST(req: NextRequest) {
 
     const reply = completion.choices[0]?.message?.content || 'I apologize, but I was unable to generate a response. Please try again or contact us directly at info@globalexperiencegh.org.'
 
-    return NextResponse.json({ reply })
+    // Save bot response to DB
+    if (sessionId) {
+      await db.chatMessage.create({
+        data: {
+          sessionId,
+          sender: 'bot',
+          content: reply,
+        },
+      })
+    }
+
+    return NextResponse.json({ reply, liveAgent: false })
   } catch (error: any) {
     console.error('Chat API error:', error.message)
     return NextResponse.json(
-      { reply: 'I\'m sorry, I\'m having trouble connecting right now. Please try again later or contact us directly at info@globalexperiencegh.org.' },
+      { reply: 'I\'m sorry, I\'m having trouble connecting right now. Please try again later or contact us directly at info@globalexperiencegh.org.', liveAgent: false },
       { status: 200 }
     )
   }
