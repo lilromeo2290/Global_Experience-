@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import HeroSection from '@/components/sections/hero'
@@ -14,13 +15,40 @@ import TestimonialsSection from '@/components/sections/testimonials'
 import BlogSection from '@/components/sections/blog'
 import ContactSection from '@/components/sections/contact'
 import PartnersSection from '@/components/sections/partners'
+import PersonalizedRecommendations from '@/components/PersonalizedRecommendations'
+import VisitorOnboarding from '@/components/VisitorOnboarding'
+import { addViewedSection } from '@/lib/personalization'
 
 export default function Home() {
+  // Track which sections the visitor views
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id
+            if (id) {
+              addViewedSection(id)
+            }
+          }
+        })
+      },
+      { threshold: 0.3 }
+    )
+
+    // Observe all major sections
+    const sections = document.querySelectorAll('section[id]')
+    sections.forEach((section) => observer.observe(section))
+
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-1">
         <HeroSection />
+        <PersonalizedRecommendations />
         <AboutSection />
         <DestinationsSection />
         <ServicesSection />
@@ -34,6 +62,9 @@ export default function Home() {
         <ContactSection />
       </main>
       <Footer />
+
+      {/* Visitor Onboarding Modal */}
+      <VisitorOnboarding />
 
       {/* WhatsApp Floating Button */}
       <a

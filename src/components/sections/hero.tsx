@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import { ArrowRight, Heart, Users, Phone, MapPin, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ArrowRight, Heart, Users, Phone, MapPin, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react'
 import DonationModal from '@/components/DonationModal'
+import { getVisitorProfile, updateVisit, getPersonalizedGreeting } from '@/lib/personalization'
 
 const slides = [
   {
@@ -52,6 +53,15 @@ const slides = [
 export default function HeroSection() {
   const [current, setCurrent] = useState(0)
   const [donateOpen, setDonateOpen] = useState(false)
+  const [greeting, setGreeting] = useState({ greeting: '', subtitle: '' })
+  const [isReturning, setIsReturning] = useState(false)
+
+  useEffect(() => {
+    const profile = updateVisit()
+    const personalized = getPersonalizedGreeting(profile)
+    setGreeting(personalized)
+    setIsReturning(profile.visitCount > 1)
+  }, [])
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -135,6 +145,26 @@ export default function HeroSection() {
       {/* Content */}
       <div className="relative max-w-7xl mx-auto px-4 py-32 w-full z-10">
         <div className="max-w-3xl">
+          {/* Personalized Greeting */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            {isReturning && (
+              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 mb-4">
+                <Sparkles className="w-4 h-4 text-gold" />
+                <span className="text-xs font-medium text-white/90">Personalized for you</span>
+              </div>
+            )}
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
+              {greeting.greeting || 'Transform Lives. Including Yours.'}
+            </h1>
+            <p className="text-lg md:text-xl text-white/80 mb-8 leading-relaxed max-w-2xl">
+              {greeting.subtitle || 'Join 2,000+ volunteers and professionals making a real difference through international placements in Ghana.'}
+            </p>
+          </motion.div>
+
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}

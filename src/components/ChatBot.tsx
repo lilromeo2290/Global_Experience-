@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MessageCircle, X, Send, Bot, User, Loader2, Headphones } from 'lucide-react'
+import { getVisitorProfile, detectInterestsFromText, setVisitorName, incrementChatHistory, addInterest } from '@/lib/personalization'
 
 interface Message {
   id?: string
@@ -18,14 +19,50 @@ const SUGGESTED_QUESTIONS = [
   'How can I donate?',
 ]
 
+// Personalized suggested questions based on visitor interests
+function getPersonalizedQuestions(): string[] {
+  if (typeof window === 'undefined') return SUGGESTED_QUESTIONS
+  try {
+    const stored = localStorage.getItem('ge_visitor_profile')
+    if (!stored) return SUGGESTED_QUESTIONS
+    const profile = JSON.parse(stored)
+
+    const personalized: string[] = []
+
+    if (profile.interests?.includes('medical')) {
+      personalized.push('Tell me about medical placements')
+    }
+    if (profile.interests?.includes('teaching')) {
+      personalized.push('What teaching programs are available?')
+    }
+    if (profile.interests?.includes('volunteer') && !profile.hasApplied) {
+      personalized.push('How do I apply for a placement?')
+    }
+    if (profile.interests?.includes('donate') && !profile.hasDonated) {
+      personalized.push('How can I donate?')
+    }
+    if (profile.interests?.includes('adventure')) {
+      personalized.push('Tell me about paragliding in Ghana')
+    }
+    if (profile.interests?.includes('internship')) {
+      personalized.push('What internship opportunities do you have?')
+    }
+    if (profile.viewedDestinations?.length > 0) {
+      personalized.push('Tell me more about the destinations')
+    }
+
+    // Fill remaining slots with default questions
+    const remaining = SUGGESTED_QUESTIONS.filter((q) => !personalized.includes(q))
+    return [...personalized.slice(0, 3), ...remaining].slice(0, 5)
+  } catch {
+    return SUGGESTED_QUESTIONS
+  }
+}
+
 export default function ChatBot() {
   const [open, setOpen] = useState(false)
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: 'assistant',
-      content: 'Hello! Welcome to Global Experience Placements. I\'m your virtual assistant. How can I help you today?',
-    },
-  ])
+  const [messages, setMessages] = useState<Message[]>([])
+  const [initialized, setInitialized] = useState(false)
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [sessionId, setSessionId] = useState<string | null>(null)
@@ -53,10 +90,30 @@ export default function ChatBot() {
   // Create a chat session when the chat is opened for the first time
   useEffect(() => {
     if (open && !sessionId) {
+      const profile = getVisitorProfile()
+      const visitorName = profile.name || 'Visitor'
+
+      // Personalized welcome message
+      let welcomeMsg = 'Hello! Welcome to Global Experience Placements. I\'m your virtual assistant. How can I help you today?'
+      if (profile.name) {
+        welcomeMsg = `Hello, ${profile.name}! Welcome back to Global Experience Placements. ${
+          profile.interests.length > 0
+            ? `I see you're interested in ${profile.interests.slice(0, 2).join(' and ')}. `
+            : ''
+        }How can I help you today?`
+      } else if (profile.visitCount > 1) {
+        welcomeMsg = 'Welcome back to Global Experience Placements! How can I assist you today?'
+      }
+
+      if (!initialized) {
+        setMessages([{ role: 'assistant', content: welcomeMsg }])
+        setInitialized(true)
+      }
+
       fetch('/api/chat/sessions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ visitorName: 'Visitor' }),
+        body: JSON.stringify({ visitorName }),
       })
         .then((res) => res.json())
         .then((data) => {
@@ -64,7 +121,7 @@ export default function ChatBot() {
         })
         .catch(console.error)
     }
-  }, [open, sessionId])
+  }, [open, sessionId, initialized])
 
   // Poll for new messages when live agent is connected
   useEffect(() => {
@@ -116,6 +173,24 @@ export default function ChatBot() {
     setMessages((prev) => [...prev, userMessage])
     setInput('')
     setLoading(true)
+
+    // Detect interests from the user's message
+    const detectedInterests = detectInterestsFromText(text)
+    detectedInterests.forEach((interest) => {
+      const profile = getVisitorProfile()
+      if (!profile.interests.includes(interest)) {
+        addInterest(interest)
+      }
+    })
+
+    // Track chat interaction
+    incrementChatHistory()
+
+    // Check if user mentions their name (e.g., "My name is John" or "I'm Sarah")
+    const nameMatch = text.match(/(?:my name is|i'm|i am|call me|name's)\s+([A-Z][a-z]+)/i)
+    if (nameMatch) {
+      setVisitorName(nameMatch[1])
+    }
 
     try {
       const chatMessages = [...messages, userMessage].map((m) => ({
@@ -368,7 +443,7 @@ export default function ChatBot() {
               <div className="px-4 pb-2 shrink-0">
                 <p className="text-xs text-charcoal/60 dark:text-white/40 mb-2">Quick questions:</p>
                 <div className="flex flex-wrap gap-1.5">
-                  {SUGGESTED_QUESTIONS.map((q) => (
+                  {getPersonalizedQuestions().map((q) => (
                     <button
                       key={q}
                       onClick={() => handleSuggestedQuestion(q)}
