@@ -69,31 +69,11 @@ export default function RootLayout({
             `,
           }}
         />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              function googleTranslateElementInit() {
-                new google.translate.TranslateElement({
-                  pageLanguage: 'en',
-                  includedLanguages: 'en,fr,es,de,pt,ar,zh-CN,ja,ko,hi,ru,it,nl,sw,ha,ak,ee,da,sv,no',
-                  autoDisplay: false,
-                  multilanguagePage: true
-                }, 'google_translate_element');
-              }
-            `,
-          }}
-        />
-        <script
-          src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-          async
-        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
         <ThemeProvider>
-          {/* Hidden Google Translate element */}
-          <div id="google_translate_element" style={{ display: 'none' }} />
           {children}
           <Toaster />
         </ThemeProvider>
