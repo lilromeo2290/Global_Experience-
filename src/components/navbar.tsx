@@ -4,11 +4,12 @@ import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet'
-import { Menu, Heart, Phone, ChevronDown, ChevronRight, X, Sun, Moon } from 'lucide-react'
+import { Menu, Heart, Phone, ChevronDown, ChevronRight, X, Sun, Moon, Search, Command } from 'lucide-react'
 import Link from 'next/link'
 import { useTheme } from '@/components/theme-provider'
 import DestinationProgramModal from '@/components/DestinationProgramModal'
 import DonationModal from '@/components/DonationModal'
+import PredictiveSearch from '@/components/PredictiveSearch'
 
 interface SubLink {
   label: string
@@ -70,6 +71,7 @@ export default function Navbar() {
   const [applyOpen, setApplyOpen] = useState(false)
   const [destinationModal, setDestinationModal] = useState<string>('')
   const [donateOpen, setDonateOpen] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
   const dropdownRefs = useRef<Record<string, HTMLDivElement | null>>({})
   const applyRef = useRef<HTMLDivElement | null>(null)
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null)
@@ -316,6 +318,27 @@ export default function Navbar() {
 
           {/* CTA + Mobile */}
           <div className="flex items-center gap-2">
+            {/* Search Button */}
+            <button
+              onClick={() => setSearchOpen(true)}
+              className={`hidden sm:flex items-center gap-2 h-9 px-3 rounded-full border transition-all duration-200 cursor-pointer ${
+                scrolled
+                  ? 'border-gray-200 dark:border-white/20 bg-gray-50 dark:bg-white/5 hover:border-cornell/30 dark:hover:border-cornell/40'
+                  : 'border-white/20 bg-white/10 hover:bg-white/20'
+              }`}
+              aria-label="Search"
+            >
+              <Search className={`w-4 h-4 ${scrolled ? 'text-charcoal/50 dark:text-white/50' : 'text-white/70'}`} />
+              <span className={`text-xs ${scrolled ? 'text-charcoal/40 dark:text-white/40' : 'text-white/50'}`}>Search...</span>
+              <kbd className={`hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[9px] font-mono rounded border ${
+                scrolled
+                  ? 'bg-white border-gray-200 text-charcoal/30 dark:bg-white/10 dark:border-white/10 dark:text-white/30'
+                  : 'bg-white/10 border-white/20 text-white/40'
+              }`}>
+                <Command className="w-2 h-2" />K
+              </kbd>
+            </button>
+
             <button
               onClick={toggleTheme}
               className="hidden sm:flex items-center justify-center w-9 h-9 rounded-full hover:bg-white/20 transition-colors"
@@ -358,6 +381,17 @@ export default function Navbar() {
                     </div>
                   </div>
                   <div className="flex-1 overflow-y-auto py-4">
+                    {/* Mobile Search Button */}
+                    <div className="px-4 mb-3">
+                      <button
+                        onClick={() => { setMobileOpen(false); setSearchOpen(true) }}
+                        className="w-full flex items-center gap-3 px-4 py-3 rounded-xl border border-border dark:border-white/20 bg-gray-50 dark:bg-white/5 text-charcoal/50 dark:text-white/50 text-sm hover:border-cornell/30 dark:hover:border-cornell/40 transition-colors"
+                      >
+                        <Search className="w-4 h-4" />
+                        Search programs, destinations...
+                      </button>
+                    </div>
+
                     {navLinks.map((link) => {
                       if (link.subLinks) {
                         const isOpen = mobileOpenDropdown === link.key
@@ -467,6 +501,9 @@ export default function Navbar() {
 
       {/* Donation Modal */}
       <DonationModal open={donateOpen} onClose={() => setDonateOpen(false)} />
+
+      {/* Predictive Search */}
+      <PredictiveSearch open={searchOpen} onOpenChange={setSearchOpen} />
     </motion.nav>
   )
 }

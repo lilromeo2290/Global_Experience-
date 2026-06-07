@@ -10,6 +10,7 @@ export interface VisitorProfile {
   interests: string[] // e.g., 'volunteer', 'medical', 'teaching', 'donate', 'internship'
   viewedDestinations: string[] // e.g., 'cape-coast', 'volta-ho', 'takoradi', 'accra'
   viewedSections: string[] // e.g., 'about', 'destinations', 'services', 'volunteer', 'donate'
+  searchHistory: string[] // recent search queries
   preferredProgram?: string
   hasDonated: boolean
   hasApplied: boolean
@@ -50,6 +51,7 @@ function createDefaultProfile(): VisitorProfile {
     interests: [],
     viewedDestinations: [],
     viewedSections: [],
+    searchHistory: [],
     hasDonated: false,
     hasApplied: false,
     chatHistory: 0,
@@ -147,6 +149,14 @@ export function markApplied(): VisitorProfile {
 export function incrementChatHistory(): VisitorProfile {
   const profile = getVisitorProfile()
   profile.chatHistory += 1
+  saveVisitorProfile(profile)
+  return profile
+}
+
+export function addSearchQuery(query: string): VisitorProfile {
+  const profile = getVisitorProfile()
+  if (!profile.searchHistory) profile.searchHistory = []
+  profile.searchHistory = [query, ...profile.searchHistory.filter(q => q !== query)].slice(0, 10)
   saveVisitorProfile(profile)
   return profile
 }
