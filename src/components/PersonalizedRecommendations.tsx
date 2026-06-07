@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRight, Heart, Stethoscope, GraduationCap, Briefcase, MapPin, Plane, Microscope, Building2, Sparkles, X } from 'lucide-react'
 import { getVisitorProfile, getPersonalizedRecommendations, type PersonalizedRecommendation } from '@/lib/personalization'
+import DestinationProgramModal from '@/components/DestinationProgramModal'
 
 const iconMap: Record<string, any> = {
   volunteer: Heart,
@@ -29,10 +30,14 @@ const colorMap: Record<string, string> = {
   destination: 'bg-teal-50 text-teal-600 border-teal-200',
 }
 
+// Destination slugs that should open the DestinationProgramModal
+const DESTINATION_SLUGS = ['cape-coast', 'volta-ho', 'takoradi', 'accra']
+
 export default function PersonalizedRecommendations() {
   const [recommendations, setRecommendations] = useState<PersonalizedRecommendation[]>([])
   const [visible, setVisible] = useState(false)
   const [dismissed, setDismissed] = useState(false)
+  const [selectedDestination, setSelectedDestination] = useState('')
 
   useEffect(() => {
     const profile = getVisitorProfile()
@@ -50,79 +55,158 @@ export default function PersonalizedRecommendations() {
 
   if (!visible || dismissed || recommendations.length === 0) return null
 
+  const handleRecClick = (rec: PersonalizedRecommendation) => {
+    const href = rec.href
+
+    // Check if this is a destination link that should open the modal
+    const destSlug = DESTINATION_SLUGS.find(slug => href === `#${slug}`)
+    if (destSlug) {
+      // First scroll to destinations section, then open modal
+      const destSection = document.getElementById('destinations')
+      if (destSection) {
+        const offset = 80
+        const top = destSection.getBoundingClientRect().top + window.scrollY - offset
+        window.scrollTo({ top, behavior: 'smooth' })
+      }
+      // Open the destination program modal after a short scroll delay
+      setTimeout(() => setSelectedDestination(destSlug), 400)
+      return
+    }
+
+    // Check if this is a volunteer/apply link — open the volunteer section
+    if (href === '#volunteer') {
+      const el = document.getElementById('volunteer')
+      if (el) {
+        const offset = 80
+        const top = el.getBoundingClientRect().top + window.scrollY - offset
+        window.scrollTo({ top, behavior: 'smooth' })
+      }
+      return
+    }
+
+    // Check if this is a donate link — open donate section
+    if (href === '#donate') {
+      const el = document.getElementById('donate')
+      if (el) {
+        const offset = 80
+        const top = el.getBoundingClientRect().top + window.scrollY - offset
+        window.scrollTo({ top, behavior: 'smooth' })
+      }
+      return
+    }
+
+    // Check if this is a services link
+    if (href === '#services') {
+      const el = document.getElementById('services')
+      if (el) {
+        const offset = 80
+        const top = el.getBoundingClientRect().top + window.scrollY - offset
+        window.scrollTo({ top, behavior: 'smooth' })
+      }
+      return
+    }
+
+    // Generic anchor link — try to find and scroll to the element
+    if (href.startsWith('#')) {
+      const el = document.getElementById(href.replace('#', ''))
+      if (el) {
+        const offset = 80
+        const top = el.getBoundingClientRect().top + window.scrollY - offset
+        window.scrollTo({ top, behavior: 'smooth' })
+      } else {
+        // Fallback: try querySelector
+        const fallbackEl = document.querySelector(href)
+        if (fallbackEl) {
+          const offset = 80
+          const top = fallbackEl.getBoundingClientRect().top + window.scrollY - offset
+          window.scrollTo({ top, behavior: 'smooth' })
+        }
+      }
+      return
+    }
+
+    // External page link — navigate directly
+    window.location.href = href
+  }
+
   return (
-    <section className="py-12 bg-gradient-to-r from-vogue/5 via-cream to-vogue/5 relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-0 left-1/4 w-64 h-64 bg-vogue rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-cornell rounded-full blur-3xl" />
-      </div>
+    <>
+      <section className="py-12 bg-gradient-to-r from-vogue/5 via-cream to-vogue/5 relative overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-0 left-1/4 w-64 h-64 bg-vogue rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-cornell rounded-full blur-3xl" />
+        </div>
 
-      <div className="max-w-7xl mx-auto px-4 relative">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          {/* Header */}
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-gold" />
-              <h2 className="text-lg font-bold text-charcoal dark:text-white">Recommended for You</h2>
-              <span className="text-xs bg-vogue/10 text-vogue px-2 py-0.5 rounded-full font-medium">Personalized</span>
+        <div className="max-w-7xl mx-auto px-4 relative">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-5 h-5 text-gold" />
+                <h2 className="text-lg font-bold text-charcoal dark:text-white">Recommended for You</h2>
+                <span className="text-xs bg-vogue/10 text-vogue px-2 py-0.5 rounded-full font-medium">Personalized</span>
+              </div>
+              <button
+                onClick={() => setDismissed(true)}
+                className="text-charcoal/40 hover:text-charcoal dark:text-white/40 dark:hover:text-white transition-colors"
+                aria-label="Dismiss recommendations"
+              >
+                <X className="w-4 h-4" />
+              </button>
             </div>
-            <button
-              onClick={() => setDismissed(true)}
-              className="text-charcoal/40 hover:text-charcoal dark:text-white/40 dark:hover:text-white transition-colors"
-              aria-label="Dismiss recommendations"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          </div>
 
-          {/* Recommendation Cards */}
-          <div className="grid md:grid-cols-3 gap-4">
-            {recommendations.map((rec, i) => {
-              const Icon = iconMap[rec.icon] || Heart
-              const colors = colorMap[rec.icon] || 'bg-vogue/10 text-vogue border-vogue/20'
+            {/* Recommendation Cards */}
+            <div className="grid md:grid-cols-3 gap-4">
+              {recommendations.map((rec, i) => {
+                const Icon = iconMap[rec.icon] || Heart
+                const colors = colorMap[rec.icon] || 'bg-vogue/10 text-vogue border-vogue/20'
 
-              return (
-                <motion.a
-                  key={i}
-                  href={rec.href}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    const el = document.querySelector(rec.href)
-                    if (el) {
-                      const offset = 80
-                      const top = el.getBoundingClientRect().top + window.scrollY - offset
-                      window.scrollTo({ top, behavior: 'smooth' })
-                    }
-                  }}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: i * 0.1 }}
-                  className={`group bg-white dark:bg-[#122A1B] rounded-xl p-5 border ${colors.split(' ').find(c => c.includes('border-')) || 'border-border'} hover:shadow-lg transition-all duration-300 hover:-translate-y-1`}
-                >
-                  <div className={`w-10 h-10 rounded-lg ${colors} flex items-center justify-center mb-3`}>
-                    <Icon className="w-5 h-5" />
-                  </div>
-                  <h3 className="text-sm font-bold text-charcoal dark:text-white mb-1.5 group-hover:text-cornell dark:group-hover:text-cornell-light transition-colors">
-                    {rec.title}
-                  </h3>
-                  <p className="text-xs text-charcoal/60 dark:text-white/60 leading-relaxed mb-3">
-                    {rec.description}
-                  </p>
-                  <div className="flex items-center gap-1 text-xs font-semibold text-vogue group-hover:text-vogue-light transition-colors">
-                    {rec.cta}
-                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </motion.a>
-              )
-            })}
-          </div>
-        </motion.div>
-      </div>
-    </section>
+                // Check if this is a destination recommendation
+                const isDestination = DESTINATION_SLUGS.some(slug => rec.href === `#${slug}`)
+
+                return (
+                  <motion.button
+                    key={i}
+                    onClick={() => handleRecClick(rec)}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: i * 0.1 }}
+                    className={`group bg-white dark:bg-[#122A1B] rounded-xl p-5 border ${
+                      colors.split(' ').find(c => c.includes('border-')) || 'border-border'
+                    } hover:shadow-lg transition-all duration-300 hover:-translate-y-1 text-left w-full`}
+                  >
+                    <div className={`w-10 h-10 rounded-lg ${colors} flex items-center justify-center mb-3`}>
+                      <Icon className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-sm font-bold text-charcoal dark:text-white mb-1.5 group-hover:text-cornell dark:group-hover:text-cornell-light transition-colors">
+                      {rec.title}
+                    </h3>
+                    <p className="text-xs text-charcoal/60 dark:text-white/60 leading-relaxed mb-3">
+                      {rec.description}
+                    </p>
+                    <div className="flex items-center gap-1 text-xs font-semibold text-vogue group-hover:text-vogue-light transition-colors">
+                      {isDestination ? 'Select a Program' : rec.cta}
+                      <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </motion.button>
+                )
+              })}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Destination Program Modal */}
+      <DestinationProgramModal
+        open={!!selectedDestination}
+        onClose={() => setSelectedDestination('')}
+        destination={selectedDestination}
+      />
+    </>
   )
 }
