@@ -23,7 +23,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { FileText, Eye, Trash2, Filter, Loader2, Mail, Phone, Globe, Calendar } from 'lucide-react'
+import { FileText, Eye, Trash2, Filter, Loader2, Mail, Phone, Globe, Calendar, GraduationCap, Plane, Clock, MapPin } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast'
 
 interface Application {
@@ -37,7 +37,16 @@ interface Application {
   branch: string | null
   duration: string | null
   startDate: string | null
+  endDate: string | null
   message: string | null
+  referral: string | null
+  school: string | null
+  courseOfStudy: string | null
+  countryOfOrigin: string | null
+  flightNumber: string | null
+  airline: string | null
+  arrivalDate: string | null
+  arrivalTime: string | null
   status: string
   createdAt: string
 }
@@ -251,8 +260,40 @@ export default function ApplicationsPage() {
                 <div><span className="text-xs font-semibold text-muted-foreground">Program:</span> <span className="text-sm text-charcoal dark:text-white">{viewDialog.program}</span></div>
                 {viewDialog.branch && <div><span className="text-xs font-semibold text-muted-foreground">Branch:</span> <span className="text-sm text-charcoal dark:text-white">{viewDialog.branch}</span></div>}
                 {viewDialog.startDate && <div><span className="text-xs font-semibold text-muted-foreground">Start Date:</span> <span className="text-sm text-charcoal dark:text-white">{viewDialog.startDate}</span></div>}
+                {viewDialog.endDate && <div><span className="text-xs font-semibold text-muted-foreground">End Date:</span> <span className="text-sm text-charcoal dark:text-white">{viewDialog.endDate}</span></div>}
                 <div><span className="text-xs font-semibold text-muted-foreground">Applied:</span> <span className="text-sm text-charcoal dark:text-white">{new Date(viewDialog.createdAt).toLocaleDateString()}</span></div>
               </div>
+
+              {/* Educational Information */}
+              {(viewDialog.school || viewDialog.courseOfStudy) && (
+                <div>
+                  <div className="flex items-center gap-1.5 mb-2">
+                    <GraduationCap className="w-4 h-4 text-vogue" />
+                    <span className="text-xs font-semibold text-muted-foreground">Educational Information</span>
+                  </div>
+                  <div className="bg-vogue/5 rounded-lg p-3 space-y-1.5">
+                    {viewDialog.school && <div><span className="text-xs font-semibold text-muted-foreground">School:</span> <span className="text-sm text-charcoal dark:text-white">{viewDialog.school}</span></div>}
+                    {viewDialog.courseOfStudy && <div><span className="text-xs font-semibold text-muted-foreground">Course of Study:</span> <span className="text-sm text-charcoal dark:text-white">{viewDialog.courseOfStudy}</span></div>}
+                  </div>
+                </div>
+              )}
+
+              {/* Flight Details */}
+              {(viewDialog.countryOfOrigin || viewDialog.flightNumber || viewDialog.airline || viewDialog.arrivalDate || viewDialog.arrivalTime) && (
+                <div>
+                  <div className="flex items-center gap-1.5 mb-2">
+                    <Plane className="w-4 h-4 text-cornell" />
+                    <span className="text-xs font-semibold text-muted-foreground">Flight Details</span>
+                  </div>
+                  <div className="bg-cornell/5 rounded-lg p-3 space-y-1.5">
+                    {viewDialog.countryOfOrigin && <div><span className="text-xs font-semibold text-muted-foreground">Coming From:</span> <span className="text-sm text-charcoal dark:text-white">{viewDialog.countryOfOrigin}</span></div>}
+                    {viewDialog.airline && <div><span className="text-xs font-semibold text-muted-foreground">Airline:</span> <span className="text-sm text-charcoal dark:text-white">{viewDialog.airline}</span></div>}
+                    {viewDialog.flightNumber && <div><span className="text-xs font-semibold text-muted-foreground">Flight Number:</span> <span className="text-sm text-charcoal dark:text-white">{viewDialog.flightNumber}</span></div>}
+                    {viewDialog.arrivalDate && <div><span className="text-xs font-semibold text-muted-foreground">Arrival Date:</span> <span className="text-sm text-charcoal dark:text-white">{viewDialog.arrivalDate}</span></div>}
+                    {viewDialog.arrivalTime && <div><span className="text-xs font-semibold text-muted-foreground">Arrival Time:</span> <span className="text-sm text-charcoal dark:text-white">{viewDialog.arrivalTime}</span></div>}
+                  </div>
+                </div>
+              )}
 
               {viewDialog.message && (
                 <div>

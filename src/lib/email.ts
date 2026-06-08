@@ -50,6 +50,13 @@ export function formatApplicationEmail(data: Record<string, string | undefined>)
     ['Duration', data.duration],
     ['Start Date', data.startDate],
     ['End Date', data.endDate],
+    ['School / University', data.school],
+    ['Course of Study', data.courseOfStudy],
+    ['Country Coming From', data.countryOfOrigin],
+    ['Airline', data.airline],
+    ['Flight Number', data.flightNumber],
+    ['Arrival Date', data.arrivalDate],
+    ['Arrival Time', data.arrivalTime],
     ['How Did You Hear', data.referral],
     ['Message', data.message],
   ]

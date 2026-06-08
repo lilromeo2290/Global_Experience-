@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import { ArrowLeft, CheckCircle2, Send, User, Mail, Phone, MapPin, Calendar, Globe2, FileText, CalendarCheck } from 'lucide-react'
+import { ArrowLeft, CheckCircle2, Send, User, Mail, Phone, MapPin, Calendar, Globe2, FileText, CalendarCheck, GraduationCap, Plane, Clock } from 'lucide-react'
 import Link from 'next/link'
 
 const programs = [
@@ -83,6 +83,13 @@ function ApplyPage() {
     endDate: '',
     message: '',
     referral: '',
+    school: '',
+    courseOfStudy: '',
+    countryOfOrigin: '',
+    flightNumber: '',
+    airline: '',
+    arrivalDate: '',
+    arrivalTime: '',
   })
 
   // Calculate end date from start date + duration
@@ -160,6 +167,13 @@ function ApplyPage() {
           startDate: formData.startDate,
           endDate: formData.endDate,
           message: formData.message,
+          school: formData.school,
+          courseOfStudy: formData.courseOfStudy,
+          countryOfOrigin: formData.countryOfOrigin,
+          flightNumber: formData.flightNumber,
+          airline: formData.airline,
+          arrivalDate: formData.arrivalDate,
+          arrivalTime: formData.arrivalTime,
         }),
       })
       if (res.ok) {
@@ -466,6 +480,118 @@ function ApplyPage() {
                       </div>
                     </div>
                   )}
+                </div>
+              </div>
+
+              {/* Educational Information */}
+              <div className="mb-8">
+                <div className="flex items-center gap-2 mb-5">
+                  <div className="w-8 h-8 bg-vogue/10 rounded-lg flex items-center justify-center">
+                    <GraduationCap className="w-4 h-4 text-vogue" />
+                  </div>
+                  <h3 className="font-semibold text-cornell">Educational Information</h3>
+                </div>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-charcoal mb-1.5">School / University *</label>
+                    <input
+                      type="text"
+                      name="school"
+                      required
+                      value={formData.school}
+                      onChange={handleChange}
+                      placeholder="e.g. University of Oxford, Harvard University"
+                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cornell/20 focus:border-cornell transition-colors"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-charcoal mb-1.5">Course of Study</label>
+                    <input
+                      type="text"
+                      name="courseOfStudy"
+                      value={formData.courseOfStudy}
+                      onChange={handleChange}
+                      placeholder="e.g. Medicine, Business Administration"
+                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cornell/20 focus:border-cornell transition-colors"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Flight Details */}
+              <div className="mb-8">
+                <div className="flex items-center gap-2 mb-5">
+                  <div className="w-8 h-8 bg-cornell/10 rounded-lg flex items-center justify-center">
+                    <Plane className="w-4 h-4 text-cornell" />
+                  </div>
+                  <h3 className="font-semibold text-cornell">Flight Details</h3>
+                </div>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-charcoal mb-1.5">Country You Are Coming From *</label>
+                    <input
+                      type="text"
+                      name="countryOfOrigin"
+                      required
+                      value={formData.countryOfOrigin}
+                      onChange={handleChange}
+                      placeholder="e.g. United Kingdom, United States, Germany"
+                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cornell/20 focus:border-cornell transition-colors"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-charcoal mb-1.5">Airline</label>
+                    <input
+                      type="text"
+                      name="airline"
+                      value={formData.airline}
+                      onChange={handleChange}
+                      placeholder="e.g. British Airways, Emirates, KLM"
+                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cornell/20 focus:border-cornell transition-colors"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-charcoal mb-1.5">Flight Number</label>
+                    <input
+                      type="text"
+                      name="flightNumber"
+                      value={formData.flightNumber}
+                      onChange={handleChange}
+                      placeholder="e.g. BA789, EK501"
+                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cornell/20 focus:border-cornell transition-colors"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-charcoal mb-1.5">Arrival Date *</label>
+                    <input
+                      type="date"
+                      name="arrivalDate"
+                      required
+                      value={formData.arrivalDate}
+                      onChange={handleChange}
+                      min={new Date().toISOString().split('T')[0]}
+                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cornell/20 focus:border-cornell transition-colors"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-charcoal mb-1.5">Arrival Time *</label>
+                    <input
+                      type="time"
+                      name="arrivalTime"
+                      required
+                      value={formData.arrivalTime}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cornell/20 focus:border-cornell transition-colors"
+                    />
+                  </div>
+                  <div className="flex items-end">
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 w-full">
+                      <p className="text-xs text-blue-700">
+                        <Plane className="w-3 h-3 inline-block mr-1 -mt-0.5" />
+                        Airport pickup is included. Our team will be waiting for you at Kotoka International Airport (ACC).
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
 

@@ -95,20 +95,29 @@ model FAQ {
 }
 
 model Application {
-  id         String   @id @default(cuid())
-  firstName  String
-  lastName   String
-  email      String
-  phone      String?
-  nationality String?
-  program    String
-  branch     String?
-  duration   String?
-  startDate  String?
-  message    String?
-  status     String   @default("pending")
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id              String   @id @default(cuid())
+  firstName       String
+  lastName        String
+  email           String
+  phone           String?
+  nationality     String?
+  program         String
+  branch          String?
+  duration        String?
+  startDate       String?
+  endDate         String?
+  message         String?
+  referral        String?
+  school          String?
+  courseOfStudy   String?
+  countryOfOrigin String?
+  flightNumber    String?
+  airline         String?
+  arrivalDate     String?
+  arrivalTime     String?
+  status          String   @default("pending")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 model SiteSetting {
