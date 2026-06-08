@@ -633,13 +633,15 @@ function ApplyPage() {
               </div>
 
               {/* Registration Fee Notice */}
-              <div className="bg-vogue/5 border border-vogue/20 rounded-xl p-4 mb-6">
+              <div className="bg-cornell/10 border-2 border-cornell/40 rounded-xl p-5 mb-6 shadow-md">
                 <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-vogue flex-shrink-0 mt-0.5" />
+                  <div className="w-8 h-8 bg-cornell rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <CheckCircle2 className="w-5 h-5 text-white" />
+                  </div>
                   <div>
-                    <p className="text-sm font-semibold text-vogue">Registration / Application Fee</p>
-                    <p className="text-xs text-charcoal/70 mt-0.5">
-                      A Registration / Application fee of <span className="font-bold text-vogue">$200</span> is required to secure your placement after your application is approved.
+                    <p className="text-lg font-extrabold text-cornell uppercase tracking-wide">Registration / Application Fee</p>
+                    <p className="text-sm text-charcoal/90 mt-1 font-semibold">
+                      A Registration / Application fee of <span className="text-lg font-black text-cornell">$200</span> is required to secure your placement after your application is approved.
                     </p>
                   </div>
                 </div>
