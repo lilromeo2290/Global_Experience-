@@ -270,7 +270,7 @@ function ApplyPage() {
                 {[
                   { step: '1', title: 'Application Review', desc: 'We review your application within 48 hours' },
                   { step: '2', title: 'Interview & Matching', desc: 'We match you with the perfect placement' },
-                  { step: '3', title: 'Confirmation & Deposit', desc: 'Secure your spot with a $295 deposit' },
+                  { step: '3', title: 'Confirmation & Registration', desc: 'Secure your spot with a $200 registration fee' },
                   { step: '4', title: 'Pre-Departure Prep', desc: 'Receive comprehensive travel guidance' },
                   { step: '5', title: 'Arrive & Begin', desc: 'Airport pickup, orientation, and start!' },
                 ].map((item) => (
@@ -632,14 +632,14 @@ function ApplyPage() {
                 </div>
               </div>
 
-              {/* Deposit Notice */}
+              {/* Registration Fee Notice */}
               <div className="bg-vogue/5 border border-vogue/20 rounded-xl p-4 mb-6">
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-vogue flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="text-sm font-semibold text-vogue">Deposit Required</p>
+                    <p className="text-sm font-semibold text-vogue">Registration / Application Fee</p>
                     <p className="text-xs text-charcoal/70 mt-0.5">
-                      A deposit of <span className="font-bold text-vogue">$295</span> is required to secure your placement after your application is approved. This covers airport pickup, orientation, and initial accommodation arrangements.
+                      A Registration / Application fee of <span className="font-bold text-vogue">$200</span> is required to secure your placement after your application is approved.
                     </p>
                   </div>
                 </div>
