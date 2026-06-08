@@ -115,6 +115,8 @@ model Application {
   airline         String?
   arrivalDate     String?
   arrivalTime     String?
+  paymentReference String?
+  paymentStatus   String   @default("unpaid")
   status          String   @default("pending")
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt

@@ -59,6 +59,8 @@ export function formatApplicationEmail(data: Record<string, string | undefined>)
     ['Arrival Time', data.arrivalTime],
     ['How Did You Hear', data.referral],
     ['Message', data.message],
+    ['Payment Status', data.paymentStatus],
+    ['Payment Reference', data.paymentReference],
   ]
 
   const rows = fields

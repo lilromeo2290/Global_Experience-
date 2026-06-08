@@ -1,12 +1,21 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import { ArrowLeft, CheckCircle2, Send, User, Mail, Phone, MapPin, Calendar, Globe2, FileText, CalendarCheck, GraduationCap, Plane, Clock } from 'lucide-react'
+import { ArrowLeft, CheckCircle2, Send, User, Mail, Phone, MapPin, Calendar, Globe2, FileText, CalendarCheck, GraduationCap, Plane, Clock, CreditCard, AlertCircle, Shield } from 'lucide-react'
 import Link from 'next/link'
+
+// Extend Window type for Paystack
+declare global {
+  interface Window {
+    PaystackPop: {
+      setup: (config: Record<string, unknown>) => { openIframe: () => void }
+    }
+  }
+}
 
 const programs = [
   'Medical Placement in Teaching Hospitals',
@@ -70,6 +79,9 @@ function ApplyPage() {
 
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
+  const [paystackLoaded, setPaystackLoaded] = useState(false)
+  const [paymentError, setPaymentError] = useState('')
+  const [paymentReference, setPaymentReference] = useState('')
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -147,10 +159,22 @@ function ApplyPage() {
     }
   }, [formData.startDate, formData.duration])
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (submitting) return
-    setSubmitting(true)
+  // Load Paystack inline script
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    if (window.PaystackPop) {
+      setPaystackLoaded(true)
+      return
+    }
+    const script = document.createElement('script')
+    script.src = 'https://js.paystack.co/v2/inline.js'
+    script.async = true
+    script.onload = () => setPaystackLoaded(true)
+    script.onerror = () => console.error('Failed to load Paystack script')
+    document.body.appendChild(script)
+  }, [])
+
+  const submitApplication = useCallback(async (ref: string) => {
     try {
       const res = await fetch('/api/applications', {
         method: 'POST',
@@ -174,16 +198,95 @@ function ApplyPage() {
           airline: formData.airline,
           arrivalDate: formData.arrivalDate,
           arrivalTime: formData.arrivalTime,
+          paymentReference: ref,
+          paymentStatus: 'paid',
         }),
       })
       if (res.ok) {
+        setPaymentReference(ref)
         setSubmitted(true)
+      } else {
+        setPaymentError('Application submission failed after payment. Please contact us with your payment reference: ' + ref)
       }
     } catch (err) {
       console.error('Application submission failed:', err)
+      setPaymentError('Application submission failed after payment. Please contact us with your payment reference: ' + ref)
     } finally {
       setSubmitting(false)
     }
+  }, [formData])
+
+  const onPaymentSuccess = useCallback(async (reference: string) => {
+    try {
+      // Verify payment on backend
+      const res = await fetch('/api/donate/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reference }),
+      })
+      const data = await res.json()
+
+      if (data.success) {
+        // Payment verified — now submit the application
+        await submitApplication(reference)
+      } else {
+        setPaymentError(data.message || 'Payment verification failed. Please contact us.')
+        setSubmitting(false)
+      }
+    } catch {
+      setPaymentError('Could not verify payment. Please contact us with your reference.')
+      setSubmitting(false)
+    }
+  }, [submitApplication])
+
+  const openPaystackPopup = useCallback(() => {
+    if (!window.PaystackPop) {
+      setPaymentError('Payment system is still loading. Please wait a moment and try again.')
+      setSubmitting(false)
+      return
+    }
+
+    const publicKey = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || ''
+    if (!publicKey) {
+      setPaymentError('Payment system is not configured. Please contact us.')
+      setSubmitting(false)
+      return
+    }
+
+    const reference = `APP-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+
+    const handler = window.PaystackPop.setup({
+      key: publicKey,
+      email: formData.email,
+      amount: 20000, // $200 in cents (Paystack expects amount in kobo/cents)
+      currency: 'USD',
+      ref: reference,
+      metadata: {
+        custom_fields: [
+          { display_name: 'Applicant Name', variable_name: 'applicant_name', value: `${formData.firstName} ${formData.lastName}` },
+          { display_name: 'Program', variable_name: 'program', value: formData.program },
+        ],
+      },
+      callback: (response: { reference: string }) => {
+        onPaymentSuccess(response.reference)
+      },
+      onClose: () => {
+        // User closed the Paystack popup without paying
+        setSubmitting(false)
+      },
+    })
+
+    handler.openIframe()
+  }, [formData, onPaymentSuccess])
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (submitting) return
+    setSubmitting(true)
+    setPaymentError('')
+
+    // Open Paystack payment popup first
+    openPaystackPopup()
   }
 
   if (submitted) {
@@ -202,6 +305,22 @@ function ApplyPage() {
           <p className="text-charcoal leading-relaxed mb-2">
             Thank you, <span className="font-semibold">{formData.firstName}</span>! Your application for <span className="font-semibold text-vogue">{formData.program}</span> has been received.
           </p>
+          <div className="bg-vogue/5 border border-vogue/20 rounded-xl p-4 my-4 text-left">
+            <div className="flex items-center gap-2 mb-2">
+              <Shield className="w-4 h-4 text-vogue" />
+              <span className="text-sm font-semibold text-vogue">Payment Confirmed</span>
+            </div>
+            <div className="flex justify-between mb-1">
+              <span className="text-xs text-charcoal/60">Registration Fee</span>
+              <span className="text-xs font-bold text-vogue">$200.00</span>
+            </div>
+            {paymentReference && (
+              <div className="flex justify-between">
+                <span className="text-xs text-charcoal/60">Reference</span>
+                <span className="text-xs font-mono text-charcoal/70">{paymentReference}</span>
+              </div>
+            )}
+          </div>
           <p className="text-charcoal/70 text-sm mb-8">
             Our team will review your application and get back to you within 48 hours. Check your email at <span className="font-medium">{formData.email}</span> for a confirmation.
           </p>
@@ -636,16 +755,27 @@ function ApplyPage() {
               <div className="bg-cornell/10 border-2 border-cornell/40 rounded-xl p-5 mb-6 shadow-md">
                 <div className="flex items-start gap-3">
                   <div className="w-8 h-8 bg-cornell rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <CheckCircle2 className="w-5 h-5 text-white" />
+                    <CreditCard className="w-5 h-5 text-white" />
                   </div>
                   <div>
                     <p className="text-lg font-extrabold text-cornell uppercase tracking-wide">Registration / Application Fee</p>
                     <p className="text-sm text-charcoal/90 mt-1 font-semibold">
-                      A Registration / Application fee of <span className="text-lg font-black text-cornell">$200</span> is required to secure your placement after your application is approved.
+                      A Registration / Application fee of <span className="text-lg font-black text-cornell">$200</span> is required upon submission. You will be prompted to complete payment before your application is finalized.
                     </p>
                   </div>
                 </div>
               </div>
+
+              {/* Payment Error */}
+              {paymentError && (
+                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl flex items-start gap-3">
+                  <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-semibold text-red-700">Payment Issue</p>
+                    <p className="text-xs text-red-600 mt-0.5">{paymentError}</p>
+                  </div>
+                </div>
+              )}
 
               {/* Submit */}
               <Button
@@ -654,12 +784,12 @@ function ApplyPage() {
                 disabled={submitting}
                 className="w-full bg-cornell hover:bg-cornell-dark text-white rounded-full text-base py-3"
               >
-                <Send className="w-4 h-4 mr-2" />
-                {submitting ? 'Submitting...' : 'Submit Application'}
+                <CreditCard className="w-4 h-4 mr-2" />
+                {submitting ? 'Processing Payment...' : 'Submit Application & Pay $200'}
               </Button>
 
               <p className="text-[11px] text-charcoal/50 text-center mt-4">
-                By submitting this application, you agree to our terms and conditions. We will respond within 48 hours.
+                By submitting this application, you agree to our terms and conditions. A $200 registration fee will be processed via Paystack. We will respond within 48 hours.
               </p>
             </form>
           </motion.div>

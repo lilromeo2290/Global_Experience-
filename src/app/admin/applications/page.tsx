@@ -23,7 +23,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { FileText, Eye, Trash2, Filter, Loader2, Mail, Phone, Globe, Calendar, GraduationCap, Plane, Clock, MapPin } from 'lucide-react'
+import { FileText, Eye, Trash2, Filter, Loader2, Mail, Phone, Globe, Calendar, GraduationCap, Plane, Clock, MapPin, CreditCard, Shield } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast'
 
 interface Application {
@@ -47,6 +47,8 @@ interface Application {
   airline: string | null
   arrivalDate: string | null
   arrivalTime: string | null
+  paymentReference: string | null
+  paymentStatus: string
   status: string
   createdAt: string
 }
@@ -176,7 +178,12 @@ export default function ApplicationsPage() {
                       {app.status}
                     </Badge>
                   </div>
-                  <p className="text-sm text-muted-foreground">{app.program} • {app.email}</p>
+                  <div className="flex items-center gap-2">
+                    <p className="text-sm text-muted-foreground">{app.program} • {app.email}</p>
+                    {app.paymentStatus === 'paid' && (
+                      <Badge variant="outline" className="text-xs bg-green-50 text-green-700 border-green-200">Paid</Badge>
+                    )}
+                  </div>
                   <p className="text-xs text-muted-foreground mt-0.5">
                     Applied: {new Date(app.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
                   </p>
@@ -294,6 +301,32 @@ export default function ApplicationsPage() {
                   </div>
                 </div>
               )}
+
+              {/* Payment Information */}
+              <div>
+                <div className="flex items-center gap-1.5 mb-2">
+                  <CreditCard className="w-4 h-4 text-cornell" />
+                  <span className="text-xs font-semibold text-muted-foreground">Payment Information</span>
+                </div>
+                <div className="bg-cornell/5 rounded-lg p-3 space-y-1.5">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-semibold text-muted-foreground">Status:</span>
+                    {viewDialog.paymentStatus === 'paid' ? (
+                      <Badge variant="outline" className="text-xs bg-green-50 text-green-700 border-green-200">
+                        <Shield className="w-3 h-3 mr-1" />Paid
+                      </Badge>
+                    ) : (
+                      <Badge variant="outline" className="text-xs bg-yellow-50 text-yellow-700 border-yellow-200">Unpaid</Badge>
+                    )}
+                  </div>
+                  {viewDialog.paymentReference && (
+                    <div><span className="text-xs font-semibold text-muted-foreground">Reference:</span> <span className="text-xs font-mono text-charcoal dark:text-white">{viewDialog.paymentReference}</span></div>
+                  )}
+                  {viewDialog.paymentStatus === 'paid' && (
+                    <div><span className="text-xs font-semibold text-muted-foreground">Amount:</span> <span className="text-xs font-bold text-vogue">$200.00</span></div>
+                  )}
+                </div>
+              </div>
 
               {viewDialog.message && (
                 <div>
