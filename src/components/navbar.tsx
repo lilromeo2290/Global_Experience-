@@ -46,7 +46,7 @@ const navLinks: NavLink[] = [
     ],
   },
   {
-    label: 'Services',
+    label: 'Pricing',
     href: '#services',
     key: 'services',
     subLinks: [
