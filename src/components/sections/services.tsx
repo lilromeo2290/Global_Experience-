@@ -9,7 +9,13 @@ const services = [
     id: 'airport-pickups',
     icon: Plane,
     title: 'Airport Pickups',
-    desc: 'We provide reliable airport pickup services to ensure smooth and stress-free arrival. Our team welcomes clients at the airport, assists with luggage, and arranges comfortable transportation to their destination.',
+    bullets: [
+      'Reliable airport pickup services',
+      'Smooth and stress-free arrival',
+      'Team welcomes clients at the airport',
+      'Luggage assistance included',
+      'Comfortable transportation to destination',
+    ],
     color: 'cornell',
     link: null,
   },
@@ -17,7 +23,13 @@ const services = [
     id: 'local-orientations',
     icon: MapPin,
     title: 'Local Orientation',
-    desc: 'Our local orientation service helps newcomers quickly adapt to their new environment. We provide guidance on transportation, shopping centers, healthcare facilities, banking services, cultural practices, and other essential information to make settling in easier.',
+    bullets: [
+      'Helps newcomers adapt to their new environment',
+      'Guidance on transportation options',
+      'Shopping centers and healthcare facilities',
+      'Banking services information',
+      'Cultural practices and essential tips',
+    ],
     color: 'vogue',
     link: null,
   },
@@ -25,7 +37,12 @@ const services = [
     id: 'placement-organisation',
     icon: Briefcase,
     title: 'Placement Organization',
-    desc: 'We assist with placement arrangements by connecting individuals with suitable institutions, workplaces, training centers, or opportunities that match their goals and qualifications. Our team ensures a seamless placement process from start to finish.',
+    bullets: [
+      'Connecting with suitable institutions',
+      'Workplaces and training centers matched to goals',
+      'Opportunities based on qualifications',
+      'Seamless placement process from start to finish',
+    ],
     color: 'vogue-light',
     link: '/placements',
   },
@@ -33,7 +50,12 @@ const services = [
     id: 'accommodation',
     icon: Home,
     title: 'Accommodation',
-    desc: 'Finding safe and comfortable accommodation is one of our priorities. We help clients secure suitable housing options based on their preferences, budget, and location requirements, ensuring a convenient and welcoming living environment.',
+    bullets: [
+      'Safe and comfortable housing options',
+      'Based on preferences, budget, and location',
+      'Convenient and welcoming living environment',
+      'Carefully vetted accommodations',
+    ],
     color: 'cornell',
     link: null,
   },
@@ -41,7 +63,12 @@ const services = [
     id: 'feeding',
     icon: UtensilsCrossed,
     title: 'Feeding',
-    desc: 'We provide feeding arrangements to ensure clients have access to nutritious and quality meals. Whether for short-term stays or extended periods, we help organize meal plans and catering services that meet individual dietary needs and preferences.',
+    bullets: [
+      'Access to nutritious and quality meals',
+      'Short-term and extended period options',
+      'Organized meal plans and catering',
+      'Accommodates individual dietary needs and preferences',
+    ],
     color: 'vogue',
     link: null,
   },
@@ -80,8 +107,15 @@ export default function ServicesSection() {
                 <div className={`w-14 h-14 ${colors.bg} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
                   <service.icon className={`w-7 h-7 ${colors.icon}`} />
                 </div>
-                <h3 className="text-lg font-bold text-cornell mb-2">{service.title}</h3>
-                <p className="text-sm text-charcoal leading-relaxed">{service.desc}</p>
+                <h3 className="text-lg font-bold text-cornell mb-3">{service.title}</h3>
+                <ul className="space-y-1.5">
+                  {service.bullets.map((bullet) => (
+                    <li key={bullet} className="flex items-start gap-2 text-sm text-charcoal leading-relaxed">
+                      <span className={`w-1.5 h-1.5 rounded-full ${colors.bg} mt-1.5 flex-shrink-0`} />
+                      {bullet}
+                    </li>
+                  ))}
+                </ul>
                 {service.link && (
                   <div className="mt-4 inline-flex items-center gap-1 text-vogue hover:text-cornell text-sm font-semibold transition-colors">
                     View Placements <ArrowRight className="w-4 h-4" />
