@@ -9,23 +9,23 @@ const services = [
     id: 'airport-pickups',
     icon: Plane,
     title: 'Airport Pickups',
-    desc: 'Seamless airport transfer services ensuring safe and comfortable arrival. Our team greets you at the airport and ensures you reach your accommodation without any hassle, 24/7.',
+    desc: 'We provide reliable airport pickup services to ensure smooth and stress-free arrival. Our team welcomes clients at the airport, assists with luggage, and arranges comfortable transportation to their destination.',
     color: 'cornell',
     link: null,
   },
   {
     id: 'local-orientations',
     icon: MapPin,
-    title: 'Local Orientations',
-    desc: 'Comprehensive orientation programs covering local culture, customs, safety guidelines, transportation, and essential information to help you settle in quickly and confidently.',
+    title: 'Local Orientation',
+    desc: 'Our local orientation service helps newcomers quickly adapt to their new environment. We provide guidance on transportation, shopping centers, healthcare facilities, banking services, cultural practices, and other essential information to make settling in easier.',
     color: 'vogue',
     link: null,
   },
   {
     id: 'placement-organisation',
     icon: Briefcase,
-    title: 'Placement Organisation',
-    desc: 'Expert matching of your skills and interests with the perfect placement opportunity. We organize placements across 12 professional categories including medical, teaching, journalism, and more.',
+    title: 'Placement Organization',
+    desc: 'We assist with placement arrangements by connecting individuals with suitable institutions, workplaces, training centers, or opportunities that match their goals and qualifications. Our team ensures a seamless placement process from start to finish.',
     color: 'vogue-light',
     link: '/placements',
   },
@@ -33,7 +33,7 @@ const services = [
     id: 'accommodation',
     icon: Home,
     title: 'Accommodation',
-    desc: 'Safe, comfortable, and affordable housing options carefully vetted by our team. From host families to shared volunteer houses, we ensure you have a secure and welcoming home throughout your placement.',
+    desc: 'Finding safe and comfortable accommodation is one of our priorities. We help clients secure suitable housing options based on their preferences, budget, and location requirements, ensuring a convenient and welcoming living environment.',
     color: 'cornell',
     link: null,
   },
@@ -41,7 +41,7 @@ const services = [
     id: 'feeding',
     icon: UtensilsCrossed,
     title: 'Feeding',
-    desc: 'Nutritious meal plans and daily feeding support throughout your stay. We ensure you are well-nourished with local and familiar cuisine so you can focus on your placement and enjoy your experience.',
+    desc: 'We provide feeding arrangements to ensure clients have access to nutritious and quality meals. Whether for short-term stays or extended periods, we help organize meal plans and catering services that meet individual dietary needs and preferences.',
     color: 'vogue',
     link: null,
   },
@@ -63,13 +63,12 @@ export default function ServicesSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="text-vogue font-semibold text-sm uppercase tracking-wider">Our Services</span>
+          <span className="text-vogue font-semibold text-sm uppercase tracking-wider">Pricing</span>
           <h2 className="text-3xl md:text-4xl font-bold text-cornell mt-2 mb-4">
-            Comprehensive Support Every Step of the Way
+            What's Included
           </h2>
           <p className="text-charcoal max-w-2xl mx-auto leading-relaxed">
-            From the moment you arrive until your placement is complete, our dedicated team provides
-            end-to-end support to ensure a safe, enriching, and transformative experience.
+            Everything you need for a smooth and fulfilling placement experience in Ghana is covered in our pricing.
           </p>
         </motion.div>
 
