@@ -45,18 +45,7 @@ const navLinks: NavLink[] = [
       { label: 'Accra', href: '#accra' },
     ],
   },
-  {
-    label: 'Pricing',
-    href: '#services',
-    key: 'services',
-    subLinks: [
-      { label: 'Airport Pickups', href: '#airport-pickups' },
-      { label: 'Local Orientations', href: '#local-orientations' },
-      { label: 'Placement Organisation', href: '/placements' },
-      { label: 'Accommodation', href: '#accommodation' },
-      { label: 'Feeding', href: '#feeding' },
-    ],
-  },
+  { label: 'Pricing', href: '#services', key: 'services' },
   { label: 'Gallery', href: '#gallery', key: 'gallery' },
   { label: 'Contact Us', href: '#contact', key: 'contact' },
 ]
