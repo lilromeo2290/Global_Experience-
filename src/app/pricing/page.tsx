@@ -10,9 +10,9 @@ import Footer from '@/components/footer'
 const included = [
   { icon: Plane, title: 'Airport Pickups', desc: 'We provide reliable airport pickup services to ensure smooth and stress-free arrival. Our team welcomes clients at the airport, assists with luggage, and arranges comfortable transportation to their destination.' },
   { icon: MapPin, title: 'Local Orientation', desc: 'Our local orientation service helps newcomers quickly adapt to their new environment. We provide guidance on transportation, shopping centers, healthcare facilities, banking services, cultural practices, and other essential information to make settling in easier.' },
-  { icon: UtensilsCrossed, title: 'Feeding', desc: 'We provide feeding arrangements to ensure clients have access to nutritious and quality meals. Whether for short-term stays or extended periods, we help organize meal plans and catering services that meet individual dietary needs and preferences.' },
-  { icon: Home, title: 'Accommodation', desc: 'Finding safe and comfortable accommodation is one of our priorities. We help clients secure suitable housing options based on their preferences, budget, and location requirements, ensuring a convenient and welcoming living environment.' },
   { icon: Briefcase, title: 'Placement Organization', desc: 'We assist with placement arrangements by connecting individuals with suitable institutions, workplaces, training centers, or opportunities that match their goals and qualifications. Our team ensures a seamless placement process from start to finish.' },
+  { icon: Home, title: 'Accommodation', desc: 'Finding safe and comfortable accommodation is one of our priorities. We help clients secure suitable housing options based on their preferences, budget, and location requirements, ensuring a convenient and welcoming living environment.' },
+  { icon: UtensilsCrossed, title: 'Feeding', desc: 'We provide feeding arrangements to ensure clients have access to nutritious and quality meals. Whether for short-term stays or extended periods, we help organize meal plans and catering services that meet individual dietary needs and preferences.' },
 ]
 
 export default function PricingPage() {
