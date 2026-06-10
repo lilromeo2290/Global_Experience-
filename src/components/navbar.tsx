@@ -45,7 +45,7 @@ const navLinks: NavLink[] = [
       { label: 'Accra', href: '#accra' },
     ],
   },
-  { label: 'Pricing', href: '#services', key: 'services' },
+  { label: 'Pricing', href: '/pricing', key: 'pricing' },
   { label: 'Gallery', href: '#gallery', key: 'gallery' },
   { label: 'Contact Us', href: '#contact', key: 'contact' },
 ]

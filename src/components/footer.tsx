@@ -8,7 +8,7 @@ const quickLinks = [
   { label: 'About Us', href: '#about' },
   { label: 'Mission and Vision', href: '#mission-vision' },
   { label: 'Our Team', href: '#team' },
-  { label: 'Pricing', href: '#services' },
+  { label: 'Pricing', href: '/pricing' },
   { label: 'Gallery', href: '#gallery' },
   { label: 'Contact Us', href: '#contact' },
 ]
