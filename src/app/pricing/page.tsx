@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Plane, MapPin, Briefcase, Home, UtensilsCrossed, CheckCircle2, ArrowLeft, Shield, CreditCard } from 'lucide-react'
+import { Plane, MapPin, Briefcase, Home, UtensilsCrossed, CheckCircle2, ArrowLeft, Shield, CreditCard, Calendar } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import Navbar from '@/components/navbar'
@@ -106,6 +106,61 @@ export default function PricingPage() {
                 </p>
               </div>
             </div>
+          </motion.div>
+
+          {/* Prices Table */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mt-16"
+          >
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center gap-2 bg-cornell/10 rounded-full px-4 py-2 mb-4">
+                <Calendar className="w-4 h-4 text-cornell" />
+                <span className="text-sm font-semibold text-cornell">Duration & Pricing</span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-cornell mb-2">PRICES</h2>
+              <p className="text-charcoal/70 max-w-xl mx-auto">Choose the duration that fits your schedule. All prices include the services listed above.</p>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse rounded-2xl overflow-hidden shadow-lg border border-cornell/20">
+                <thead>
+                  <tr className="bg-gradient-to-r from-cornell to-cornell-dark">
+                    {["1 Week", "2 Weeks", "3 Weeks", "4 Weeks", "5 Weeks", "6 Weeks", "Extra Week"].map((period) => (
+                      <th
+                        key={period}
+                        className="px-4 md:px-6 py-4 text-white text-sm md:text-base font-bold uppercase tracking-wider text-center border-r border-white/10 last:border-r-0"
+                      >
+                        {period}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="bg-white even:bg-gray-50/50">
+                    {["$2,129", "$2,467", "$2,804", "$3,142", "$3,480", "$3,817", "$598"].map((price, i) => (
+                      <td
+                        key={i}
+                        className="px-4 md:px-6 py-5 text-center border-r border-cornell/10 last:border-r-0 border-t border-cornell/10"
+                      >
+                        <span className={`text-lg md:text-2xl font-black ${i === 6 ? 'text-vogue' : 'text-cornell'}`}>
+                          {price}
+                        </span>
+                        {i === 6 && (
+                          <span className="block text-[10px] text-charcoal/50 font-medium uppercase tracking-wider mt-0.5">per additional</span>
+                        )}
+                      </td>
+                    ))}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p className="text-center text-xs text-charcoal/50 mt-3 italic">
+              * All prices are in USD. Registration / Application Fee of $200 applies separately.
+            </p>
           </motion.div>
 
           {/* Why Choose Us */}
