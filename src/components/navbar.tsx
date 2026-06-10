@@ -24,30 +24,30 @@ interface NavLink {
 }
 
 const navLinks: NavLink[] = [
-  { label: 'Home', href: '#home', key: 'home' },
+  { label: 'Home', href: '/', key: 'home' },
   {
     label: 'About Us',
-    href: '#about',
+    href: '/about',
     key: 'about',
     subLinks: [
-      { label: 'Mission and Vision', href: '#mission-vision' },
-      { label: 'Our Team', href: '#team' },
+      { label: 'Mission and Vision', href: '/about#mission-vision' },
+      { label: 'Our Team', href: '/about#team' },
     ],
   },
   {
     label: 'Destinations',
-    href: '#destinations',
+    href: '/destinations',
     key: 'destinations',
     subLinks: [
-      { label: 'Cape Coast', href: '#cape-coast' },
-      { label: 'Volta \u2013 HO', href: '#volta-ho' },
-      { label: 'Takoradi', href: '#takoradi' },
-      { label: 'Accra', href: '#accra' },
+      { label: 'Cape Coast', href: '/destinations#cape-coast' },
+      { label: 'Volta \u2013 HO', href: '/destinations#volta-ho' },
+      { label: 'Takoradi', href: '/destinations#takoradi' },
+      { label: 'Accra', href: '/destinations#accra' },
     ],
   },
   { label: 'Pricing', href: '/pricing', key: 'pricing' },
-  { label: 'Gallery', href: '#gallery', key: 'gallery' },
-  { label: 'Contact Us', href: '#contact', key: 'contact' },
+  { label: 'Gallery', href: '/gallery', key: 'gallery' },
+  { label: 'Contact Us', href: '/contact', key: 'contact' },
 ]
 
 export default function Navbar() {
@@ -57,12 +57,10 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
   const [mobileOpenDropdown, setMobileOpenDropdown] = useState<string | null>(null)
-  const [applyOpen, setApplyOpen] = useState(false)
   const [destinationModal, setDestinationModal] = useState<string>('')
   const [donateOpen, setDonateOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const dropdownRefs = useRef<Record<string, HTMLDivElement | null>>({})
-  const applyRef = useRef<HTMLDivElement | null>(null)
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
@@ -99,9 +97,6 @@ export default function Navbar() {
       if (!anyOpen) {
         setOpenDropdown(null)
       }
-      if (applyRef.current && !applyRef.current.contains(e.target as Node)) {
-        setApplyOpen(false)
-      }
     }
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
@@ -110,16 +105,14 @@ export default function Navbar() {
   const handleNavClick = (href: string) => {
     setMobileOpen(false)
     setMobileOpenDropdown(null)
+    setOpenDropdown(null)
 
     if (href.startsWith('/')) {
-      setOpenDropdown(null)
+      // Page routes are handled by Next.js Link navigation
       return
     }
 
-    setTimeout(() => {
-      setOpenDropdown(null)
-    }, 50)
-
+    // Hash-only anchors scroll on the current page
     const el = document.querySelector(href)
     if (el) {
       const offset = 80
@@ -147,14 +140,16 @@ export default function Navbar() {
   }
 
   const handleSubLinkClick = (link: NavLink, sub: SubLink) => {
+    setOpenDropdown(null)
+    setMobileOpen(false)
+    setMobileOpenDropdown(null)
+
     if (link.key === 'destinations') {
-      setOpenDropdown(null)
-      setMobileOpen(false)
-      setMobileOpenDropdown(null)
-      setDestinationModal(sub.href.replace('#', ''))
-    } else {
-      handleNavClick(sub.href)
+      // Destination sublinks open the program modal
+      const slug = sub.href.includes('#') ? sub.href.split('#').pop()! : sub.href.replace('#', '')
+      setDestinationModal(slug)
     }
+    // About sublinks (and other page-route sublinks) navigate normally via Next.js Link
   }
 
   return (
@@ -192,7 +187,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <a href="#home" onClick={(e) => { e.preventDefault(); handleNavClick('#home') }} className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2">
             <img
               src="/images/logo.png"
               alt="Global Experience Placements Logo"
@@ -206,7 +201,7 @@ export default function Navbar() {
                 Aligning Skills with Corporate Goals
               </span>
             </div>
-          </a>
+          </Link>
 
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center gap-1">
@@ -220,11 +215,11 @@ export default function Navbar() {
                     onMouseEnter={() => handleDropdownEnter(link.key)}
                     onMouseLeave={handleDropdownLeave}
                   >
-                    <a
+                    <Link
                       href={link.href}
-                      onClick={(e) => { e.preventDefault(); handleNavClick(link.href) }}
+                      onClick={() => { handleNavClick(link.href) }}
                       className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center gap-1 cursor-pointer ${
-                        activeSection === link.href.replace('#', '') || isDropdownActive(link)
+                        isDropdownActive(link)
                           ? scrolled
                             ? 'text-cornell dark:text-white bg-cornell/10 dark:bg-white/20'
                             : 'text-white bg-white/20'
@@ -235,7 +230,7 @@ export default function Navbar() {
                     >
                       {link.label}
                       <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isDropdownActive(link) ? 'rotate-180' : ''}`} />
-                    </a>
+                    </Link>
 
                     {/* Dropdown */}
                     {isDropdownActive(link) && (
@@ -285,15 +280,10 @@ export default function Navbar() {
               }
 
               return (
-                <a
+                <Link
                   key={link.key}
                   href={link.href}
-                  onClick={(e) => {
-                    if (!link.href.startsWith('/')) {
-                      e.preventDefault()
-                    }
-                    handleNavClick(link.href)
-                  }}
+                  onClick={() => handleNavClick(link.href)}
                   className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
                     activeSection === link.href.replace('#', '')
                       ? scrolled
@@ -305,7 +295,7 @@ export default function Navbar() {
                   }`}
                 >
                   {link.label}
-                </a>
+                </Link>
               )
             })}
           </div>
@@ -346,12 +336,13 @@ export default function Navbar() {
             </button>
 
             <div className="hidden sm:flex items-center">
-              <Button
-                onClick={() => { setApplyOpen(false); handleNavClick('#volunteer') }}
-                className="bg-cornell hover:bg-cornell-dark text-white rounded-full px-5"
-              >
-                Apply Now
-              </Button>
+              <Link href="/apply">
+                <Button
+                  className="bg-cornell hover:bg-cornell-dark text-white rounded-full px-5"
+                >
+                  Apply Now
+                </Button>
+              </Link>
             </div>
 
             {/* Mobile Menu */}
@@ -449,15 +440,10 @@ export default function Navbar() {
                       }
 
                       return (
-                        <a
+                        <Link
                           key={link.key}
                           href={link.href}
-                          onClick={(e) => {
-                            if (!link.href.startsWith('/')) {
-                              e.preventDefault()
-                            }
-                            handleNavClick(link.href)
-                          }}
+                          onClick={() => handleNavClick(link.href)}
                           className={`block px-6 py-3 text-base font-medium transition-colors ${
                             activeSection === link.href.replace('#', '')
                               ? 'text-cornell bg-cornell/10 border-r-4 border-cornell'
@@ -465,7 +451,7 @@ export default function Navbar() {
                           }`}
                         >
                           {link.label}
-                        </a>
+                        </Link>
                       )
                     })}
                   </div>
@@ -477,12 +463,13 @@ export default function Navbar() {
                       {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
                       {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
                     </button>
-                    <Button
-                      onClick={() => { setMobileOpen(false); setMobileOpenDropdown(null); handleNavClick('#volunteer') }}
-                      className="w-full bg-cornell hover:bg-cornell-dark text-white rounded-full"
-                    >
-                      Apply Now
-                    </Button>
+                    <Link href="/apply" className="block">
+                      <Button
+                        className="w-full bg-cornell hover:bg-cornell-dark text-white rounded-full"
+                      >
+                        Apply Now
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               </SheetContent>
