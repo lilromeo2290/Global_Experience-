@@ -288,7 +288,12 @@ export default function Navbar() {
                 <a
                   key={link.key}
                   href={link.href}
-                  onClick={(e) => { e.preventDefault(); handleNavClick(link.href) }}
+                  onClick={(e) => {
+                    if (!link.href.startsWith('/')) {
+                      e.preventDefault()
+                    }
+                    handleNavClick(link.href)
+                  }}
                   className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
                     activeSection === link.href.replace('#', '')
                       ? scrolled
@@ -447,7 +452,12 @@ export default function Navbar() {
                         <a
                           key={link.key}
                           href={link.href}
-                          onClick={(e) => { e.preventDefault(); handleNavClick(link.href) }}
+                          onClick={(e) => {
+                            if (!link.href.startsWith('/')) {
+                              e.preventDefault()
+                            }
+                            handleNavClick(link.href)
+                          }}
                           className={`block px-6 py-3 text-base font-medium transition-colors ${
                             activeSection === link.href.replace('#', '')
                               ? 'text-cornell bg-cornell/10 border-r-4 border-cornell'
