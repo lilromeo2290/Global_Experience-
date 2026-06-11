@@ -30,6 +30,38 @@ export default function DonateSection() {
   return (
     <section id="donate" className="py-20 bg-white dark:bg-[#0A1F12]">
       <div className="max-w-7xl mx-auto px-4">
+        {/* Donation Introduction */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-14"
+        >
+          <div className="inline-flex items-center gap-2 bg-cornell/10 dark:bg-cornell/20 text-cornell px-4 py-1.5 rounded-full text-sm font-semibold mb-6">
+            <Heart className="w-4 h-4" />
+            Donation
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-cornell dark:text-white mb-6">
+            Make a Difference Today
+          </h2>
+          <p className="text-charcoal dark:text-white/70 max-w-3xl mx-auto text-base leading-relaxed mb-4">
+            Every day, countless individuals and communities face challenges that limit their access to education,
+            healthcare, shelter, food, and opportunities for a better future. Our NGO is committed to creating lasting
+            change by providing support, empowerment, and sustainable development programs to those who need it most.
+          </p>
+          <p className="text-charcoal dark:text-white/80 max-w-2xl mx-auto text-lg font-semibold leading-relaxed mb-4">
+            Your donation is more than a financial contribution — it is an investment in hope, dignity, and transformation.
+          </p>
+          <p className="text-charcoal dark:text-white/70 max-w-3xl mx-auto text-base leading-relaxed mb-4">
+            Global Experience, Ghana welcomes donations from NGOs, Corporate Organizations, Government Institutions,
+            and Individuals for the organization&apos;s Outreach Program in the areas listed below.
+          </p>
+          <p className="text-cornell dark:text-vogue font-medium max-w-2xl mx-auto text-base leading-relaxed">
+            Every amount donated helps us reach vulnerable individuals, support community projects, provide educational
+            resources, improve livelihoods, and respond to urgent humanitarian needs.
+          </p>
+        </motion.div>
+
         {/* Donation Areas */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

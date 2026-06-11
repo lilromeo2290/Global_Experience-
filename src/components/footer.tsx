@@ -4,13 +4,14 @@ import { Heart, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, You
 import Link from 'next/link'
 
 const quickLinks = [
-  { label: 'Home', href: '#home' },
-  { label: 'About Us', href: '#about' },
-  { label: 'Mission and Vision', href: '#mission-vision' },
-  { label: 'Our Team', href: '#team' },
-  { label: 'Pricing', href: '#services' },
-  { label: 'Gallery', href: '#gallery' },
-  { label: 'Contact Us', href: '#contact' },
+  { label: 'Home', href: '/' },
+  { label: 'About Us', href: '/about' },
+  { label: 'Mission and Vision', href: '/about#mission-vision' },
+  { label: 'Our Team', href: '/about#team' },
+  { label: 'Pricing', href: '/pricing' },
+  { label: 'Gallery', href: '/gallery' },
+  { label: 'Donation', href: '/#donate' },
+  { label: 'Contact Us', href: '/contact' },
 ]
 
 const programs = [
@@ -38,15 +39,6 @@ const socials = [
 ]
 
 export default function Footer() {
-  const handleNavClick = (href: string) => {
-    const el = document.querySelector(href)
-    if (el) {
-      const offset = 80
-      const top = el.getBoundingClientRect().top + window.scrollY - offset
-      window.scrollTo({ top, behavior: 'smooth' })
-    }
-  }
-
   return (
     <footer className="bg-gradient-to-br from-vogue-dark via-vogue to-vogue-dark text-white/90">
       {/* Main Footer */}
@@ -89,23 +81,13 @@ export default function Footer() {
             <h4 className="font-semibold text-white mb-4 text-sm uppercase tracking-wider">Quick Links</h4>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
-                <li key={link.href}>
-                  {link.href.startsWith('/') ? (
-                    <Link
-                      href={link.href}
-                      className="text-sm text-white/60 hover:text-vogue transition-colors"
-                    >
-                      {link.label}
-                    </Link>
-                  ) : (
-                    <a
-                      href={link.href}
-                      onClick={(e) => { e.preventDefault(); handleNavClick(link.href) }}
-                      className="text-sm text-white/60 hover:text-vogue transition-colors"
-                    >
-                      {link.label}
-                    </a>
-                  )}
+                <li key={link.href + link.label}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-white/60 hover:text-vogue transition-colors"
+                  >
+                    {link.label}
+                  </Link>
                 </li>
               ))}
             </ul>

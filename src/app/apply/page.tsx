@@ -56,6 +56,42 @@ const durationDaysMap: Record<string, number> = {
   '12 Months': 365,
 }
 
+const medicalDepartments = [
+  'Internal Medicine',
+  'Surgery',
+  'Obstetrics & Gynaecology',
+  'Pediatrics & Child Health',
+  'Public Health',
+  'Dental Clinic',
+  'Eye Clinic (Ophthalmology)',
+  'ENT (Ear, Nose & Throat)',
+  'Family Medicine',
+  'Infectious Disease Centre',
+  'Laboratory Services',
+  'Radiology',
+  'Physiotherapy & Rehabilitation',
+  'Pharmacy',
+  'Nutrition & Dietetics',
+]
+
+const medicalDepartmentDescriptions: Record<string, string> = {
+  'Internal Medicine': 'Management of adult diseases, including specialized cardiovascular, dialysis, and neurological units.',
+  'Surgery': '',
+  'Obstetrics & Gynaecology': '',
+  'Pediatrics & Child Health': '',
+  'Public Health': '',
+  'Dental Clinic': '',
+  'Eye Clinic (Ophthalmology)': '',
+  'ENT (Ear, Nose & Throat)': '',
+  'Family Medicine': '',
+  'Infectious Disease Centre': '',
+  'Laboratory Services': '',
+  'Radiology': '',
+  'Physiotherapy & Rehabilitation': '',
+  'Pharmacy': '',
+  'Nutrition & Dietetics': '',
+}
+
 const howDidYouHear = [
   'Google Search',
   'Social Media',
@@ -97,6 +133,7 @@ function ApplyPage() {
     referral: '',
     school: '',
     courseOfStudy: '',
+    medicalDepartment: '',
     countryOfOrigin: '',
     flightNumber: '',
     airline: '',
@@ -193,6 +230,7 @@ function ApplyPage() {
           message: formData.message,
           school: formData.school,
           courseOfStudy: formData.courseOfStudy,
+          medicalDepartment: formData.medicalDepartment,
           countryOfOrigin: formData.countryOfOrigin,
           flightNumber: formData.flightNumber,
           airline: formData.airline,
@@ -261,6 +299,7 @@ function ApplyPage() {
       amount: 20000, // $200 in cents (Paystack expects amount in kobo/cents)
       currency: 'USD',
       ref: reference,
+      channels: ['card', 'mobile_money', 'bank'],
       metadata: {
         custom_fields: [
           { display_name: 'Applicant Name', variable_name: 'applicant_name', value: `${formData.firstName} ${formData.lastName}` },
@@ -315,11 +354,15 @@ function ApplyPage() {
               <span className="text-xs font-bold text-vogue">$200.00</span>
             </div>
             {paymentReference && (
-              <div className="flex justify-between">
+              <div className="flex justify-between mb-1">
                 <span className="text-xs text-charcoal/60">Reference</span>
                 <span className="text-xs font-mono text-charcoal/70">{paymentReference}</span>
               </div>
             )}
+            <div className="flex justify-between">
+              <span className="text-xs text-charcoal/60">Payment Method</span>
+              <span className="text-xs text-charcoal/70">Credit Card / Mobile Money / Bank</span>
+            </div>
           </div>
           <p className="text-charcoal/70 text-sm mb-8">
             Our team will review your application and get back to you within 48 hours. Check your email at <span className="font-medium">{formData.email}</span> for a confirmation.
@@ -540,7 +583,13 @@ function ApplyPage() {
                       name="program"
                       required
                       value={formData.program}
-                      onChange={handleChange}
+                      onChange={(e) => {
+                        handleChange(e)
+                        // Reset medical department when program changes away from Medical
+                        if (e.target.value !== 'Medical Placement in Teaching Hospitals') {
+                          setFormData(prev => ({ ...prev, medicalDepartment: '' }))
+                        }
+                      }}
                       className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cornell/20 focus:border-cornell transition-colors"
                     >
                       <option value="">Select a program</option>
@@ -549,6 +598,34 @@ function ApplyPage() {
                       ))}
                     </select>
                   </div>
+                  {/* Medical Department Selection — shown only for Medical Placement */}
+                  {formData.program === 'Medical Placement in Teaching Hospitals' && (
+                    <div className="sm:col-span-2">
+                      <label className="block text-sm font-medium text-charcoal mb-1.5">Medical Department / Unit *</label>
+                      <select
+                        name="medicalDepartment"
+                        required
+                        value={formData.medicalDepartment}
+                        onChange={handleChange}
+                        className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cornell/20 focus:border-cornell transition-colors"
+                      >
+                        <option value="">Select a department</option>
+                        {medicalDepartments.map((dept) => (
+                          <option key={dept} value={dept}>
+                            {dept}{medicalDepartmentDescriptions[dept] ? ` — ${medicalDepartmentDescriptions[dept]}` : ''}
+                          </option>
+                        ))}
+                      </select>
+                      {formData.medicalDepartment && medicalDepartmentDescriptions[formData.medicalDepartment] && (
+                        <div className="mt-2 bg-vogue/5 border border-vogue/20 rounded-lg p-3">
+                          <p className="text-xs text-charcoal/70">
+                            <span className="font-semibold text-vogue">{formData.medicalDepartment}:</span>{' '}
+                            {medicalDepartmentDescriptions[formData.medicalDepartment]}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  )}
                   <div>
                     <label className="block text-sm font-medium text-charcoal mb-1.5">Preferred Duration *</label>
                     <select
@@ -762,6 +839,17 @@ function ApplyPage() {
                     <p className="text-sm text-charcoal/90 mt-1 font-semibold">
                       A Registration / Application fee of <span className="text-lg font-black text-cornell">$200</span> is required upon submission. You will be prompted to complete payment before your application is finalized.
                     </p>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      <span className="inline-flex items-center gap-1.5 bg-white border border-cornell/20 rounded-full px-3 py-1 text-xs font-semibold text-cornell">
+                        <CreditCard className="w-3.5 h-3.5" /> Credit Card (Visa)
+                      </span>
+                      <span className="inline-flex items-center gap-1.5 bg-white border border-cornell/20 rounded-full px-3 py-1 text-xs font-semibold text-cornell">
+                        <Phone className="w-3.5 h-3.5" /> Mobile Money
+                      </span>
+                      <span className="inline-flex items-center gap-1.5 bg-white border border-cornell/20 rounded-full px-3 py-1 text-xs font-semibold text-cornell">
+                        <Shield className="w-3.5 h-3.5" /> Bank Transfer
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -788,8 +876,20 @@ function ApplyPage() {
                 {submitting ? 'Processing Payment...' : 'Submit Application & Pay $200'}
               </Button>
 
+              <div className="mt-4 flex flex-wrap justify-center gap-3">
+                <span className="inline-flex items-center gap-1 text-[11px] text-charcoal/50">
+                  <CreditCard className="w-3 h-3" /> Visa Card
+                </span>
+                <span className="inline-flex items-center gap-1 text-[11px] text-charcoal/50">
+                  <Phone className="w-3 h-3" /> Mobile Money
+                </span>
+                <span className="inline-flex items-center gap-1 text-[11px] text-charcoal/50">
+                  <Shield className="w-3 h-3" /> Bank Transfer
+                </span>
+              </div>
+
               <p className="text-[11px] text-charcoal/50 text-center mt-4">
-                By submitting this application, you agree to our terms and conditions. A $200 registration fee will be processed via Paystack. We will respond within 48 hours.
+                By submitting, you agree to our terms. A $200 registration fee is processed securely via Paystack. Payment supports Visa Credit Card, Mobile Money, and Bank Transfer. We will respond within 48 hours.
               </p>
             </form>
           </motion.div>

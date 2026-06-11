@@ -6,7 +6,6 @@ import Footer from '@/components/footer'
 import HeroSection from '@/components/sections/hero'
 import AboutSection from '@/components/sections/about'
 import DestinationsSection from '@/components/sections/destinations'
-import ServicesSection from '@/components/sections/services'
 import TeamSection from '@/components/sections/team'
 import VolunteerSection from '@/components/sections/volunteer'
 import GallerySection from '@/components/sections/gallery'
@@ -49,7 +48,6 @@ export default function Home() {
         <HeroSection />
         <AboutSection />
         <DestinationsSection />
-        <ServicesSection />
         <TeamSection />
         <VolunteerSection />
         <GallerySection />

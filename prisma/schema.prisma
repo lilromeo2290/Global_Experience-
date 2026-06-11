@@ -109,8 +109,9 @@ model Application {
   message         String?
   referral        String?
   school          String?
-  courseOfStudy   String?
-  countryOfOrigin String?
+  courseOfStudy     String?
+  medicalDepartment String?
+  countryOfOrigin   String?
   flightNumber    String?
   airline         String?
   arrivalDate     String?

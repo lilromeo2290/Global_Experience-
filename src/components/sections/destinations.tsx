@@ -1,9 +1,8 @@
 'use client'
 
-import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { MapPin, Building2, Globe, Palmtree, Mountain, Briefcase } from 'lucide-react'
-import DestinationProgramModal from '@/components/DestinationProgramModal'
+import { MapPin, Building2, Globe, Palmtree, Mountain, Briefcase, ArrowRight } from 'lucide-react'
+import Link from 'next/link'
 
 const currentDestinations = [
   {
@@ -75,8 +74,14 @@ const comingSoonDestinations = [
   },
 ]
 
+const branchSlugMap: Record<string, string> = {
+  'cape-coast': 'Cape Coast',
+  'volta-ho': 'Ho',
+  'takoradi': 'Takoradi',
+  'accra': 'Accra',
+}
+
 export default function DestinationsSection() {
-  const [selectedDestination, setSelectedDestination] = useState('')
 
   return (
     <section id="destinations" className="py-20 bg-white dark:bg-[#0A1F12]">
@@ -102,77 +107,80 @@ export default function DestinationsSection() {
         {/* Current Destinations Grid */}
         <div className="grid md:grid-cols-2 gap-6 mb-16">
           {currentDestinations.map((dest, i) => (
-            <motion.div
+            <Link
               key={dest.city}
-              id={dest.slug}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="group bg-cream dark:bg-[#122A1B] rounded-2xl shadow-sm border border-border overflow-hidden hover:shadow-lg transition-all duration-300"
+              href={`/apply?branch=${encodeURIComponent(branchSlugMap[dest.slug] || dest.city)}`}
+              className="block group"
             >
-              {/* Card Header */}
-              <div className={`${
-                dest.type === 'Head Office'
-                  ? 'bg-gradient-to-r from-cornell to-cornell-dark'
-                  : 'bg-gradient-to-r from-vogue to-vogue-dark'
-              } p-6 text-white relative overflow-hidden`}>
-                <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
-                <div className="relative flex items-center justify-between">
-                  <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <MapPin className="w-4 h-4 text-white/80" />
-                      <span className="text-white/70 text-xs uppercase tracking-wider">{dest.country}</span>
+              <motion.div
+                id={dest.slug}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-cream dark:bg-[#122A1B] rounded-2xl shadow-sm border border-border overflow-hidden hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer h-full"
+              >
+                {/* Card Header */}
+                <div className={`${
+                  dest.type === 'Head Office'
+                    ? 'bg-gradient-to-r from-cornell to-cornell-dark'
+                    : 'bg-gradient-to-r from-vogue to-vogue-dark'
+                } p-6 text-white relative overflow-hidden`}>
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
+                  <div className="relative flex items-center justify-between">
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <MapPin className="w-4 h-4 text-white/80" />
+                        <span className="text-white/70 text-xs uppercase tracking-wider">{dest.country}</span>
+                      </div>
+                      <h3 className="text-2xl font-bold">{dest.city}</h3>
                     </div>
-                    <h3 className="text-2xl font-bold">{dest.city}</h3>
+                    <div className="w-12 h-12 bg-white/15 rounded-xl flex items-center justify-center">
+                      <Building2 className="w-6 h-6 text-white" />
+                    </div>
                   </div>
-                  <div className="w-12 h-12 bg-white/15 rounded-xl flex items-center justify-center">
-                    <Building2 className="w-6 h-6 text-white" />
-                  </div>
-                </div>
-                {dest.type === 'Head Office' && (
-                  <span className="inline-block mt-2 text-[10px] font-bold uppercase tracking-wider bg-white/20 text-white px-3 py-1 rounded-full">
-                    Head Office
-                  </span>
-                )}
-              </div>
-
-              {/* Card Body */}
-              <div className="p-6">
-                <p className="text-charcoal dark:text-white/70 text-sm leading-relaxed mb-4">
-                  {dest.description}
-                </p>
-                <div className="mb-5">
-                  <div className="flex flex-wrap gap-2">
-                    {dest.highlights.map((h) => (
-                      <span
-                        key={h}
-                        className={`text-xs px-3 py-1 rounded-full font-medium ${
-                          dest.color === 'cornell'
-                            ? 'bg-cornell/10 text-cornell dark:bg-cornell/20 dark:text-white'
-                            : 'bg-vogue/10 text-vogue dark:bg-vogue/20 dark:text-vogue-light'
-                        }`}
-                      >
-                        {h}
-                      </span>
-                    ))}
-                  </div>
+                  {dest.type === 'Head Office' && (
+                    <span className="inline-block mt-2 text-[10px] font-bold uppercase tracking-wider bg-white/20 text-white px-3 py-1 rounded-full">
+                      Head Office
+                    </span>
+                  )}
                 </div>
 
-                {/* Select Program Button */}
-                <button
-                  onClick={() => setSelectedDestination(dest.slug)}
-                  className={`w-full flex items-center justify-center gap-2 py-3 rounded-full text-sm font-semibold transition-all duration-200 ${
+                {/* Card Body */}
+                <div className="p-6">
+                  <p className="text-charcoal dark:text-white/70 text-sm leading-relaxed mb-4">
+                    {dest.description}
+                  </p>
+                  <div className="mb-5">
+                    <div className="flex flex-wrap gap-2">
+                      {dest.highlights.map((h) => (
+                        <span
+                          key={h}
+                          className={`text-xs px-3 py-1 rounded-full font-medium ${
+                            dest.color === 'cornell'
+                              ? 'bg-cornell/10 text-cornell dark:bg-cornell/20 dark:text-white'
+                              : 'bg-vogue/10 text-vogue dark:bg-vogue/20 dark:text-vogue-light'
+                          }`}
+                        >
+                          {h}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Apply Now Button */}
+                  <div className={`w-full flex items-center justify-center gap-2 py-3 rounded-full text-sm font-semibold transition-all duration-200 ${
                     dest.type === 'Head Office'
-                      ? 'bg-cornell hover:bg-cornell-dark text-white'
-                      : 'bg-vogue hover:bg-vogue-dark text-white'
-                  }`}
-                >
-                  <Briefcase className="w-4 h-4" />
-                  Select a Placement Program
-                </button>
-              </div>
-            </motion.div>
+                      ? 'bg-cornell group-hover:bg-cornell-dark text-white'
+                      : 'bg-vogue group-hover:bg-vogue-dark text-white'
+                  }`}>
+                    <Briefcase className="w-4 h-4" />
+                    Apply Now
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
+                </div>
+              </motion.div>
+            </Link>
           ))}
         </div>
 
@@ -232,13 +240,6 @@ export default function DestinationsSection() {
         </motion.div>
 
       </div>
-
-      {/* Destination Program Modal */}
-      <DestinationProgramModal
-        open={!!selectedDestination}
-        onClose={() => setSelectedDestination('')}
-        destination={selectedDestination}
-      />
     </section>
   )
 }

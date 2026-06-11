@@ -1,7 +1,6 @@
 import nodemailer from 'nodemailer'
 
 const NOTIFICATION_EMAILS = [
-  'info@globalexperiencegh.org',
   'globalexperiencegh@gmail.com',
 ]
 
@@ -46,6 +45,7 @@ export function formatApplicationEmail(data: Record<string, string | undefined>)
     ['Phone', data.phone],
     ['Nationality', data.nationality],
     ['Program', data.program],
+    ['Medical Department', data.medicalDepartment],
     ['Branch', data.branch],
     ['Duration', data.duration],
     ['Start Date', data.startDate],
@@ -61,6 +61,8 @@ export function formatApplicationEmail(data: Record<string, string | undefined>)
     ['Message', data.message],
     ['Payment Status', data.paymentStatus],
     ['Payment Reference', data.paymentReference],
+    ['Registration Fee', '$200.00 USD'],
+    ['Payment Method', 'Credit Card / Mobile Money / Bank Transfer (via Paystack)'],
   ]
 
   const rows = fields
