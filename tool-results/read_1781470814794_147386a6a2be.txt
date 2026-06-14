@@ -1,0 +1,901 @@
+     1→'use client'
+     2→
+     3→import { useState, useEffect, useCallback } from 'react'
+     4→import { useSearchParams } from 'next/navigation'
+     5→import { Suspense } from 'react'
+     6→import { motion } from 'framer-motion'
+     7→import { Button } from '@/components/ui/button'
+     8→import { ArrowLeft, CheckCircle2, Send, User, Mail, Phone, MapPin, Calendar, Globe2, FileText, CalendarCheck, GraduationCap, Plane, Clock, CreditCard, AlertCircle, Shield } from 'lucide-react'
+     9→import Link from 'next/link'
+    10→
+    11→// Extend Window type for Paystack
+    12→declare global {
+    13→  interface Window {
+    14→    PaystackPop: {
+    15→      setup: (config: Record<string, unknown>) => { openIframe: () => void }
+    16→    }
+    17→  }
+    18→}
+    19→
+    20→const programs = [
+    21→  'Medical Placement in Teaching Hospitals',
+    22→  'Teaching',
+    23→  'Journalism',
+    24→  'Community Outreach',
+    25→  'Sports',
+    26→  'Office Administration',
+    27→  'Banking and Finance',
+    28→  'Law Placements',
+    29→  'Agriculture Placement',
+    30→  'Tourism and Ecotourism',
+    31→  'Community Projects — Building of Schools',
+    32→  'Bore Holes — Drinkable Water',
+    33→]
+    34→
+    35→const durations = [
+    36→  '1 Week',
+    37→  '2 Weeks',
+    38→  '3 Weeks',
+    39→  '4 Weeks',
+    40→  '6 Weeks',
+    41→  '8 Weeks',
+    42→  '3 Months',
+    43→  '6 Months',
+    44→  '12 Months',
+    45→]
+    46→
+    47→const durationDaysMap: Record<string, number> = {
+    48→  '1 Week': 7,
+    49→  '2 Weeks': 14,
+    50→  '3 Weeks': 21,
+    51→  '4 Weeks': 28,
+    52→  '6 Weeks': 42,
+    53→  '8 Weeks': 56,
+    54→  '3 Months': 90,
+    55→  '6 Months': 180,
+    56→  '12 Months': 365,
+    57→}
+    58→
+    59→const medicalDepartments = [
+    60→  'Internal Medicine',
+    61→  'Surgery',
+    62→  'Obstetrics & Gynaecology',
+    63→  'Pediatrics & Child Health',
+    64→  'Public Health',
+    65→  'Dental Clinic',
+    66→  'Eye Clinic (Ophthalmology)',
+    67→  'ENT (Ear, Nose & Throat)',
+    68→  'Family Medicine',
+    69→  'Infectious Disease Centre',
+    70→  'Laboratory Services',
+    71→  'Radiology',
+    72→  'Physiotherapy & Rehabilitation',
+    73→  'Pharmacy',
+    74→  'Nutrition & Dietetics',
+    75→]
+    76→
+    77→const medicalDepartmentDescriptions: Record<string, string> = {
+    78→  'Internal Medicine': 'Management of adult diseases, including specialized cardiovascular, dialysis, and neurological units.',
+    79→  'Surgery': '',
+    80→  'Obstetrics & Gynaecology': '',
+    81→  'Pediatrics & Child Health': '',
+    82→  'Public Health': '',
+    83→  'Dental Clinic': '',
+    84→  'Eye Clinic (Ophthalmology)': '',
+    85→  'ENT (Ear, Nose & Throat)': '',
+    86→  'Family Medicine': '',
+    87→  'Infectious Disease Centre': '',
+    88→  'Laboratory Services': '',
+    89→  'Radiology': '',
+    90→  'Physiotherapy & Rehabilitation': '',
+    91→  'Pharmacy': '',
+    92→  'Nutrition & Dietetics': '',
+    93→}
+    94→
+    95→const howDidYouHear = [
+    96→  'Google Search',
+    97→  'Social Media',
+    98→  'University/College',
+    99→  'Friend/Family Referral',
+   100→  'Past Participant',
+   101→  'Volunteer Website',
+   102→  'Other',
+   103→]
+   104→
+   105→export default function ApplyPageWrapper() {
+   106→  return (
+   107→    <Suspense fallback={<div className="min-h-screen bg-sage flex items-center justify-center"><div className="animate-spin w-8 h-8 border-4 border-cornell border-t-transparent rounded-full" /></div>}>
+   108→      <ApplyPage />
+   109→    </Suspense>
+   110→  )
+   111→}
+   112→
+   113→function ApplyPage() {
+   114→  const searchParams = useSearchParams()
+   115→
+   116→  const [submitted, setSubmitted] = useState(false)
+   117→  const [submitting, setSubmitting] = useState(false)
+   118→  const [paystackLoaded, setPaystackLoaded] = useState(false)
+   119→  const [paymentError, setPaymentError] = useState('')
+   120→  const [paymentReference, setPaymentReference] = useState('')
+   121→  const [formData, setFormData] = useState({
+   122→    firstName: '',
+   123→    lastName: '',
+   124→    email: '',
+   125→    phone: '',
+   126→    nationality: '',
+   127→    program: '',
+   128→    branch: '',
+   129→    duration: '',
+   130→    startDate: '',
+   131→    endDate: '',
+   132→    message: '',
+   133→    referral: '',
+   134→    school: '',
+   135→    courseOfStudy: '',
+   136→    medicalDepartment: '',
+   137→    countryOfOrigin: '',
+   138→    flightNumber: '',
+   139→    airline: '',
+   140→    arrivalDate: '',
+   141→    arrivalTime: '',
+   142→  })
+   143→
+   144→  // Calculate end date from start date + duration
+   145→  const calculateEndDate = (startDate: string, duration: string): string => {
+   146→    if (!startDate || !duration) return ''
+   147→    const start = new Date(startDate)
+   148→    const days = durationDaysMap[duration]
+   149→    if (!days) return ''
+   150→    const end = new Date(start)
+   151→    end.setDate(end.getDate() + days)
+   152→    return end.toISOString().split('T')[0]
+   153→  }
+   154→
+   155→  const formatDate = (dateStr: string): string => {
+   156→    if (!dateStr) return ''
+   157→    const date = new Date(dateStr + 'T00:00:00')
+   158→    return date.toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' })
+   159→  }
+   160→
+   161→  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+   162→    setFormData({ ...formData, [e.target.name]: e.target.value })
+   163→  }
+   164→
+   165→  // Pre-select program from URL query param
+   166→  useEffect(() => {
+   167→    const programParam = searchParams.get('program')
+   168→    if (programParam && programs.includes(programParam)) {
+   169→      setFormData(prev => ({ ...prev, program: programParam }))
+   170→    }
+   171→    const branchParam = searchParams.get('branch')
+   172→    if (branchParam) {
+   173→      setFormData(prev => ({ ...prev, branch: branchParam }))
+   174→    }
+   175→    const startDateParam = searchParams.get('startDate')
+   176→    if (startDateParam) {
+   177→      setFormData(prev => ({ ...prev, startDate: startDateParam }))
+   178→    }
+   179→    const durationParam = searchParams.get('duration')
+   180→    if (durationParam && durations.includes(durationParam)) {
+   181→      setFormData(prev => ({ ...prev, duration: durationParam }))
+   182→    }
+   183→    const endDateParam = searchParams.get('endDate')
+   184→    if (endDateParam) {
+   185→      setFormData(prev => ({ ...prev, endDate: endDateParam }))
+   186→    }
+   187→  }, [searchParams])
+   188→
+   189→  // Auto-calculate end date when start date or duration changes
+   190→  useEffect(() => {
+   191→    if (formData.startDate && formData.duration) {
+   192→      const calculated = calculateEndDate(formData.startDate, formData.duration)
+   193→      if (calculated !== formData.endDate) {
+   194→        setFormData(prev => ({ ...prev, endDate: calculated }))
+   195→      }
+   196→    }
+   197→  }, [formData.startDate, formData.duration])
+   198→
+   199→  // Load Paystack inline script
+   200→  useEffect(() => {
+   201→    if (typeof window === 'undefined') return
+   202→    if (window.PaystackPop) {
+   203→      setPaystackLoaded(true)
+   204→      return
+   205→    }
+   206→    const script = document.createElement('script')
+   207→    script.src = 'https://js.paystack.co/v2/inline.js'
+   208→    script.async = true
+   209→    script.onload = () => setPaystackLoaded(true)
+   210→    script.onerror = () => console.error('Failed to load Paystack script')
+   211→    document.body.appendChild(script)
+   212→  }, [])
+   213→
+   214→  const submitApplication = useCallback(async (ref: string) => {
+   215→    try {
+   216→      const res = await fetch('/api/applications', {
+   217→        method: 'POST',
+   218→        headers: { 'Content-Type': 'application/json' },
+   219→        body: JSON.stringify({
+   220→          firstName: formData.firstName,
+   221→          lastName: formData.lastName,
+   222→          email: formData.email,
+   223→          phone: formData.phone,
+   224→          nationality: formData.nationality,
+   225→          program: formData.program,
+   226→          branch: formData.branch,
+   227→          duration: formData.duration,
+   228→          startDate: formData.startDate,
+   229→          endDate: formData.endDate,
+   230→          message: formData.message,
+   231→          school: formData.school,
+   232→          courseOfStudy: formData.courseOfStudy,
+   233→          medicalDepartment: formData.medicalDepartment,
+   234→          countryOfOrigin: formData.countryOfOrigin,
+   235→          flightNumber: formData.flightNumber,
+   236→          airline: formData.airline,
+   237→          arrivalDate: formData.arrivalDate,
+   238→          arrivalTime: formData.arrivalTime,
+   239→          paymentReference: ref,
+   240→          paymentStatus: 'paid',
+   241→        }),
+   242→      })
+   243→      if (res.ok) {
+   244→        setPaymentReference(ref)
+   245→        setSubmitted(true)
+   246→      } else {
+   247→        setPaymentError('Application submission failed after payment. Please contact us with your payment reference: ' + ref)
+   248→      }
+   249→    } catch (err) {
+   250→      console.error('Application submission failed:', err)
+   251→      setPaymentError('Application submission failed after payment. Please contact us with your payment reference: ' + ref)
+   252→    } finally {
+   253→      setSubmitting(false)
+   254→    }
+   255→  }, [formData])
+   256→
+   257→  const onPaymentSuccess = useCallback(async (reference: string) => {
+   258→    try {
+   259→      // Verify payment on backend
+   260→      const res = await fetch('/api/donate/verify', {
+   261→        method: 'POST',
+   262→        headers: { 'Content-Type': 'application/json' },
+   263→        body: JSON.stringify({ reference }),
+   264→      })
+   265→      const data = await res.json()
+   266→
+   267→      if (data.success) {
+   268→        // Payment verified — now submit the application
+   269→        await submitApplication(reference)
+   270→      } else {
+   271→        setPaymentError(data.message || 'Payment verification failed. Please contact us.')
+   272→        setSubmitting(false)
+   273→      }
+   274→    } catch {
+   275→      setPaymentError('Could not verify payment. Please contact us with your reference.')
+   276→      setSubmitting(false)
+   277→    }
+   278→  }, [submitApplication])
+   279→
+   280→  const openPaystackPopup = useCallback(() => {
+   281→    if (!window.PaystackPop) {
+   282→      setPaymentError('Payment system is still loading. Please wait a moment and try again.')
+   283→      setSubmitting(false)
+   284→      return
+   285→    }
+   286→
+   287→    const publicKey = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || ''
+   288→    if (!publicKey) {
+   289→      setPaymentError('Payment system is not configured. Please contact us.')
+   290→      setSubmitting(false)
+   291→      return
+   292→    }
+   293→
+   294→    const reference = `APP-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+   295→
+   296→    const handler = window.PaystackPop.setup({
+   297→      key: publicKey,
+   298→      email: formData.email,
+   299→      amount: 20000, // $200 in cents (Paystack expects amount in kobo/cents)
+   300→      currency: 'USD',
+   301→      ref: reference,
+   302→      channels: ['card', 'mobile_money', 'bank'],
+   303→      metadata: {
+   304→        custom_fields: [
+   305→          { display_name: 'Applicant Name', variable_name: 'applicant_name', value: `${formData.firstName} ${formData.lastName}` },
+   306→          { display_name: 'Program', variable_name: 'program', value: formData.program },
+   307→        ],
+   308→      },
+   309→      callback: (response: { reference: string }) => {
+   310→        onPaymentSuccess(response.reference)
+   311→      },
+   312→      onClose: () => {
+   313→        // User closed the Paystack popup without paying
+   314→        setSubmitting(false)
+   315→      },
+   316→    })
+   317→
+   318→    handler.openIframe()
+   319→  }, [formData, onPaymentSuccess])
+   320→
+   321→  const handleSubmit = async (e: React.FormEvent) => {
+   322→    e.preventDefault()
+   323→    if (submitting) return
+   324→    setSubmitting(true)
+   325→    setPaymentError('')
+   326→
+   327→    // Open Paystack payment popup first
+   328→    openPaystackPopup()
+   329→  }
+   330→
+   331→  if (submitted) {
+   332→    return (
+   333→      <div className="min-h-screen bg-sage flex items-center justify-center px-4">
+   334→        <motion.div
+   335→          initial={{ opacity: 0, scale: 0.9 }}
+   336→          animate={{ opacity: 1, scale: 1 }}
+   337→          transition={{ duration: 0.5 }}
+   338→          className="max-w-lg w-full bg-white rounded-2xl shadow-xl p-8 md:p-12 text-center"
+   339→        >
+   340→          <div className="w-20 h-20 bg-vogue/10 rounded-full flex items-center justify-center mx-auto mb-6">
+   341→            <CheckCircle2 className="w-10 h-10 text-vogue" />
+   342→          </div>
+   343→          <h1 className="text-2xl md:text-3xl font-bold text-cornell mb-3">Application Submitted!</h1>
+   344→          <p className="text-charcoal leading-relaxed mb-2">
+   345→            Thank you, <span className="font-semibold">{formData.firstName}</span>! Your application for <span className="font-semibold text-vogue">{formData.program}</span> has been received.
+   346→          </p>
+   347→          <div className="bg-vogue/5 border border-vogue/20 rounded-xl p-4 my-4 text-left">
+   348→            <div className="flex items-center gap-2 mb-2">
+   349→              <Shield className="w-4 h-4 text-vogue" />
+   350→              <span className="text-sm font-semibold text-vogue">Payment Confirmed</span>
+   351→            </div>
+   352→            <div className="flex justify-between mb-1">
+   353→              <span className="text-xs text-charcoal/60">Registration Fee</span>
+   354→              <span className="text-xs font-bold text-vogue">$200.00</span>
+   355→            </div>
+   356→            {paymentReference && (
+   357→              <div className="flex justify-between mb-1">
+   358→                <span className="text-xs text-charcoal/60">Reference</span>
+   359→                <span className="text-xs font-mono text-charcoal/70">{paymentReference}</span>
+   360→              </div>
+   361→            )}
+   362→            <div className="flex justify-between">
+   363→              <span className="text-xs text-charcoal/60">Payment Method</span>
+   364→              <span className="text-xs text-charcoal/70">Credit Card / Mobile Money / Bank</span>
+   365→            </div>
+   366→          </div>
+   367→          <p className="text-charcoal/70 text-sm mb-8">
+   368→            Our team will review your application and get back to you within 48 hours. Check your email at <span className="font-medium">{formData.email}</span> for a confirmation.
+   369→          </p>
+   370→          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+   371→            <Link href="/">
+   372→              <Button className="bg-cornell hover:bg-cornell-dark text-white rounded-full px-6">
+   373→                Back to Home
+   374→              </Button>
+   375→            </Link>
+   376→            <Link href="/placements">
+   377→              <Button variant="outline" className="border-cornell text-cornell hover:bg-cornell/5 rounded-full px-6">
+   378→                View All Programs
+   379→              </Button>
+   380→            </Link>
+   381→          </div>
+   382→        </motion.div>
+   383→      </div>
+   384→    )
+   385→  }
+   386→
+   387→  return (
+   388→    <div className="min-h-screen bg-sage">
+   389→      {/* Header */}
+   390→      <div className="relative overflow-hidden">
+   391→        <div className="absolute inset-0 bg-gradient-to-r from-cornell to-cornell-dark" />
+   392→        <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
+   393→        <div className="absolute bottom-0 left-0 w-64 h-64 bg-vogue/10 rounded-full translate-y-1/2 -translate-x-1/2" />
+   394→        <div className="relative max-w-7xl mx-auto px-4 py-16 md:py-24">
+   395→          <motion.div
+   396→            initial={{ opacity: 0, y: 20 }}
+   397→            animate={{ opacity: 1, y: 0 }}
+   398→            transition={{ duration: 0.5 }}
+   399→          >
+   400→            <Link
+   401→              href="/"
+   402→              className="inline-flex items-center gap-2 text-white/70 hover:text-white transition-colors mb-6 text-sm"
+   403→            >
+   404→              <ArrowLeft className="w-4 h-4" />
+   405→              Back to Home
+   406→            </Link>
+   407→            <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">
+   408→              Apply for a Placement
+   409→            </h1>
+   410→            <p className="text-white/70 max-w-2xl text-lg leading-relaxed">
+   411→              Take the first step toward a life-changing experience. Complete the application form below
+   412→              and our team will match you with the ideal placement opportunity.
+   413→            </p>
+   414→          </motion.div>
+   415→        </div>
+   416→      </div>
+   417→
+   418→      {/* Form Section */}
+   419→      <div className="max-w-4xl mx-auto px-4 py-12">
+   420→        <div className="grid lg:grid-cols-3 gap-8">
+   421→          {/* Sidebar Info */}
+   422→          <motion.div
+   423→            initial={{ opacity: 0, x: -20 }}
+   424→            animate={{ opacity: 1, x: 0 }}
+   425→            transition={{ duration: 0.5, delay: 0.2 }}
+   426→            className="lg:col-span-1 space-y-6"
+   427→          >
+   428→            {/* Quick Info */}
+   429→            <div className="bg-white rounded-2xl shadow-sm border border-border p-6">
+   430→              <h3 className="font-bold text-cornell mb-4">What Happens Next?</h3>
+   431→              <div className="space-y-4">
+   432→                {[
+   433→                  { step: '1', title: 'Application Review', desc: 'We review your application within 48 hours' },
+   434→                  { step: '2', title: 'Interview & Matching', desc: 'We match you with the perfect placement' },
+   435→                  { step: '3', title: 'Confirmation & Registration', desc: 'Secure your spot with a $200 registration fee' },
+   436→                  { step: '4', title: 'Pre-Departure Prep', desc: 'Receive comprehensive travel guidance' },
+   437→                  { step: '5', title: 'Arrive & Begin', desc: 'Airport pickup, orientation, and start!' },
+   438→                ].map((item) => (
+   439→                  <div key={item.step} className="flex gap-3">
+   440→                    <div className="w-8 h-8 bg-cornell/10 rounded-full flex items-center justify-center flex-shrink-0">
+   441→                      <span className="text-cornell font-bold text-xs">{item.step}</span>
+   442→                    </div>
+   443→                    <div>
+   444→                      <p className="font-semibold text-sm text-cornell">{item.title}</p>
+   445→                      <p className="text-xs text-charcoal/70">{item.desc}</p>
+   446→                    </div>
+   447→                  </div>
+   448→                ))}
+   449→              </div>
+   450→            </div>
+   451→
+   452→            {/* Contact */}
+   453→            <div className="bg-white rounded-2xl shadow-sm border border-border p-6">
+   454→              <h3 className="font-bold text-cornell mb-4">Need Help?</h3>
+   455→              <div className="space-y-3">
+   456→                <a href="mailto:info@globalexperiencegh.org" className="flex items-center gap-2 text-sm text-charcoal hover:text-cornell transition-colors">
+   457→                  <Mail className="w-4 h-4 text-vogue" />
+   458→                  info@globalexperiencegh.org
+   459→                </a>
+   460→                <a href="mailto:globalexperiencegh@gmail.com" className="flex items-center gap-2 text-sm text-charcoal hover:text-cornell transition-colors">
+   461→                  <Mail className="w-4 h-4 text-vogue" />
+   462→                  globalexperiencegh@gmail.com
+   463→                </a>
+   464→                <a href="tel:+233544129556" className="flex items-center gap-2 text-sm text-charcoal hover:text-cornell transition-colors">
+   465→                  <Phone className="w-4 h-4 text-vogue" />
+   466→                  +233 544 129 556
+   467→                </a>
+   468→              </div>
+   469→            </div>
+   470→          </motion.div>
+   471→
+   472→          {/* Application Form */}
+   473→          <motion.div
+   474→            initial={{ opacity: 0, x: 20 }}
+   475→            animate={{ opacity: 1, x: 0 }}
+   476→            transition={{ duration: 0.5, delay: 0.3 }}
+   477→            className="lg:col-span-2"
+   478→          >
+   479→            <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-sm border border-border p-6 md:p-8">
+   480→              <h2 className="text-xl font-bold text-cornell mb-1">Application Form</h2>
+   481→              <p className="text-charcoal/70 text-sm mb-8">All fields marked with * are required</p>
+   482→
+   483→              {/* Personal Information */}
+   484→              <div className="mb-8">
+   485→                <div className="flex items-center gap-2 mb-5">
+   486→                  <div className="w-8 h-8 bg-cornell/10 rounded-lg flex items-center justify-center">
+   487→                    <User className="w-4 h-4 text-cornell" />
+   488→                  </div>
+   489→                  <h3 className="font-semibold text-cornell">Personal Information</h3>
+   490→                </div>
+   491→                <div className="grid sm:grid-cols-2 gap-4">
+   492→                  <div>
+   493→                    <label className="block text-sm font-medium text-charcoal mb-1.5">First Name *</label>
+   494→                    <input
+   495→                      type="text"
+   496→                      name="firstName"
+   497→                      required
+   498→                      value={formData.firstName}
+   499→                      onChange={handleChange}
+   500→                      placeholder="Enter your first name"
+   501→                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cornell/20 focus:border-cornell transition-colors"
+   502→                    />
+   503→                  </div>
+   504→                  <div>
+   505→                    <label className="block text-sm font-medium text-charcoal mb-1.5">Last Name *</label>
+   506→                    <input
+   507→                      type="text"
+   508→                      name="lastName"
+   509→                      required
+   510→                      value={formData.lastName}
+   511→                      onChange={handleChange}
+   512→                      placeholder="Enter your last name"
+   513→                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cornell/20 focus:border-cornell transition-colors"
+   514→                    />
+   515→                  </div>
+   516→                  <div>
+   517→                    <label className="block text-sm font-medium text-charcoal mb-1.5">Email Address *</label>
+   518→                    <input
+   519→                      type="email"
+   520→                      name="email"
+   521→                      required
+   522→                      value={formData.email}
+   523→                      onChange={handleChange}
+   524→                      placeholder="you@example.com"
+   525→                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cornell/20 focus:border-cornell transition-colors"
+   526→                    />
+   527→                  </div>
+   528→                  <div>
+   529→                    <label className="block text-sm font-medium text-charcoal mb-1.5">Phone Number *</label>
+   530→                    <input
+   531→                      type="tel"
+   532→                      name="phone"
+   533→                      required
+   534→                      value={formData.phone}
+   535→                      onChange={handleChange}
+   536→                      placeholder="+1 234 567 8900"
+   537→                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cornell/20 focus:border-cornell transition-colors"
+   538→                    />
+   539→                  </div>
+   540→                  <div className="sm:col-span-2">
+   541→                    <label className="block text-sm font-medium text-charcoal mb-1.5">Nationality *</label>
+   542→                    <input
+   543→                      type="text"
+   544→                      name="nationality"
+   545→                      required
+   546→                      value={formData.nationality}
+   547→                      onChange={handleChange}
+   548→                      placeholder="e.g. British, American, German"
+   549→                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cornell/20 focus:border-cornell transition-colors"
+   550→                    />
+   551→                  </div>
+   552→                </div>
+   553→              </div>
+   554→
+   555→              {/* Program Selection */}
+   556→              <div className="mb-8">
+   557→                <div className="flex items-center gap-2 mb-5">
+   558→                  <div className="w-8 h-8 bg-vogue/10 rounded-lg flex items-center justify-center">
+   559→                    <Globe2 className="w-4 h-4 text-vogue" />
+   560→                  </div>
+   561→                  <h3 className="font-semibold text-cornell">Program Selection</h3>
+   562→                </div>
+   563→                <div className="grid sm:grid-cols-2 gap-4">
+   564→                  <div className="sm:col-span-2">
+   565→                    <label className="block text-sm font-medium text-charcoal mb-1.5">Preferred Branch / Location *</label>
+   566→                    <select
+   567→                      name="branch"
+   568→                      required
+   569→                      value={formData.branch}
+   570→                      onChange={handleChange}
+   571→                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cornell/20 focus:border-cornell transition-colors"
+   572→                    >
+   573→                      <option value="">Select a branch</option>
+   574→                      <option value="Ho">Ho (Head Office)</option>
+   575→                      <option value="Cape Coast">Cape Coast (Regional Office)</option>
+   576→                      <option value="Takoradi">Takoradi (Regional Office)</option>
+   577→                      <option value="Accra">Accra (Regional Office)</option>
+   578→                    </select>
+   579→                  </div>
+   580→                  <div className="sm:col-span-2">
+   581→                    <label className="block text-sm font-medium text-charcoal mb-1.5">Preferred Placement Program *</label>
+   582→                    <select
+   583→                      name="program"
+   584→                      required
+   585→                      value={formData.program}
+   586→                      onChange={(e) => {
+   587→                        handleChange(e)
+   588→                        // Reset medical department when program changes away from Medical
+   589→                        if (e.target.value !== 'Medical Placement in Teaching Hospitals') {
+   590→                          setFormData(prev => ({ ...prev, medicalDepartment: '' }))
+   591→                        }
+   592→                      }}
+   593→                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cornell/20 focus:border-cornell transition-colors"
+   594→                    >
+   595→                      <option value="">Select a program</option>
+   596→                      {programs.map((p) => (
+   597→                        <option key={p} value={p}>{p}</option>
+   598→                      ))}
+   599→                    </select>
+   600→                  </div>
+   601→                  {/* Medical Department Selection — shown only for Medical Placement */}
+   602→                  {formData.program === 'Medical Placement in Teaching Hospitals' && (
+   603→                    <div className="sm:col-span-2">
+   604→                      <label className="block text-sm font-medium text-charcoal mb-1.5">Medical Department / Unit *</label>
+   605→                      <select
+   606→                        name="medicalDepartment"
+   607→                        required
+   608→                        value={formData.medicalDepartment}
+   609→                        onChange={handleChange}
+   610→                        className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cornell/20 focus:border-cornell transition-colors"
+   611→                      >
+   612→                        <option value="">Select a department</option>
+   613→                        {medicalDepartments.map((dept) => (
+   614→                          <option key={dept} value={dept}>
+   615→                            {dept}{medicalDepartmentDescriptions[dept] ? ` — ${medicalDepartmentDescriptions[dept]}` : ''}
+   616→                          </option>
+   617→                        ))}
+   618→                      </select>
+   619→                      {formData.medicalDepartment && medicalDepartmentDescriptions[formData.medicalDepartment] && (
+   620→                        <div className="mt-2 bg-vogue/5 border border-vogue/20 rounded-lg p-3">
+   621→                          <p className="text-xs text-charcoal/70">
+   622→                            <span className="font-semibold text-vogue">{formData.medicalDepartment}:</span>{' '}
+   623→                            {medicalDepartmentDescriptions[formData.medicalDepartment]}
+   624→                          </p>
+   625→                        </div>
+   626→                      )}
+   627→                    </div>
+   628→                  )}
+   629→                  <div>
+   630→                    <label className="block text-sm font-medium text-charcoal mb-1.5">Preferred Duration *</label>
+   631→                    <select
+   632→                      name="duration"
+   633→                      required
+   634→                      value={formData.duration}
+   635→                      onChange={handleChange}
+   636→                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cornell/20 focus:border-cornell transition-colors"
+   637→                    >
+   638→                      <option value="">Select duration</option>
+   639→                      {durations.map((d) => (
+   640→                        <option key={d} value={d}>{d}</option>
+   641→                      ))}
+   642→                    </select>
+   643→                  </div>
+   644→                  <div>
+   645→                    <label className="block text-sm font-medium text-charcoal mb-1.5">Preferred Start Date *</label>
+   646→                    <input
+   647→                      type="date"
+   648→                      name="startDate"
+   649→                      required
+   650→                      value={formData.startDate}
+   651→                      onChange={handleChange}
+   652→                      min={new Date().toISOString().split('T')[0]}
+   653→                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cornell/20 focus:border-cornell transition-colors"
+   654→                    />
+   655→                  </div>
+   656→                  {/* End Date (Auto-calculated) */}
+   657→                  {formData.endDate && (
+   658→                    <div className="sm:col-span-2">
+   659→                      <div className="bg-vogue/5 border border-vogue/20 rounded-xl p-4">
+   660→                        <div className="flex items-center gap-3">
+   661→                          <div className="w-10 h-10 bg-vogue/10 rounded-lg flex items-center justify-center flex-shrink-0">
+   662→                            <CalendarCheck className="w-5 h-5 text-vogue" />
+   663→                          </div>
+   664→                          <div>
+   665→                            <label className="text-xs font-medium text-vogue mb-0.5 block">
+   666→                              End Date
+   667→                            </label>
+   668→                            <p className="text-sm font-semibold text-cornell">
+   669→                              {formatDate(formData.endDate)}
+   670→                            </p>
+   671→                            <p className="text-[10px] text-charcoal/50 mt-0.5">
+   672→                              Auto-calculated from start date + {formData.duration.toLowerCase()}
+   673→                            </p>
+   674→                          </div>
+   675→                        </div>
+   676→                      </div>
+   677→                    </div>
+   678→                  )}
+   679→                </div>
+   680→              </div>
+   681→
+   682→              {/* Educational Information */}
+   683→              <div className="mb-8">
+   684→                <div className="flex items-center gap-2 mb-5">
+   685→                  <div className="w-8 h-8 bg-vogue/10 rounded-lg flex items-center justify-center">
+   686→                    <GraduationCap className="w-4 h-4 text-vogue" />
+   687→                  </div>
+   688→                  <h3 className="font-semibold text-cornell">Educational Information</h3>
+   689→                </div>
+   690→                <div className="grid sm:grid-cols-2 gap-4">
+   691→                  <div>
+   692→                    <label className="block text-sm font-medium text-charcoal mb-1.5">School / University *</label>
+   693→                    <input
+   694→                      type="text"
+   695→                      name="school"
+   696→                      required
+   697→                      value={formData.school}
+   698→                      onChange={handleChange}
+   699→                      placeholder="e.g. University of Oxford, Harvard University"
+   700→                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cornell/20 focus:border-cornell transition-colors"
+   701→                    />
+   702→                  </div>
+   703→                  <div>
+   704→                    <label className="block text-sm font-medium text-charcoal mb-1.5">Course of Study</label>
+   705→                    <input
+   706→                      type="text"
+   707→                      name="courseOfStudy"
+   708→                      value={formData.courseOfStudy}
+   709→                      onChange={handleChange}
+   710→                      placeholder="e.g. Medicine, Business Administration"
+   711→                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cornell/20 focus:border-cornell transition-colors"
+   712→                    />
+   713→                  </div>
+   714→                </div>
+   715→              </div>
+   716→
+   717→              {/* Flight Details */}
+   718→              <div className="mb-8">
+   719→                <div className="flex items-center gap-2 mb-5">
+   720→                  <div className="w-8 h-8 bg-cornell/10 rounded-lg flex items-center justify-center">
+   721→                    <Plane className="w-4 h-4 text-cornell" />
+   722→                  </div>
+   723→                  <h3 className="font-semibold text-cornell">Flight Details</h3>
+   724→                </div>
+   725→                <div className="grid sm:grid-cols-2 gap-4">
+   726→                  <div>
+   727→                    <label className="block text-sm font-medium text-charcoal mb-1.5">Country You Are Coming From *</label>
+   728→                    <input
+   729→                      type="text"
+   730→                      name="countryOfOrigin"
+   731→                      required
+   732→                      value={formData.countryOfOrigin}
+   733→                      onChange={handleChange}
+   734→                      placeholder="e.g. United Kingdom, United States, Germany"
+   735→                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cornell/20 focus:border-cornell transition-colors"
+   736→                    />
+   737→                  </div>
+   738→                  <div>
+   739→                    <label className="block text-sm font-medium text-charcoal mb-1.5">Airline</label>
+   740→                    <input
+   741→                      type="text"
+   742→                      name="airline"
+   743→                      value={formData.airline}
+   744→                      onChange={handleChange}
+   745→                      placeholder="e.g. British Airways, Emirates, KLM"
+   746→                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cornell/20 focus:border-cornell transition-colors"
+   747→                    />
+   748→                  </div>
+   749→                  <div>
+   750→                    <label className="block text-sm font-medium text-charcoal mb-1.5">Flight Number</label>
+   751→                    <input
+   752→                      type="text"
+   753→                      name="flightNumber"
+   754→                      value={formData.flightNumber}
+   755→                      onChange={handleChange}
+   756→                      placeholder="e.g. BA789, EK501"
+   757→                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cornell/20 focus:border-cornell transition-colors"
+   758→                    />
+   759→                  </div>
+   760→                  <div>
+   761→                    <label className="block text-sm font-medium text-charcoal mb-1.5">Arrival Date *</label>
+   762→                    <input
+   763→                      type="date"
+   764→                      name="arrivalDate"
+   765→                      required
+   766→                      value={formData.arrivalDate}
+   767→                      onChange={handleChange}
+   768→                      min={new Date().toISOString().split('T')[0]}
+   769→                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cornell/20 focus:border-cornell transition-colors"
+   770→                    />
+   771→                  </div>
+   772→                  <div>
+   773→                    <label className="block text-sm font-medium text-charcoal mb-1.5">Arrival Time *</label>
+   774→                    <input
+   775→                      type="time"
+   776→                      name="arrivalTime"
+   777→                      required
+   778→                      value={formData.arrivalTime}
+   779→                      onChange={handleChange}
+   780→                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cornell/20 focus:border-cornell transition-colors"
+   781→                    />
+   782→                  </div>
+   783→                  <div className="flex items-end">
+   784→                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 w-full">
+   785→                      <p className="text-xs text-blue-700">
+   786→                        <Plane className="w-3 h-3 inline-block mr-1 -mt-0.5" />
+   787→                        Airport pickup is included. Our team will be waiting for you at Kotoka International Airport (ACC).
+   788→                      </p>
+   789→                    </div>
+   790→                  </div>
+   791→                </div>
+   792→              </div>
+   793→
+   794→              {/* Additional Information */}
+   795→              <div className="mb-8">
+   796→                <div className="flex items-center gap-2 mb-5">
+   797→                  <div className="w-8 h-8 bg-cornell/10 rounded-lg flex items-center justify-center">
+   798→                    <FileText className="w-4 h-4 text-cornell" />
+   799→                  </div>
+   800→                  <h3 className="font-semibold text-cornell">Additional Information</h3>
+   801→                </div>
+   802→                <div className="space-y-4">
+   803→                  <div>
+   804→                    <label className="block text-sm font-medium text-charcoal mb-1.5">How did you hear about us?</label>
+   805→                    <select
+   806→                      name="referral"
+   807→                      value={formData.referral}
+   808→                      onChange={handleChange}
+   809→                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cornell/20 focus:border-cornell transition-colors"
+   810→                    >
+   811→                      <option value="">Select an option</option>
+   812→                      {howDidYouHear.map((h) => (
+   813→                        <option key={h} value={h}>{h}</option>
+   814→                      ))}
+   815→                    </select>
+   816→                  </div>
+   817→                  <div>
+   818→                    <label className="block text-sm font-medium text-charcoal mb-1.5">Additional Message / Questions</label>
+   819→                    <textarea
+   820→                      name="message"
+   821→                      value={formData.message}
+   822→                      onChange={handleChange}
+   823→                      rows={4}
+   824→                      placeholder="Tell us about your motivation, any specific requirements, or questions you may have..."
+   825→                      className="w-full px-4 py-2.5 rounded-lg border border-border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-cornell/20 focus:border-cornell transition-colors resize-none"
+   826→                    />
+   827→                  </div>
+   828→                </div>
+   829→              </div>
+   830→
+   831→              {/* Registration Fee Notice */}
+   832→              <div className="bg-cornell/10 border-2 border-cornell/40 rounded-xl p-5 mb-6 shadow-md">
+   833→                <div className="flex items-start gap-3">
+   834→                  <div className="w-8 h-8 bg-cornell rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+   835→                    <CreditCard className="w-5 h-5 text-white" />
+   836→                  </div>
+   837→                  <div>
+   838→                    <p className="text-lg font-extrabold text-cornell uppercase tracking-wide">Registration / Application Fee</p>
+   839→                    <p className="text-sm text-charcoal/90 mt-1 font-semibold">
+   840→                      A Registration / Application fee of <span className="text-lg font-black text-cornell">$200</span> is required upon submission. You will be prompted to complete payment before your application is finalized.
+   841→                    </p>
+   842→                    <div className="mt-3 flex flex-wrap gap-2">
+   843→                      <span className="inline-flex items-center gap-1.5 bg-white border border-cornell/20 rounded-full px-3 py-1 text-xs font-semibold text-cornell">
+   844→                        <CreditCard className="w-3.5 h-3.5" /> Credit Card (Visa)
+   845→                      </span>
+   846→                      <span className="inline-flex items-center gap-1.5 bg-white border border-cornell/20 rounded-full px-3 py-1 text-xs font-semibold text-cornell">
+   847→                        <Phone className="w-3.5 h-3.5" /> Mobile Money
+   848→                      </span>
+   849→                      <span className="inline-flex items-center gap-1.5 bg-white border border-cornell/20 rounded-full px-3 py-1 text-xs font-semibold text-cornell">
+   850→                        <Shield className="w-3.5 h-3.5" /> Bank Transfer
+   851→                      </span>
+   852→                    </div>
+   853→                  </div>
+   854→                </div>
+   855→              </div>
+   856→
+   857→              {/* Payment Error */}
+   858→              {paymentError && (
+   859→                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl flex items-start gap-3">
+   860→                  <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+   861→                  <div>
+   862→                    <p className="text-sm font-semibold text-red-700">Payment Issue</p>
+   863→                    <p className="text-xs text-red-600 mt-0.5">{paymentError}</p>
+   864→                  </div>
+   865→                </div>
+   866→              )}
+   867→
+   868→              {/* Submit */}
+   869→              <Button
+   870→                type="submit"
+   871→                size="lg"
+   872→                disabled={submitting}
+   873→                className="w-full bg-cornell hover:bg-cornell-dark text-white rounded-full text-base py-3"
+   874→              >
+   875→                <CreditCard className="w-4 h-4 mr-2" />
+   876→                {submitting ? 'Processing Payment...' : 'Submit Application & Pay $200'}
+   877→              </Button>
+   878→
+   879→              <div className="mt-4 flex flex-wrap justify-center gap-3">
+   880→                <span className="inline-flex items-center gap-1 text-[11px] text-charcoal/50">
+   881→                  <CreditCard className="w-3 h-3" /> Visa Card
+   882→                </span>
+   883→                <span className="inline-flex items-center gap-1 text-[11px] text-charcoal/50">
+   884→                  <Phone className="w-3 h-3" /> Mobile Money
+   885→                </span>
+   886→                <span className="inline-flex items-center gap-1 text-[11px] text-charcoal/50">
+   887→                  <Shield className="w-3 h-3" /> Bank Transfer
+   888→                </span>
+   889→              </div>
+   890→
+   891→              <p className="text-[11px] text-charcoal/50 text-center mt-4">
+   892→                By submitting, you agree to our terms. A $200 registration fee is processed securely via Paystack. Payment supports Visa Credit Card, Mobile Money, and Bank Transfer. We will respond within 48 hours.
+   893→              </p>
+   894→            </form>
+   895→          </motion.div>
+   896→        </div>
+   897→      </div>
+   898→    </div>
+   899→  )
+   900→}
+   901→
