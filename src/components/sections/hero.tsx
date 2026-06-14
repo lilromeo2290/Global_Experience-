@@ -202,7 +202,6 @@ export default function HeroSection() {
                 Donate
               </Button>
             </Link>
-            <span className="text-[9px] text-white/50 tracking-wide self-end pb-1 hidden sm:block">SECURELY DONATE TO SUPPORT FOUNDATIONS</span>
           </motion.div>
 
           {/* Trust indicators */}
