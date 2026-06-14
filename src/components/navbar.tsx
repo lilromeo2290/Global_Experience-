@@ -7,7 +7,6 @@ import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/s
 import { Menu, Heart, Phone, ChevronDown, ChevronRight, Sun, Moon, Search, Command } from 'lucide-react'
 import Link from 'next/link'
 import { useTheme } from '@/components/theme-provider'
-import DonationModal from '@/components/DonationModal'
 import PredictiveSearch from '@/components/PredictiveSearch'
 
 interface SubLink {
@@ -46,7 +45,7 @@ const navLinks: NavLink[] = [
   },
   { label: 'Pricing', href: '/pricing', key: 'pricing' },
   { label: 'Gallery', href: '/gallery', key: 'gallery' },
-  { label: 'Donation', href: '/#donate', key: 'donation' },
+  { label: 'Donation', href: '/donate', key: 'donation' },
   { label: 'Contact Us', href: '/contact', key: 'contact' },
 ]
 
@@ -57,7 +56,6 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
   const [mobileOpenDropdown, setMobileOpenDropdown] = useState<string | null>(null)
-  const [donateOpen, setDonateOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const dropdownRefs = useRef<Record<string, HTMLDivElement | null>>({})
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null)
@@ -182,19 +180,12 @@ export default function Navbar() {
               </a>
             </div>
             <div className="flex items-center gap-3">
-              <button
-                onClick={() => {
-                  const el = document.getElementById('donate')
-                  if (el) {
-                    el.scrollIntoView({ behavior: 'smooth' })
-                  } else {
-                    window.location.href = '/#donate'
-                  }
-                }}
+              <Link
+                href="/donate"
                 className="flex items-center gap-1.5 bg-vogue hover:bg-vogue-light text-white px-3 py-1 rounded-full text-xs font-semibold transition-colors"
               >
                 <Heart className="w-3 h-3 fill-white" /> Donate Now
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -494,9 +485,6 @@ export default function Navbar() {
           </div>
         </div>
       </div>
-
-      {/* Donation Modal */}
-      <DonationModal open={donateOpen} onClose={() => setDonateOpen(false)} />
 
       {/* Predictive Search */}
       <PredictiveSearch open={searchOpen} onOpenChange={setSearchOpen} />

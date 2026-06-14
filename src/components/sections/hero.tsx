@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { ArrowRight, Heart, Users, Phone, MapPin, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react'
 import Link from 'next/link'
-import DonationModal from '@/components/DonationModal'
 import { getVisitorProfile, updateVisit, getPersonalizedGreeting } from '@/lib/personalization'
 
 const slides = [
@@ -53,7 +52,6 @@ const slides = [
 
 export default function HeroSection() {
   const [current, setCurrent] = useState(0)
-  const [donateOpen, setDonateOpen] = useState(false)
   const [greeting, setGreeting] = useState({ greeting: '', subtitle: '' })
   const [isReturning, setIsReturning] = useState(false)
 
@@ -193,21 +191,15 @@ export default function HeroSection() {
               <Users className="mr-2 w-4 h-4" />
               Become a Volunteer
             </Button>
-            <Button
-              size="lg"
-              className="bg-vogue hover:bg-vogue-light text-white rounded-full px-8 text-base shadow-lg shadow-vogue/30"
-              onClick={() => {
-                const el = document.getElementById('donate')
-                if (el) {
-                  el.scrollIntoView({ behavior: 'smooth' })
-                } else {
-                  window.location.href = '/#donate'
-                }
-              }}
-            >
-              <Heart className="mr-2 w-4 h-4 fill-white" />
-              Donate
-            </Button>
+            <Link href="/donate">
+              <Button
+                size="lg"
+                className="bg-vogue hover:bg-vogue-light text-white rounded-full px-8 text-base shadow-lg shadow-vogue/30"
+              >
+                <Heart className="mr-2 w-4 h-4 fill-white" />
+                Donate
+              </Button>
+            </Link>
           </motion.div>
 
           {/* Trust indicators */}
@@ -249,8 +241,6 @@ export default function HeroSection() {
         </motion.div>
       </motion.div>
 
-      {/* Donation Modal */}
-      <DonationModal open={donateOpen} onClose={() => setDonateOpen(false)} />
     </section>
   )
 }

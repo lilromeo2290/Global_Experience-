@@ -10,7 +10,7 @@ const quickLinks = [
   { label: 'Our Team', href: '/about#team' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'Gallery', href: '/gallery' },
-  { label: 'Donation', href: '/#donate' },
+  { label: 'Donation', href: '/donate' },
   { label: 'Contact Us', href: '/contact' },
 ]
 

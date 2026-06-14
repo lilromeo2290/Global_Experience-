@@ -9,7 +9,6 @@ import DestinationsSection from '@/components/sections/destinations'
 import TeamSection from '@/components/sections/team'
 import VolunteerSection from '@/components/sections/volunteer'
 import GallerySection from '@/components/sections/gallery'
-import DonateSection from '@/components/sections/donate'
 import TestimonialsSection from '@/components/sections/testimonials'
 import BlogSection from '@/components/sections/blog'
 import ContactSection from '@/components/sections/contact'
@@ -53,7 +52,6 @@ export default function Home() {
         <GallerySection />
         <TestimonialsSection />
         <PartnersSection />
-        <DonateSection />
         <BlogSection />
         <ContactSection />
       </main>
