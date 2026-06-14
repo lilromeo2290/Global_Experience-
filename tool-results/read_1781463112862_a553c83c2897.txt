@@ -1,0 +1,681 @@
+     1→'use client'
+     2→
+     3→import { useState } from 'react'
+     4→import { Button } from '@/components/ui/button'
+     5→import {
+     6→  Dialog,
+     7→  DialogContent,
+     8→  DialogTitle,
+     9→} from '@/components/ui/dialog'
+    10→import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+    11→import { Label } from '@/components/ui/label'
+    12→import {
+    13→  User, Mail, Phone, MapPin, Truck, Package, ArrowRight, X, CheckCircle2,
+    14→  Globe2, ClipboardList,
+    15→  Stethoscope, BookOpen, Trophy, Monitor, Sprout, GraduationCap, Users, Wrench, Building2,
+    16→} from 'lucide-react'
+    17→import { motion } from 'framer-motion'
+    18→import type { LucideIcon } from 'lucide-react'
+    19→
+    20→const deliveryMethods = [
+    21→  'I will ship it myself',
+    22→  'I need pickup from my location',
+    23→  'I will deliver in person',
+    24→  'Please arrange collection',
+    25→  'Other (specify in message)',
+    26→]
+    27→
+    28→interface ProgramConfig {
+    29→  title: string
+    30→  icon: LucideIcon
+    31→  subtitle: string
+    32→  color: string
+    33→  categories: string[]
+    34→  conditions: string[]
+    35→  categoryLabel: string
+    36→  quantityLabel: string
+    37→  descriptionPlaceholder: string
+    38→  showCondition: boolean
+    39→  showQuantity: boolean
+    40→}
+    41→
+    42→const programConfigs: Record<string, ProgramConfig> = {
+    43→  'Medical Equipment and Items': {
+    44→    title: 'Medical Equipment Donation',
+    45→    icon: Stethoscope,
+    46→    subtitle: 'Help equip clinics and hospitals serving underserved communities',
+    47→    color: 'from-cornell to-cornell-dark',
+    48→    categoryLabel: 'Category of Equipment',
+    49→    quantityLabel: 'Quantity',
+    50→    descriptionPlaceholder: 'Please describe the equipment you wish to donate, including brand, model, specifications, and any other relevant details...',
+    51→    categories: [
+    52→      'Hospital Beds & Stretchers',
+    53→      'Medical Imaging Equipment',
+    54→      'Surgical Instruments',
+    55→      'Diagnostic Equipment',
+    56→      'Patient Monitors',
+    57→      'Laboratory Equipment',
+    58→      'First Aid & Emergency Supplies',
+    59→      'Mobility Aids (Wheelchairs, Crutches)',
+    60→      'PPE & Protective Gear',
+    61→      'Pharmaceutical Supplies',
+    62→      'Other Medical Equipment',
+    63→    ],
+    64→    conditions: ['New / Unused', 'Like New / Excellent', 'Good / Working', 'Fair / Needs Minor Repairs', 'Refurbished'],
+    65→    showCondition: true,
+    66→    showQuantity: true,
+    67→  },
+    68→  'Teaching Materials': {
+    69→    title: 'Teaching Materials Donation',
+    70→    icon: BookOpen,
+    71→    subtitle: 'Support teaching programs in rural and urban schools with educational resources',
+    72→    color: 'from-vogue to-vogue-dark',
+    73→    categoryLabel: 'Category of Materials',
+    74→    quantityLabel: 'Quantity',
+    75→    descriptionPlaceholder: 'Please describe the teaching materials you wish to donate, including subjects, grade levels, and any other relevant details...',
+    76→    categories: [
+    77→      'Textbooks & Workbooks',
+    78→      'Stationery (Pens, Pencils, Notebooks)',
+    79→      'Teaching Aids & Charts',
+    80→      'Children\'s Storybooks',
+    81→      'Science Lab Supplies',
+    82→      'Art & Craft Supplies',
+    83→      'Mathematical Instruments',
+    84→      'Maps & Globes',
+    85→      'Computers & Tablets for Schools',
+    86→      'Other Teaching Materials',
+    87→    ],
+    88→    conditions: ['New / Unused', 'Like New', 'Good / Usable', 'Fair / Slightly Worn'],
+    89→    showCondition: true,
+    90→    showQuantity: true,
+    91→  },
+    92→  'Sport Items': {
+    93→    title: 'Sport Items Donation',
+    94→    icon: Trophy,
+    95→    subtitle: 'Provide sports equipment for youth development programs',
+    96→    color: 'from-cornell to-cornell-dark',
+    97→    categoryLabel: 'Category of Sport Items',
+    98→    quantityLabel: 'Quantity',
+    99→    descriptionPlaceholder: 'Please describe the sport items you wish to donate, including sizes, brands, and any other relevant details...',
+   100→    categories: [
+   101→      'Footballs & Football Boots',
+   102→      'Jerseys & Team Kits',
+   103→      'Shin Guards & Protective Gear',
+   104→      'Training Equipment (Cones, Whistles, etc.)',
+   105→      'Volleyball & Netball Equipment',
+   106→      'Athletics Equipment',
+   107→      'Table Tennis Equipment',
+   108→      'Basketball Equipment',
+   109→      'Other Sport Items',
+   110→    ],
+   111→    conditions: ['New / Unused', 'Like New', 'Good / Usable', 'Fair / Slightly Worn'],
+   112→    showCondition: true,
+   113→    showQuantity: true,
+   114→  },
+   115→  'Office Equipment': {
+   116→    title: 'Office Equipment Donation',
+   117→    icon: Monitor,
+   118→    subtitle: 'Support administrative and professional placements with essential technology',
+   119→    color: 'from-vogue to-vogue-dark',
+   120→    categoryLabel: 'Category of Equipment',
+   121→    quantityLabel: 'Quantity',
+   122→    descriptionPlaceholder: 'Please describe the office equipment you wish to donate, including brand, model, specifications, and any other relevant details...',
+   123→    categories: [
+   124→      'Laptops & Desktop Computers',
+   125→      'Printers & Scanners',
+   126→      'Mobile Phones & Tablets',
+   127→      'Office Furniture (Desks, Chairs)',
+   128→      'Projectors & Display Screens',
+   129→      'Networking Equipment (Routers, Switches)',
+   130→      'Stationery & Office Supplies',
+   131→      'Filing & Storage Solutions',
+   132→      'Other Office Equipment',
+   133→    ],
+   134→    conditions: ['New / Unused', 'Like New / Excellent', 'Good / Working', 'Fair / Needs Minor Repairs', 'Refurbished'],
+   135→    showCondition: true,
+   136→    showQuantity: true,
+   137→  },
+   138→  'Agriculture Products and Equipment': {
+   139→    title: 'Agriculture Equipment Donation',
+   140→    icon: Sprout,
+   141→    subtitle: 'Support community farming initiatives with tools, seeds, and machinery',
+   142→    color: 'from-vogue to-vogue-dark',
+   143→    categoryLabel: 'Category of Items',
+   144→    quantityLabel: 'Quantity',
+   145→    descriptionPlaceholder: 'Please describe the agricultural items you wish to donate, including types, quantities, and any other relevant details...',
+   146→    categories: [
+   147→      'Farming Tools (Hoes, Cutlasses, Shovels)',
+   148→      'Seeds & Seedlings',
+   149→      'Fertilizers & Agrochemicals',
+   150→      'Irrigation Equipment',
+   151→      'Processing Equipment (Mills, Dryers)',
+   152→      'Storage Facilities & Containers',
+   153→      'Protective Gear (Boots, Gloves, Hats)',
+   154→      'Tractors & Power Equipment',
+   155→      'Other Agriculture Items',
+   156→    ],
+   157→    conditions: ['New / Unused', 'Like New', 'Good / Usable', 'Fair / Needs Minor Repairs'],
+   158→    showCondition: true,
+   159→    showQuantity: true,
+   160→  },
+   161→  'Educational Scholarship': {
+   162→    title: 'Educational Scholarship Donation',
+   163→    icon: GraduationCap,
+   164→    subtitle: 'Support students to access quality education and professional development',
+   165→    color: 'from-cornell to-cornell-dark',
+   166→    categoryLabel: 'Type of Scholarship Support',
+   167→    quantityLabel: 'Number of Students to Sponsor',
+   168→    descriptionPlaceholder: 'Please describe the scholarship support you wish to provide, including the level of education, duration, and any preferences...',
+   169→    categories: [
+   170→      'Primary / Junior High School Fees',
+   171→      'Senior High School Fees',
+   172→      'University / College Tuition',
+   173→      'Vocational Training Fees',
+   174→      'Professional Certification Programs',
+   175→      'Study Materials & Textbooks',
+   176→      'Accommodation & Living Expenses',
+   177→      'Other Scholarship Support',
+   178→    ],
+   179→    conditions: [],
+   180→    showCondition: false,
+   181→    showQuantity: false,
+   182→  },
+   183→  'Conferences': {
+   184→    title: 'Conference Donation',
+   185→    icon: Users,
+   186→    subtitle: 'Fund community conferences, workshops, and knowledge-sharing events',
+   187→    color: 'from-vogue to-vogue-dark',
+   188→    categoryLabel: 'Type of Conference Support',
+   189→    quantityLabel: 'Number of Participants to Sponsor',
+   190→    descriptionPlaceholder: 'Please describe the conference support you wish to provide, including the type of event, target audience, and any preferences...',
+   191→    categories: [
+   192→      'Venue & Facilities Sponsorship',
+   193→      'Speaker / Facilitator Funding',
+   194→      'Participant Travel & Accommodation',
+   195→      'Event Materials & Supplies',
+   196→      'Catering & Refreshments',
+   197→      'Audio-Visual & Technology Support',
+   198→      'Community Health Workshops',
+   199→      'Youth Development Conferences',
+   200→      'Other Conference Support',
+   201→    ],
+   202→    conditions: [],
+   203→    showCondition: false,
+   204→    showQuantity: false,
+   205→  },
+   206→  'NVTI / Vocational Training': {
+   207→    title: 'Vocational Training Donation',
+   208→    icon: Wrench,
+   209→    subtitle: 'Support vocational skills training for community development',
+   210→    color: 'from-cornell to-cornell-dark',
+   211→    categoryLabel: 'Type of Vocational Training Support',
+   212→    quantityLabel: 'Number of Trainees to Sponsor',
+   213→    descriptionPlaceholder: 'Please describe the vocational training support you wish to provide, including the trade area, duration, and any preferences...',
+   214→    categories: [
+   215→      'Driving School Fees',
+   216→      'Hairdressing & Beauty Training',
+   217→      'Forklift Operation Training',
+   218→      'Electrical Installation Training',
+   219→      'Masonry & Construction Training',
+   220→      'Carpentry & Woodwork Training',
+   221→      'Welding & Metalwork Training',
+   222→      'Auto Mechanics Training',
+   223→      'Catering & Hospitality Training',
+   224→      'Dressmaking & Fashion Design',
+   225→      'ICT / Computer Training',
+   226→      'Other Vocational Training',
+   227→    ],
+   228→    conditions: [],
+   229→    showCondition: false,
+   230→    showQuantity: false,
+   231→  },
+   232→  'Community Service': {
+   233→    title: 'Community Service Donation',
+   234→    icon: Building2,
+   235→    subtitle: 'Help build schools, drill boreholes, and develop vital community infrastructure',
+   236→    color: 'from-vogue to-vogue-dark',
+   237→    categoryLabel: 'Type of Community Service',
+   238→    quantityLabel: 'Estimated Number of Beneficiaries',
+   239→    descriptionPlaceholder: 'Please describe the community service support you wish to provide, including the project type, location preferences, and any other relevant details...',
+   240→    categories: [
+   241→      'School Building Projects',
+   242→      'Borehole Drilling for Clean Water',
+   243→      'Community Centre Construction',
+   244→      'Library / Resource Centre Setup',
+   245→      'Health Facility Construction',
+   246→      'Road & Bridge Construction',
+   247→      'Sanitation Facilities (Toilets, Drains)',
+   248→      'Solar Power Installation',
+   249→      'Other Community Infrastructure',
+   250→    ],
+   251→    conditions: [],
+   252→    showCondition: false,
+   253→    showQuantity: false,
+   254→  },
+   255→}
+   256→
+   257→export default function OutreachDonationModal({
+   258→  open,
+   259→  onClose,
+   260→  programArea,
+   261→}: {
+   262→  open: boolean
+   263→  onClose: () => void
+   264→  programArea: string
+   265→}) {
+   266→  const config = programConfigs[programArea]
+   267→  const [submitted, setSubmitted] = useState(false)
+   268→  const [submitting, setSubmitting] = useState(false)
+   269→  const [formData, setFormData] = useState({
+   270→    fullName: '',
+   271→    email: '',
+   272→    phone: '',
+   273→    organization: '',
+   274→    country: '',
+   275→    city: '',
+   276→    category: '',
+   277→    itemCondition: '',
+   278→    quantity: '',
+   279→    description: '',
+   280→    deliveryMethod: '',
+   281→    pickupAddress: '',
+   282→    message: '',
+   283→  })
+   284→
+   285→  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+   286→    setFormData({ ...formData, [e.target.name]: e.target.value })
+   287→  }
+   288→
+   289→  const handleSubmit = async (e: React.FormEvent) => {
+   290→    e.preventDefault()
+   291→    if (submitting) return
+   292→    setSubmitting(true)
+   293→    try {
+   294→      const res = await fetch('/api/outreach-donations', {
+   295→        method: 'POST',
+   296→        headers: { 'Content-Type': 'application/json' },
+   297→        body: JSON.stringify({ ...formData, programArea }),
+   298→      })
+   299→      if (res.ok) {
+   300→        setSubmitted(true)
+   301→      }
+   302→    } catch (err) {
+   303→      console.error('Outreach donation submission failed:', err)
+   304→    } finally {
+   305→      setSubmitting(false)
+   306→    }
+   307→  }
+   308→
+   309→  const handleClose = () => {
+   310→    setSubmitted(false)
+   311→    setFormData({
+   312→      fullName: '',
+   313→      email: '',
+   314→      phone: '',
+   315→      organization: '',
+   316→      country: '',
+   317→      city: '',
+   318→      category: '',
+   319→      itemCondition: '',
+   320→      quantity: '',
+   321→      description: '',
+   322→      deliveryMethod: '',
+   323→      pickupAddress: '',
+   324→      message: '',
+   325→    })
+   326→    onClose()
+   327→  }
+   328→
+   329→  if (!config) return null
+   330→
+   331→  const ConfigIcon = config.icon
+   332→
+   333→  if (submitted) {
+   334→    return (
+   335→      <Dialog open={open} onOpenChange={handleClose}>
+   336→        <DialogContent className="sm:max-w-lg bg-white dark:bg-[#0A1F12] p-0 overflow-hidden">
+   337→          <DialogTitle className="sr-only">Donation Submitted</DialogTitle>
+   338→          <div className="p-8 text-center">
+   339→            <motion.div
+   340→              initial={{ opacity: 0, scale: 0.8 }}
+   341→              animate={{ opacity: 1, scale: 1 }}
+   342→              transition={{ duration: 0.4 }}
+   343→            >
+   344→              <div className="w-20 h-20 bg-vogue/10 rounded-full flex items-center justify-center mx-auto mb-6">
+   345→                <CheckCircle2 className="w-10 h-10 text-vogue" />
+   346→              </div>
+   347→              <h2 className="text-2xl font-bold text-cornell mb-3">Thank You!</h2>
+   348→              <p className="text-charcoal dark:text-white/70 mb-2">
+   349→                Your donation offer for <span className="font-semibold text-cornell">{programArea}</span> has been received.
+   350→              </p>
+   351→              <p className="text-sm text-charcoal/70 dark:text-white/50 mb-6">
+   352→                Our team will review your submission and contact you at <span className="font-semibold">{formData.email}</span> within 48 hours to coordinate the donation and delivery details.
+   353→              </p>
+   354→              <Button
+   355→                onClick={handleClose}
+   356→                className="bg-cornell hover:bg-cornell-dark text-white rounded-full px-8"
+   357→              >
+   358→                Close
+   359→              </Button>
+   360→            </motion.div>
+   361→          </div>
+   362→        </DialogContent>
+   363→      </Dialog>
+   364→    )
+   365→  }
+   366→
+   367→  return (
+   368→    <Dialog open={open} onOpenChange={handleClose}>
+   369→      <DialogContent className="sm:max-w-2xl bg-white dark:bg-[#0A1F12] p-0 overflow-hidden max-h-[90vh] overflow-y-auto">
+   370→        <DialogTitle className="sr-only">Donate - {config.title}</DialogTitle>
+   371→
+   372→        {/* Header */}
+   373→        <div className={`bg-gradient-to-br ${config.color} p-6 text-white relative`}>
+   374→          <button
+   375→            onClick={handleClose}
+   376→            className="absolute top-4 right-4 text-white/60 hover:text-white transition-colors"
+   377→          >
+   378→            <X className="w-5 h-5" />
+   379→          </button>
+   380→          <div className="flex items-center gap-3 mb-2">
+   381→            <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+   382→              <ConfigIcon className="w-5 h-5" />
+   383→            </div>
+   384→            <div>
+   385→              <h2 className="text-xl font-bold">{config.title}</h2>
+   386→              <p className="text-white/70 text-xs mt-0.5">{config.subtitle}</p>
+   387→            </div>
+   388→          </div>
+   389→        </div>
+   390→
+   391→        {/* Form */}
+   392→        <form onSubmit={handleSubmit} className="p-6">
+   393→          {/* Donor Details */}
+   394→          <div className="mb-7">
+   395→            <div className="flex items-center gap-2 mb-4">
+   396→              <div className="w-8 h-8 bg-cornell/10 rounded-lg flex items-center justify-center">
+   397→                <User className="w-4 h-4 text-cornell" />
+   398→              </div>
+   399→              <h3 className="font-bold text-cornell dark:text-white text-sm">Your Details</h3>
+   400→            </div>
+   401→            <div className="grid sm:grid-cols-2 gap-4">
+   402→              <div>
+   403→                <Label className="text-xs font-medium text-charcoal dark:text-white/70 mb-1.5 block">
+   404→                  Full Name *
+   405→                </Label>
+   406→                <input
+   407→                  type="text"
+   408→                  name="fullName"
+   409→                  required
+   410→                  value={formData.fullName}
+   411→                  onChange={handleChange}
+   412→                  placeholder="Enter your full name"
+   413→                  className="w-full h-10 px-3 rounded-lg border border-border bg-cream dark:bg-[#122A1B] text-charcoal dark:text-white text-sm focus:border-cornell focus:ring-cornell focus:outline-none"
+   414→                />
+   415→              </div>
+   416→              <div>
+   417→                <Label className="text-xs font-medium text-charcoal dark:text-white/70 mb-1.5 block">
+   418→                  Email Address *
+   419→                </Label>
+   420→                <div className="relative">
+   421→                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-charcoal/40 dark:text-white/30" />
+   422→                  <input
+   423→                    type="email"
+   424→                    name="email"
+   425→                    required
+   426→                    value={formData.email}
+   427→                    onChange={handleChange}
+   428→                    placeholder="you@example.com"
+   429→                    className="w-full h-10 pl-10 pr-3 rounded-lg border border-border bg-cream dark:bg-[#122A1B] text-charcoal dark:text-white text-sm focus:border-cornell focus:ring-cornell focus:outline-none"
+   430→                  />
+   431→                </div>
+   432→              </div>
+   433→              <div>
+   434→                <Label className="text-xs font-medium text-charcoal dark:text-white/70 mb-1.5 block">
+   435→                  Phone Number *
+   436→                </Label>
+   437→                <div className="relative">
+   438→                  <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-charcoal/40 dark:text-white/30" />
+   439→                  <input
+   440→                    type="tel"
+   441→                    name="phone"
+   442→                    required
+   443→                    value={formData.phone}
+   444→                    onChange={handleChange}
+   445→                    placeholder="+1 234 567 8900"
+   446→                    className="w-full h-10 pl-10 pr-3 rounded-lg border border-border bg-cream dark:bg-[#122A1B] text-charcoal dark:text-white text-sm focus:border-cornell focus:ring-cornell focus:outline-none"
+   447→                  />
+   448→                </div>
+   449→              </div>
+   450→              <div>
+   451→                <Label className="text-xs font-medium text-charcoal dark:text-white/70 mb-1.5 block">
+   452→                  Organization (Optional)
+   453→                </Label>
+   454→                <input
+   455→                  type="text"
+   456→                  name="organization"
+   457→                  value={formData.organization}
+   458→                  onChange={handleChange}
+   459→                  placeholder="Hospital, NGO, Company, etc."
+   460→                  className="w-full h-10 px-3 rounded-lg border border-border bg-cream dark:bg-[#122A1B] text-charcoal dark:text-white text-sm focus:border-cornell focus:ring-cornell focus:outline-none"
+   461→                />
+   462→              </div>
+   463→              <div>
+   464→                <Label className="text-xs font-medium text-charcoal dark:text-white/70 mb-1.5 block">
+   465→                  Country *
+   466→                </Label>
+   467→                <div className="relative">
+   468→                  <Globe2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-charcoal/40 dark:text-white/30" />
+   469→                  <input
+   470→                    type="text"
+   471→                    name="country"
+   472→                    required
+   473→                    value={formData.country}
+   474→                    onChange={handleChange}
+   475→                    placeholder="e.g. United Kingdom"
+   476→                    className="w-full h-10 pl-10 pr-3 rounded-lg border border-border bg-cream dark:bg-[#122A1B] text-charcoal dark:text-white text-sm focus:border-cornell focus:ring-cornell focus:outline-none"
+   477→                  />
+   478→                </div>
+   479→              </div>
+   480→              <div>
+   481→                <Label className="text-xs font-medium text-charcoal dark:text-white/70 mb-1.5 block">
+   482→                  City *
+   483→                </Label>
+   484→                <div className="relative">
+   485→                  <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-charcoal/40 dark:text-white/30" />
+   486→                  <input
+   487→                    type="text"
+   488→                    name="city"
+   489→                    required
+   490→                    value={formData.city}
+   491→                    onChange={handleChange}
+   492→                    placeholder="e.g. London"
+   493→                    className="w-full h-10 pl-10 pr-3 rounded-lg border border-border bg-cream dark:bg-[#122A1B] text-charcoal dark:text-white text-sm focus:border-cornell focus:ring-cornell focus:outline-none"
+   494→                  />
+   495→                </div>
+   496→              </div>
+   497→            </div>
+   498→          </div>
+   499→
+   500→          {/* Item Details */}
+   501→          <div className="mb-7">
+   502→            <div className="flex items-center gap-2 mb-4">
+   503→              <div className="w-8 h-8 bg-vogue/10 rounded-lg flex items-center justify-center">
+   504→                <Package className="w-4 h-4 text-vogue" />
+   505→              </div>
+   506→              <h3 className="font-bold text-cornell dark:text-white text-sm">Donation Details</h3>
+   507→            </div>
+   508→            <div className="grid sm:grid-cols-2 gap-4">
+   509→              <div className={config.showCondition ? '' : 'sm:col-span-2'}>
+   510→                <Label className="text-xs font-medium text-charcoal dark:text-white/70 mb-1.5 block">
+   511→                  {config.categoryLabel} *
+   512→                </Label>
+   513→                <Select value={formData.category} onValueChange={(val) => setFormData({ ...formData, category: val })}>
+   514→                  <SelectTrigger className="w-full rounded-lg border-border bg-cream dark:bg-[#122A1B] focus:border-cornell focus:ring-cornell h-10">
+   515→                    <SelectValue placeholder="-- Select Category --" />
+   516→                  </SelectTrigger>
+   517→                  <SelectContent className="max-h-48">
+   518→                    {config.categories.map((cat) => (
+   519→                      <SelectItem key={cat} value={cat} className="text-sm">
+   520→                        {cat}
+   521→                      </SelectItem>
+   522→                    ))}
+   523→                  </SelectContent>
+   524→                </Select>
+   525→              </div>
+   526→              {config.showCondition && (
+   527→                <div>
+   528→                  <Label className="text-xs font-medium text-charcoal dark:text-white/70 mb-1.5 block">
+   529→                    Condition *
+   530→                  </Label>
+   531→                  <Select value={formData.itemCondition} onValueChange={(val) => setFormData({ ...formData, itemCondition: val })}>
+   532→                    <SelectTrigger className="w-full rounded-lg border-border bg-cream dark:bg-[#122A1B] focus:border-cornell focus:ring-cornell h-10">
+   533→                      <SelectValue placeholder="-- Select Condition --" />
+   534→                    </SelectTrigger>
+   535→                    <SelectContent>
+   536→                      {config.conditions.map((cond) => (
+   537→                        <SelectItem key={cond} value={cond} className="text-sm">
+   538→                          {cond}
+   539→                        </SelectItem>
+   540→                      ))}
+   541→                    </SelectContent>
+   542→                  </Select>
+   543→                </div>
+   544→              )}
+   545→              {config.showQuantity && (
+   546→                <div>
+   547→                  <Label className="text-xs font-medium text-charcoal dark:text-white/70 mb-1.5 block">
+   548→                    {config.quantityLabel} *
+   549→                  </Label>
+   550→                  <input
+   551→                    type="text"
+   552→                    name="quantity"
+   553→                    required
+   554→                    value={formData.quantity}
+   555→                    onChange={handleChange}
+   556→                    placeholder="e.g. 5 hospital beds, 2 wheelchairs"
+   557→                    className="w-full h-10 px-3 rounded-lg border border-border bg-cream dark:bg-[#122A1B] text-charcoal dark:text-white text-sm focus:border-cornell focus:ring-cornell focus:outline-none"
+   558→                  />
+   559→                </div>
+   560→              )}
+   561→              <div className="sm:col-span-2">
+   562→                <Label className="text-xs font-medium text-charcoal dark:text-white/70 mb-1.5 block">
+   563→                  Description *
+   564→                </Label>
+   565→                <textarea
+   566→                  name="description"
+   567→                  required
+   568→                  value={formData.description}
+   569→                  onChange={handleChange}
+   570→                  rows={3}
+   571→                  placeholder={config.descriptionPlaceholder}
+   572→                  className="w-full px-3 py-2.5 rounded-lg border border-border bg-cream dark:bg-[#122A1B] text-charcoal dark:text-white text-sm focus:border-cornell focus:ring-cornell focus:outline-none resize-none"
+   573→                />
+   574→              </div>
+   575→            </div>
+   576→          </div>
+   577→
+   578→          {/* Delivery Details */}
+   579→          <div className="mb-7">
+   580→            <div className="flex items-center gap-2 mb-4">
+   581→              <div className="w-8 h-8 bg-cornell/10 rounded-lg flex items-center justify-center">
+   582→                <Truck className="w-4 h-4 text-cornell" />
+   583→              </div>
+   584→              <h3 className="font-bold text-cornell dark:text-white text-sm">Delivery Method</h3>
+   585→            </div>
+   586→            <div className="grid gap-4">
+   587→              <div>
+   588→                <Label className="text-xs font-medium text-charcoal dark:text-white/70 mb-1.5 block">
+   589→                  How would you like the items to be delivered? *
+   590→                </Label>
+   591→                <Select value={formData.deliveryMethod} onValueChange={(val) => setFormData({ ...formData, deliveryMethod: val })}>
+   592→                  <SelectTrigger className="w-full rounded-lg border-border bg-cream dark:bg-[#122A1B] focus:border-cornell focus:ring-cornell h-10">
+   593→                    <div className="flex items-center gap-2">
+   594→                      <Truck className="w-4 h-4 text-charcoal/40 dark:text-white/30" />
+   595→                      <SelectValue placeholder="-- Select Delivery Method --" />
+   596→                    </div>
+   597→                  </SelectTrigger>
+   598→                  <SelectContent>
+   599→                    {deliveryMethods.map((method) => (
+   600→                      <SelectItem key={method} value={method} className="text-sm">
+   601→                        {method}
+   602→                      </SelectItem>
+   603→                    ))}
+   604→                  </SelectContent>
+   605→                </Select>
+   606→              </div>
+   607→              {(formData.deliveryMethod === 'I need pickup from my location' ||
+   608→                formData.deliveryMethod === 'Please arrange collection') && (
+   609→                <div>
+   610→                  <Label className="text-xs font-medium text-charcoal dark:text-white/70 mb-1.5 block">
+   611→                    Pickup / Collection Address *
+   612→                  </Label>
+   613→                  <div className="relative">
+   614→                    <MapPin className="absolute left-3 top-3 w-4 h-4 text-charcoal/40 dark:text-white/30" />
+   615→                    <textarea
+   616→                      name="pickupAddress"
+   617→                      required
+   618→                      value={formData.pickupAddress}
+   619→                      onChange={handleChange}
+   620→                      rows={2}
+   621→                      placeholder="Enter the full address where the items can be collected from..."
+   622→                      className="w-full pl-10 pr-3 py-2.5 rounded-lg border border-border bg-cream dark:bg-[#122A1B] text-charcoal dark:text-white text-sm focus:border-cornell focus:ring-cornell focus:outline-none resize-none"
+   623→                    />
+   624→                  </div>
+   625→                </div>
+   626→              )}
+   627→            </div>
+   628→          </div>
+   629→
+   630→          {/* Additional Message */}
+   631→          <div className="mb-6">
+   632→            <div className="flex items-center gap-2 mb-3">
+   633→              <div className="w-8 h-8 bg-vogue/10 rounded-lg flex items-center justify-center">
+   634→                <ClipboardList className="w-4 h-4 text-vogue" />
+   635→              </div>
+   636→              <h3 className="font-bold text-cornell dark:text-white text-sm">Additional Information</h3>
+   637→            </div>
+   638→            <textarea
+   639→              name="message"
+   640→              value={formData.message}
+   641→              onChange={handleChange}
+   642→              rows={3}
+   643→              placeholder="Any additional details, special instructions, or questions you may have about the donation process..."
+   644→              className="w-full px-3 py-2.5 rounded-lg border border-border bg-cream dark:bg-[#122A1B] text-charcoal dark:text-white text-sm focus:border-cornell focus:ring-cornell focus:outline-none resize-none"
+   645→            />
+   646→          </div>
+   647→
+   648→          {/* Info Notice */}
+   649→          <div className="bg-vogue/5 dark:bg-vogue/10 border border-vogue/20 rounded-xl p-4 mb-6">
+   650→            <div className="flex items-start gap-3">
+   651→              <CheckCircle2 className="w-5 h-5 text-vogue flex-shrink-0 mt-0.5" />
+   652→              <div>
+   653→                <p className="text-xs font-semibold text-vogue">What Happens Next?</p>
+   654→                <p className="text-[11px] text-charcoal/70 dark:text-white/50 mt-0.5">
+   655→                  Our team will review your donation offer and contact you within 48 hours to coordinate
+   656→                  delivery logistics, provide shipping instructions, and answer any questions you may have.
+   657→                  All donations are documented and tracked to ensure they reach the communities that need them most.
+   658→                </p>
+   659→              </div>
+   660→            </div>
+   661→          </div>
+   662→
+   663→          {/* Submit */}
+   664→          <Button
+   665→            type="submit"
+   666→            disabled={!formData.category || !formData.deliveryMethod || (config.showCondition && !formData.itemCondition) || submitting}
+   667→            className="w-full bg-cornell hover:bg-cornell-dark text-white rounded-full py-3 text-base font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+   668→          >
+   669→            {submitting ? 'Submitting...' : 'Submit Donation Offer'}
+   670→            <ArrowRight className="w-4 h-4 ml-2" />
+   671→          </Button>
+   672→
+   673→          <p className="text-[10px] text-center text-charcoal/40 dark:text-white/30 mt-3">
+   674→            By submitting this form, you agree that the details provided are accurate. We will contact you to finalize the donation.
+   675→          </p>
+   676→        </form>
+   677→      </DialogContent>
+   678→    </Dialog>
+   679→  )
+   680→}
+   681→
