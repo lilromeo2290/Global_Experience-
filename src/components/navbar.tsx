@@ -182,12 +182,19 @@ export default function Navbar() {
               </a>
             </div>
             <div className="flex items-center gap-3">
-              <Link
-                href="/#donate"
+              <button
+                onClick={() => {
+                  const el = document.getElementById('donate')
+                  if (el) {
+                    el.scrollIntoView({ behavior: 'smooth' })
+                  } else {
+                    window.location.href = '/#donate'
+                  }
+                }}
                 className="flex items-center gap-1.5 bg-vogue hover:bg-vogue-light text-white px-3 py-1 rounded-full text-xs font-semibold transition-colors"
               >
                 <Heart className="w-3 h-3 fill-white" /> Donate Now
-              </Link>
+              </button>
             </div>
           </div>
         </div>

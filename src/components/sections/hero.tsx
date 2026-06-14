@@ -193,15 +193,21 @@ export default function HeroSection() {
               <Users className="mr-2 w-4 h-4" />
               Become a Volunteer
             </Button>
-            <Link href="/#donate">
-              <Button
-                size="lg"
-                className="bg-vogue hover:bg-vogue-light text-white rounded-full px-8 text-base shadow-lg shadow-vogue/30"
-              >
-                <Heart className="mr-2 w-4 h-4 fill-white" />
-                Donate
-              </Button>
-            </Link>
+            <Button
+              size="lg"
+              className="bg-vogue hover:bg-vogue-light text-white rounded-full px-8 text-base shadow-lg shadow-vogue/30"
+              onClick={() => {
+                const el = document.getElementById('donate')
+                if (el) {
+                  el.scrollIntoView({ behavior: 'smooth' })
+                } else {
+                  window.location.href = '/#donate'
+                }
+              }}
+            >
+              <Heart className="mr-2 w-4 h-4 fill-white" />
+              Donate
+            </Button>
           </motion.div>
 
           {/* Trust indicators */}
