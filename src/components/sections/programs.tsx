@@ -8,7 +8,7 @@ const categories = [
   {
     icon: Stethoscope,
     title: 'Medical Placement in Teaching Hospitals',
-    img: '/images/medical-placement.png',
+    img: '/images/medical-placement.jpg',
     desc: 'Gain invaluable hands-on clinical experience in leading teaching hospitals across Africa. Work alongside seasoned medical professionals in real healthcare settings, developing practical skills that will shape your career in medicine, nursing, or allied health sciences.',
     benefits: ['Direct patient care experience', 'Cross-cultural medical practice', 'Professional mentorship from specialists', 'Clinical skills certification'],
     requirements: ['Medical/nursing enrollment', 'Basic language willingness', 'Immunization records', 'Professional references'],
@@ -18,7 +18,7 @@ const categories = [
   {
     icon: BookOpen,
     title: 'Teaching',
-    img: '/images/teaching-placement.png',
+    img: '/images/teaching-placement.jpg',
     desc: 'Inspire the next generation by teaching in local schools and educational institutions. Share your knowledge while learning innovative teaching methods in resource-diverse environments, making a direct impact on students\' academic journeys and future opportunities.',
     benefits: ['Curriculum development skills', 'Cross-cultural teaching experience', 'Language immersion', 'Community integration'],
     requirements: ['Teaching qualification or interest', 'Fluent English', 'Patience & adaptability', 'Cultural sensitivity'],
@@ -28,7 +28,7 @@ const categories = [
   {
     icon: Radio,
     title: 'Journalism',
-    img: '/images/journalism-placement.png',
+    img: '/images/journalism-placement.jpg',
     desc: 'Build your media portfolio with real-world experience in broadcasting and newsrooms. Report on compelling stories, develop multimedia content, and gain unique perspectives on African media landscapes while working alongside experienced journalists and producers.',
     benefits: ['Published portfolio pieces', 'Multimedia storytelling', 'International reporting experience', 'Professional network building'],
     requirements: ['Journalism/media enrollment', 'Writing samples', 'Digital literacy', 'Storytelling passion'],
@@ -38,7 +38,7 @@ const categories = [
   {
     icon: Users,
     title: 'Community Outreach',
-    img: '/images/community-project.png',
+    img: '/images/community-project.jpg',
     desc: 'Make a lasting difference through community outreach programs that address pressing social needs. Engage directly with local communities on health education, youth empowerment, women\'s initiatives, and social welfare projects that create sustainable change.',
     benefits: ['Direct community impact', 'Grassroots development experience', 'Cultural immersion', 'Program design skills'],
     requirements: ['Community development interest', 'Strong communication skills', 'Cultural sensitivity', 'Passion for social change'],
@@ -48,7 +48,7 @@ const categories = [
   {
     icon: Trophy,
     title: 'Sports',
-    img: '/images/sports-placement.png',
+    img: '/images/sports-placement.jpg',
     desc: 'Coach and develop sports programs in local communities. Use the power of sport to inspire youth, promote health and discipline, and build teamwork across cultural boundaries while gaining valuable coaching and athletic development experience.',
     benefits: ['Coaching certification path', 'Youth development impact', 'Athletic program design', 'Community engagement'],
     requirements: ['Sports background', 'Coaching interest', 'Physical fitness', 'Youth mentoring skills'],
@@ -58,7 +58,7 @@ const categories = [
   {
     icon: Building2,
     title: 'Office Administration',
-    img: '/images/community-project.png',
+    img: '/images/community-project.jpg',
     desc: 'Develop essential professional skills through office administration placements in dynamic organizational settings. Gain hands-on experience in business operations, management systems, and administrative processes that are transferable across any industry.',
     benefits: ['Professional office skills', 'Business operations exposure', 'Management systems knowledge', 'Organizational communication'],
     requirements: ['Business/admin interest', 'Computer literacy', 'Organizational skills', 'Professional demeanor'],
@@ -68,7 +68,7 @@ const categories = [
   {
     icon: Landmark,
     title: 'Banking and Finance',
-    img: '/images/community-project.png',
+    img: '/images/community-project.jpg',
     desc: 'Gain valuable financial sector experience in emerging markets. Understand African banking systems, microfinance operations, and financial inclusion initiatives that are transforming communities and driving economic growth across the continent.',
     benefits: ['Emerging market exposure', 'Financial systems knowledge', 'Professional networking', 'Cross-border finance insight'],
     requirements: ['Finance/business studies', 'Analytical skills', 'Professional demeanor', 'Cultural adaptability'],
@@ -78,7 +78,7 @@ const categories = [
   {
     icon: Scale,
     title: 'Law Placements',
-    img: '/images/community-project.png',
+    img: '/images/community-project.jpg',
     desc: 'Experience the legal system firsthand through placements in local courts and legal organizations. Observe courtroom proceedings, assist with legal research, and understand justice systems and human rights advocacy within African legal contexts.',
     benefits: ['Courtroom experience', 'Legal research skills', 'Human rights exposure', 'Comparative law knowledge'],
     requirements: ['Law studies enrollment', 'Research proficiency', 'Professional ethics', 'Communication skills'],
@@ -88,7 +88,7 @@ const categories = [
   {
     icon: Wheat,
     title: 'Agriculture Placement',
-    img: '/images/agriculture-placement.png',
+    img: '/images/agriculture-placement.jpg',
     desc: 'Work on sustainable agriculture projects that feed communities and drive economic growth. Learn innovative farming techniques, contribute to food security initiatives, and gain practical experience in agribusiness and rural development.',
     benefits: ['Sustainable farming skills', 'Food security impact', 'Agribusiness knowledge', 'Rural development insight'],
     requirements: ['Agricultural interest', 'Physical stamina', 'Environmental awareness', 'Community focus'],
@@ -98,7 +98,7 @@ const categories = [
   {
     icon: TreePine,
     title: 'Tourism and Ecotourism',
-    img: '/images/tourism-placement.png',
+    img: '/images/tourism-placement.jpg',
     desc: 'Explore the intersection of tourism, conservation, and community development. Work with eco-lodges, wildlife sanctuaries, and sustainable tourism enterprises while gaining hospitality skills and contributing to environmental preservation efforts.',
     benefits: ['Eco-tourism expertise', 'Conservation experience', 'Hospitality skills', 'Cultural preservation'],
     requirements: ['Tourism/hospitality interest', 'Environmental awareness', 'Customer service skills', 'Adventure mindset'],
@@ -108,7 +108,7 @@ const categories = [
   {
     icon: Users,
     title: 'Community Projects — Building of Schools',
-    img: '/images/school-building.png',
+    img: '/images/school-building.jpg',
     desc: 'Participate in transformative community development by helping build schools that provide children with access to quality education. Work alongside local builders and community members on construction projects that create lasting infrastructure, from classrooms and libraries to playgrounds and sanitation facilities that serve generations of learners.',
     benefits: ['Hands-on construction experience', 'Direct community impact', 'Project management skills', 'Sustainable development practice'],
     requirements: ['Physical fitness', 'Teamwork mindset', 'Cultural sensitivity', 'Willingness to work outdoors'],
@@ -118,7 +118,7 @@ const categories = [
   {
     icon: Heart,
     title: 'Bore Holes — Drinkable Water',
-    img: '/images/community-project.png',
+    img: '/images/community-project.jpg',
     desc: 'Help provide communities with access to clean, safe drinking water through bore hole drilling and water infrastructure projects. This life-saving work addresses one of the most critical needs in rural communities, reducing waterborne diseases and improving overall health, while freeing women and children from spending hours each day fetching water from distant sources.',
     benefits: ['Public health impact', 'Water engineering exposure', 'Community health education', 'Sustainable infrastructure skills'],
     requirements: ['Community development interest', 'Physical stamina', 'Environmental awareness', 'Compassion for vulnerable communities'],

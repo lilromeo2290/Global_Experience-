@@ -171,7 +171,7 @@ export default function VolunteerSection() {
           className="mt-16 relative rounded-2xl overflow-hidden"
         >
           <img
-            src="/images/volunteer-group.png"
+            src="/images/volunteer-group.jpg"
             alt="Volunteers experiencing cultural immersion"
             className="w-full h-72 md:h-96 object-cover"
           />
