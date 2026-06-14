@@ -182,9 +182,15 @@ export default function Navbar() {
               </a>
             </div>
             <div className="flex items-center gap-3">
-              <a href="#" onClick={(e) => { e.preventDefault(); setDonateOpen(true) }} className="flex items-center gap-1 hover:text-vogue-light transition-colors">
-                <Heart className="w-3 h-3" /> Donate Now
-              </a>
+              <div className="flex flex-col items-end">
+                <button
+                  onClick={() => setDonateOpen(true)}
+                  className="flex items-center gap-1.5 bg-vogue hover:bg-vogue-light text-white px-3 py-1 rounded-full text-xs font-semibold transition-colors"
+                >
+                  <Heart className="w-3 h-3 fill-white" /> Donate Now
+                </button>
+                <span className="text-[8px] text-white/70 mt-0.5 tracking-wide">SECURELY DONATE TO SUPPORT FOUNDATIONS</span>
+              </div>
             </div>
           </div>
         </div>
