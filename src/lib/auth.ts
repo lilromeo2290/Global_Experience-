@@ -1,7 +1,7 @@
 import type { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import bcrypt from "bcryptjs"
-import { db } from "@/lib/db"
+import { db, isDatabaseAvailable } from "@/lib/db"
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -16,24 +16,35 @@ export const authOptions: NextAuthOptions = {
           return null
         }
 
-        const admin = await db.adminUser.findUnique({
-          where: { email: credentials.email },
-        })
-
-        if (!admin) {
+        // If database is not available, no admin login possible
+        if (!isDatabaseAvailable()) {
+          console.warn('Database not available - admin login disabled')
           return null
         }
 
-        const isValid = await bcrypt.compare(credentials.password, admin.password)
-        if (!isValid) {
-          return null
-        }
+        try {
+          const admin = await db.adminUser.findUnique({
+            where: { email: credentials.email },
+          })
 
-        return {
-          id: admin.id,
-          email: admin.email,
-          name: admin.name,
-          role: admin.role,
+          if (!admin) {
+            return null
+          }
+
+          const isValid = await bcrypt.compare(credentials.password, admin.password)
+          if (!isValid) {
+            return null
+          }
+
+          return {
+            id: admin.id,
+            email: admin.email,
+            name: admin.name,
+            role: admin.role,
+          }
+        } catch (error) {
+          console.error('Error during admin authorization:', error)
+          return null
         }
       },
     }),

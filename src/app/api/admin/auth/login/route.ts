@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { db } from '@/lib/db'
+import { db, isDatabaseAvailable } from '@/lib/db'
 
 export async function POST(req: NextRequest) {
   try {
+    if (!isDatabaseAvailable()) {
+      return NextResponse.json({ success: false, error: 'Database not available. Please try again later.' }, { status: 503 })
+    }
+
     const { email, password } = await req.json()
 
     if (!email || !password) {
