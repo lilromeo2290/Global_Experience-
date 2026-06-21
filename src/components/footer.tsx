@@ -1,6 +1,6 @@
 'use client'
 
-import { Heart, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, Youtube } from 'lucide-react'
+import { Mail, Phone, MapPin, Facebook } from 'lucide-react'
 import Link from 'next/link'
 
 const quickLinks = [
@@ -32,10 +32,6 @@ const programs = [
 
 const socials = [
   { icon: Facebook, href: 'https://web.facebook.com/profile.php?id=61590352813546', label: 'Facebook' },
-  { icon: Twitter, href: '#', label: 'Twitter' },
-  { icon: Instagram, href: '#', label: 'Instagram' },
-  { icon: Linkedin, href: '#', label: 'LinkedIn' },
-  { icon: Youtube, href: '#', label: 'YouTube' },
 ]
 
 export default function Footer() {
