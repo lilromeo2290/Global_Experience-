@@ -1,0 +1,43 @@
+# ============================================================
+#  Apache reverse proxy: your-domain → Node.js app (port 3000)
+# ============================================================
+#  Place this file in:  ~/public_html/<your-domain>/.htaccess
+#  (or wherever your domain's document root points)
+#
+#  Requirements:
+#    - mod_proxy, mod_proxy_http, mod_rewrite enabled in Apache
+#    - Node app running on 127.0.0.1:3000 (managed by PM2)
+#
+#  On Webuzo these modules are usually enabled by default.
+# ============================================================
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # If the request is for an existing file (e.g. an image in /public),
+    # serve it directly from disk — don't proxy.
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+    # Everything else goes to the Node app on port 3000.
+    RewriteRule ^(.*)$ http://127.0.0.1:3000/$1 [P,L]
+</IfModule>
+
+<IfModule mod_proxy.c>
+    ProxyPreserveHost On
+    ProxyRequests Off
+    ProxyPass / http://127.0.0.1:3000/
+    ProxyPassReverse / http://127.0.0.1:3000/
+
+    # WebSocket support (for chat / hot reload features)
+    <Location /_next/webpack-hmr>
+        ProxyPass ws://127.0.0.1:3000/_next/webpack-hmr
+        ProxyPassReverse ws://127.0.0.1:3000/_next/webpack-hmr
+    </Location>
+</IfModule>
+
+# Helpful headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>

@@ -50,8 +50,27 @@ test
 prompt
 
 server.log
+
 # Skills directory
 /skills/
+
 # Environment variables
 .env.local
 .env*.local
+
+# Build artifacts / downloadable deliverables (do not push)
+/download/
+/tmp/
+/tool-results/
+/upload/
+
+# OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Editor directories
+.vscode/
+.idea/
+*.swp
+*.swo
