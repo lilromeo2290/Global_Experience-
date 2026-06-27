@@ -65,10 +65,11 @@ print_ok "Node.js $(node -v) detected"
 # --- 1. Install dependencies --------------------------------------------------
 print_step "Installing dependencies (this can take a few minutes)"
 
-# Prefer bun if available (faster), fall back to npm
+# Install ALL deps (including devDeps — needed for build: TypeScript, Prisma CLI, etc.)
+# Note: `bun install --production` is a boolean flag (no value). We must NOT use it here.
 if command -v bun > /dev/null && [ -f bun.lock ]; then
   print_ok "Using bun"
-  bun install --production=false
+  bun install
 elif [ -f package-lock.json ]; then
   print_ok "Using npm"
   npm ci || npm install
