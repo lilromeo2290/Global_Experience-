@@ -2,8 +2,8 @@ module.exports = {
   apps: [
     {
       name: 'global-experience',
-      script: '.next/standalone/server.js',
-      cwd: '/home/globalexp/public_html',
+      script: 'server.js',
+      cwd: __dirname,
       instances: 1,
       autorestart: true,
       watch: false,
@@ -13,9 +13,9 @@ module.exports = {
         PORT: 3000,
         HOSTNAME: '0.0.0.0',
       },
-      error_file: '/home/globalexp/logs/error.log',
-      out_file: '/home/globalexp/logs/output.log',
-      log_file: '/home/globalexp/logs/combined.log',
+      error_file: `${__dirname}/logs/error.log`,
+      out_file: `${__dirname}/logs/output.log`,
+      log_file: `${__dirname}/logs/combined.log`,
       time: true,
     },
   ],
