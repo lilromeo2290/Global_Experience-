@@ -43,11 +43,17 @@ nano .env   # fill in real MySQL creds, NEXTAUTH_SECRET, etc.
 
 ### 3. Run the deploy script
 
+**Option A — Deploy + auto-configure Nginx (recommended):**
+```bash
+bash deploy.sh --nginx-domain=your-domain.com
+```
+
+**Option B — Deploy only (configure Nginx manually later):**
 ```bash
 bash deploy.sh
 ```
 
-This will:
+The script will:
 - Install Node.js dependencies
 - Generate the Prisma client
 - Build Next.js (standalone mode)
@@ -55,17 +61,30 @@ This will:
 - Apply the Prisma schema to your MySQL DB (creates all tables)
 - (Re)start PM2 process named `global-experience`
 - Save PM2 config so it auto-starts on reboot
+- **If `--nginx-domain` is passed:** auto-configure Nginx reverse proxy
 
-### 4. Point your domain to the app
+### 4. Configure Nginx (if you skipped --nginx-domain)
 
-The repo ships an Apache reverse-proxy config in `.htaccess.production`.
+The repo ships a ready-to-use Nginx config in `nginx-production.conf`.
 
 ```bash
-# Copy it to your domain's document root
-cp ~/global-experience/.htaccess.production ~/public_html/<your-domain>/.htaccess
+# Auto-configure (easiest):
+bash deploy.sh --nginx-domain=your-domain.com
+
+# Or manually:
+sudo cp nginx-production.conf /etc/nginx/conf.d/your-domain.com.conf
+sudo sed -i 's/YOUR_DOMAIN/your-domain.com/g' /etc/nginx/conf.d/your-domain.com.conf
+sudo nginx -t && sudo systemctl reload nginx
 ```
 
-Then in Webuzo: ensure `AllowOverride All` is set for the domain so `.htaccess` is honored.
+**Important:** Remove or rename any default Webuzo config that serves the landing page:
+```bash
+# Check what's serving the default page:
+ls /etc/nginx/conf.d/
+# Back up any conflicting default configs:
+sudo mv /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf.bak
+sudo systemctl reload nginx
+```
 
 ### 5. SSL
 

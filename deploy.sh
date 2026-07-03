@@ -4,11 +4,14 @@
 # ============================================================
 #  Run this on the Webuzo VPS after `git clone`:
 #
-#      cd ~/public_html
+#      cd ~
 #      git clone https://github.com/lilromeo2290/Global_Experience-.git global-experience
 #      cd global-experience
 #      cp .env.production.example .env    # then edit .env
 #      bash deploy.sh
+#
+#  Optional: auto-configure Nginx reverse proxy
+#      bash deploy.sh --nginx-domain=your-domain.com
 #
 #  What this script does:
 #    1. Verifies .env exists
@@ -18,7 +21,8 @@
 #    5. Copies .next/static + public/ into standalone/
 #    6. Pushes Prisma schema to MySQL (creates tables)
 #    7. (Re)starts PM2 process
-#    8. Prints status + URLs
+#    8. Optionally configures Nginx reverse proxy
+#    9. Prints status + URLs
 # ============================================================
 
 set -e
@@ -34,6 +38,16 @@ print_step() { echo -e "\n${BLUE}==>${NC} $1"; }
 print_ok()   { echo -e "${GREEN}✓${NC} $1"; }
 print_warn() { echo -e "${YELLOW}⚠${NC} $1"; }
 print_err()  { echo -e "${RED}✗${NC} $1"; }
+
+# --- Parse CLI args ---
+NGINX_DOMAIN=""
+for arg in "$@"; do
+  case $arg in
+    --nginx-domain=*)
+      NGINX_DOMAIN="${arg#*=}"
+      ;;
+  esac
+done
 
 # --- 0. Sanity checks ---------------------------------------------------------
 print_step "Pre-flight checks"
@@ -154,7 +168,70 @@ print_ok "PM2 process started"
 print_step "Enabling PM2 auto-start on boot"
 pm2 startup 2>&1 | tail -5 || print_warn "Could not auto-start PM2 on boot (may need sudo)"
 
-# --- 7. Final status ----------------------------------------------------------
+# --- 7. Configure Nginx reverse proxy (optional) -----------------------------
+if [ -n "$NGINX_DOMAIN" ]; then
+  print_step "Configuring Nginx reverse proxy for $NGINX_DOMAIN"
+
+  SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+  NGINX_CONF_SRC="$SCRIPT_DIR/nginx-production.conf"
+
+  if [ ! -f "$NGINX_CONF_SRC" ]; then
+    print_warn "nginx-production.conf not found in repo. Skipping Nginx config."
+  else
+    # Detect Nginx config directory
+    NGINX_CONF_DIR=""
+    for d in /etc/nginx/conf.d /usr/local/apps/nginx/etc/conf.d /etc/nginx/sites-available; do
+      if [ -d "$d" ]; then
+        NGINX_CONF_DIR="$d"
+        break
+      fi
+    done
+
+    if [ -z "$NGINX_CONF_DIR" ]; then
+      print_warn "Could not find Nginx config directory. Skipping auto-config."
+      echo "  You can manually copy nginx-production.conf to your Nginx conf dir."
+    else
+      print_ok "Found Nginx config dir: $NGINX_CONF_DIR"
+
+      # Prepare the config with the actual domain
+      NGINX_CONF_DEST="$NGINX_CONF_DIR/$NGINX_DOMAIN.conf"
+      sed "s/YOUR_DOMAIN/$NGINX_DOMAIN/g" "$NGINX_CONF_SRC" | sudo tee "$NGINX_CONF_DEST" > /dev/null
+      print_ok "Wrote Nginx config to $NGINX_CONF_DEST"
+
+      # Remove the default Webuzo landing page config if it conflicts
+      DEFAULT_CONF="$NGINX_CONF_DIR/default.conf"
+      if [ -f "$DEFAULT_CONF" ]; then
+        print_warn "Found default.conf — backing up and disabling it"
+        sudo mv "$DEFAULT_CONF" "${DEFAULT_CONF}.bak"
+      fi
+
+      # Also check for Webuzo's per-domain default config
+      for ext in "" ".conf"; do
+        DOMAIN_CONF="$NGINX_CONF_DIR/${NGINX_DOMAIN}${ext}"
+        # We just wrote our config, skip it
+        if [ "$DOMAIN_CONF" = "$NGINX_CONF_DEST" ]; then
+          continue
+        fi
+        if [ -f "$DOMAIN_CONF" ] && grep -q "root.*public_html" "$DOMAIN_CONF" 2>/dev/null; then
+          print_warn "Found existing Webuzo default config at $DOMAIN_CONF — backing up"
+          sudo mv "$DOMAIN_CONF" "${DOMAIN_CONF}.bak"
+        fi
+      done
+
+      # Test Nginx config
+      if sudo nginx -t 2>&1; then
+        print_ok "Nginx config test passed"
+        sudo systemctl reload nginx 2>/dev/null || sudo service nginx reload 2>/dev/null || print_warn "Could not reload Nginx automatically. Run: sudo systemctl reload nginx"
+        print_ok "Nginx reloaded — $NGINX_DOMAIN now points to the Node.js app"
+      else
+        print_err "Nginx config test FAILED. Check the output above for errors."
+        echo "  The app is still running on port 3000 — fix Nginx config manually."
+      fi
+    fi
+  fi
+fi
+
+# --- 8. Final status ----------------------------------------------------------
 print_step "Deployment complete!"
 
 echo ""
@@ -162,16 +239,32 @@ echo -e "${GREEN}============================================================${N
 echo -e "${GREEN}  App is running on port ${PORT:-3000}${NC}"
 echo -e "${GREEN}  PM2 process:  global-experience${NC}"
 echo -e "${GREEN}  App folder:   $APP_DIR${NC}"
+if [ -n "$NGINX_DOMAIN" ]; then
+  echo -e "${GREEN}  Domain:       http://$NGINX_DOMAIN${NC}"
+fi
 echo -e "${GREEN}============================================================${NC}"
 echo ""
-echo "Next steps:"
-echo "  1. Configure your domain in Webuzo to point to this app"
-echo "  2. Use the .htaccess in this folder to reverse-proxy Apache → port ${PORT:-3000}"
-echo "  3. Install SSL via Webuzo admin panel"
-echo ""
+
+if [ -z "$NGINX_DOMAIN" ]; then
+  echo "Next steps:"
+  echo "  1. Configure Nginx to reverse-proxy your domain → port ${PORT:-3000}"
+  echo "     Option A: Re-run with  bash deploy.sh --nginx-domain=your-domain.com"
+  echo "     Option B: Manually copy nginx-production.conf to /etc/nginx/conf.d/"
+  echo "  2. Install SSL via Webuzo admin panel"
+  echo ""
+else
+  echo "Next steps:"
+  echo "  1. Make sure DNS for $NGINX_DOMAIN points to this VPS IP"
+  echo "  2. Install SSL via Webuzo admin panel (Let's Encrypt — one click)"
+  echo "  3. After SSL, uncomment the HTTPS block in the Nginx config"
+  echo ""
+fi
+
 echo "Useful commands:"
 echo "  pm2 status                    # check process status"
 echo "  pm2 logs global-experience    # view live logs"
 echo "  pm2 restart global-experience # restart after .env changes"
 echo "  pm2 stop global-experience    # stop the app"
+echo "  sudo nginx -t                 # test Nginx config"
+echo "  sudo systemctl reload nginx   # apply Nginx config changes"
 echo ""
