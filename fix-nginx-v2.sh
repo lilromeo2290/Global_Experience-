@@ -16,7 +16,7 @@ DOMAIN="${1:-}"
 if [ -z "$DOMAIN" ]; then
   echo "Usage: bash fix-nginx-v2.sh your-domain.com"
   exit 1
-}
+fi
 
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
