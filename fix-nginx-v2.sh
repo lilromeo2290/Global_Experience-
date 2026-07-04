@@ -284,7 +284,27 @@ fi
 
 print_ok "Server blocks patched"
 
-# --- 5. Test Nginx config ---------------------------------------------------
+# --- 5. Ensure required include files exist ----------------------------------
+print_step "Ensuring required Nginx include files exist"
+
+CONF_DIR=$(dirname "$VHOST_FILE")
+
+# proxy.conf — standard proxy params, referenced by Webuzo's vhost config
+if [ ! -f "$CONF_DIR/proxy.conf" ]; then
+  cat > "$CONF_DIR/proxy.conf" << 'PROXYCONF'
+proxy_set_header Host $host;
+proxy_set_header X-Real-IP $remote_addr;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header X-Forwarded-Proto $scheme;
+proxy_set_header X-Forwarded-Host $host;
+proxy_set_header X-Forwarded-Port $server_port;
+PROXYCONF
+  print_ok "Created $CONF_DIR/proxy.conf"
+else
+  print_ok "proxy.conf already exists"
+fi
+
+# --- 6. Test Nginx config ---------------------------------------------------
 print_step "Testing Nginx configuration"
 
 if nginx -t 2>&1; then
