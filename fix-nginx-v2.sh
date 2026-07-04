@@ -68,6 +68,9 @@ print_ok "Backed up to $BACKUP"
 # --- 4. Patch ALL server blocks for this domain ----------------------------
 print_step "Patching all server blocks for $DOMAIN"
 
+# Export so Python can read them inside the quoted heredoc
+export VHOST_FILE DOMAIN
+
 python3 << 'PYEOF'
 import sys, re, os
 
