@@ -128,6 +128,7 @@ if target_idx is None:
     sys.exit(1)
 
 # Build the replacement server block
+# NOTE: bash heredoc expands $var, so Nginx $host etc. must be escaped as \$ below
 new_block = f"""# === {domain} — Node.js reverse proxy (auto-configured) ===
 server {{
     listen 80;
@@ -141,14 +142,14 @@ server {{
         proxy_http_version 1.1;
 
         # WebSocket support
-        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Upgrade \$http_upgrade;
         proxy_set_header Connection "upgrade";
 
         # Proxy headers
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
 
         # Timeouts
         proxy_connect_timeout 60s;
@@ -156,13 +157,13 @@ server {{
         proxy_read_timeout 60s;
 
         proxy_buffering off;
-        proxy_cache_bypass $http_upgrade;
+        proxy_cache_bypass \$http_upgrade;
     }}
 
     # Static assets — cache aggressively
     location /_next/static/ {{
         proxy_pass http://127.0.0.1:3000;
-        proxy_set_header Host $host;
+        proxy_set_header Host \$host;
         expires 365d;
         add_header Cache-Control "public, immutable";
         access_log off;
@@ -170,7 +171,7 @@ server {{
 
     location /images/ {{
         proxy_pass http://127.0.0.1:3000;
-        proxy_set_header Host $host;
+        proxy_set_header Host \$host;
         expires 7d;
         add_header Cache-Control "public";
         access_log off;
@@ -178,7 +179,7 @@ server {{
 
     location /gallery/ {{
         proxy_pass http://127.0.0.1:3000;
-        proxy_set_header Host $host;
+        proxy_set_header Host \$host;
         expires 7d;
         add_header Cache-Control "public";
         access_log off;
