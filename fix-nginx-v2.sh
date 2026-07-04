@@ -187,6 +187,9 @@ for start, end, is_ssl in reversed(domain_blocks):
     skip_return_301 = False
 
     for line_idx, line in enumerate(block_lines):
+        # Skip lines already marked for removal
+        if line is None:
+            continue
         stripped = line.strip()
 
         # Skip the "return 301 https://..." redirect in HTTP block
@@ -247,10 +250,6 @@ for start, end, is_ssl in reversed(domain_blocks):
             for skip_idx in range(line_idx + 1, j2 + 1):
                 block_lines[skip_idx] = None
             print(f"  [{label}] Removed existing static location block")
-            continue
-
-        # Skip lines marked for removal
-        if line is None:
             continue
 
         new_block_lines.append(line)
