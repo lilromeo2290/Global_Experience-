@@ -192,8 +192,8 @@ server {{
         log_not_found off;
     }}
 
-    access_log /var/log/nginx/{domain}.access.log;
-    error_log /var/log/nginx/{domain}.error.log;
+    access_log /usr/local/apps/nginx/logs/{domain}.access.log;
+    error_log /usr/local/apps/nginx/logs/{domain}.error.log;
 }}"""
 
 # Reconstruct the file: keep everything before and after the target block
@@ -224,7 +224,12 @@ fi
 
 print_ok "Patched server block for $DOMAIN"
 
-# --- 5. Test Nginx config ---------------------------------------------------
+# --- 5. Ensure log directory exists -----------------------------------------
+print_step "Ensuring Nginx log directory exists"
+mkdir -p /usr/local/apps/nginx/logs
+print_ok "Log directory ready: /usr/local/apps/nginx/logs/"
+
+# --- 6. Test Nginx config ---------------------------------------------------
 print_step "Testing Nginx configuration"
 
 if nginx -t 2>&1; then
