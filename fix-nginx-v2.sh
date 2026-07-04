@@ -114,9 +114,11 @@ while i < len(lines):
 
 # Find which block contains our domain
 target_idx = None
+target_block = None
 for idx, (start, end, block) in enumerate(blocks):
     if re.search(r'server_name\s+[^;]*' + re.escape(domain), block):
         target_idx = idx
+        target_block = block
         print(f"Found domain server block at lines {start+1}-{end} (block #{idx+1})")
         print(f"Block preview (first 5 lines):")
         for l in block.split('\n')[:5]:
@@ -127,14 +129,34 @@ if target_idx is None:
     print(f"ERROR: Could not find server block for {domain}")
     sys.exit(1)
 
+# Extract the original listen directives and server_name from Webuzo's config
+listen_lines = []
+server_name_line = None
+for line in target_block.split('\n'):
+    stripped = line.strip()
+    if stripped.startswith('listen '):
+        listen_lines.append(stripped)
+        print(f"  Preserving listen: {stripped}")
+    if stripped.startswith('server_name '):
+        server_name_line = stripped
+        print(f"  Preserving server_name: {stripped}")
+
+if not listen_lines:
+    listen_lines = ['listen 80;', 'listen [::]:80;']
+    print("  No listen directives found, using defaults")
+
+if not server_name_line:
+    server_name_line = f'server_name {domain} www.{domain};'
+
+listen_block = '\n    '.join(listen_lines)
+
 # Build the replacement server block
 # NOTE: bash heredoc expands $var, so Nginx $host etc. must be escaped as \$ below
 new_block = f"""# === {domain} — Node.js reverse proxy (auto-configured) ===
 server {{
-    listen 80;
-    listen [::]:80;
+    {listen_block}
 
-    server_name {domain} www.{domain};
+    {server_name_line}
 
     # Reverse proxy to Next.js app on port 3000 (PM2)
     location / {{
