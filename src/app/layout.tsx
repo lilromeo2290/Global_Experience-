@@ -39,12 +39,23 @@ export const metadata: Metadata = {
     description:
       "Join our international volunteer and placement programs. Support communities through cultural exchange, professional placements, and humanitarian programs.",
     type: "website",
+    url: "https://globalexperiencegh.org",
+    siteName: "Global Experience Placements",
+    images: [
+      {
+        url: "https://globalexperiencegh.org/images/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Global Experience Placements Logo",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Global Experience Placements | Empowering Communities",
     description:
       "Join our international volunteer and placement programs. Support communities through cultural exchange and humanitarian programs.",
+    images: ["https://globalexperiencegh.org/images/logo.png"],
   },
 };
 
