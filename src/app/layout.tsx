@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Global Experience Placements | Empowering Communities Through International Volunteerism",
+  title: "Global Experience | Aligning Skills with Cooperate Goals",
   description:
     "International volunteer and placement organization dedicated to supporting students, graduates, interns, researchers, and volunteers through cultural exchange, professional placements, community development, and humanitarian support programs worldwide.",
   keywords: [
@@ -30,29 +30,29 @@ export const metadata: Metadata = {
     "teaching placements",
     "volunteer Africa",
   ],
-  authors: [{ name: "Global Experience Placements" }],
+  authors: [{ name: "Global Experience" }],
   icons: {
     icon: "/images/logo.png",
   },
   openGraph: {
-    title: "Global Experience Placements | Empowering Communities",
+    title: "Global Experience | Aligning Skills with Cooperate Goals",
     description:
       "Join our international volunteer and placement programs. Support communities through cultural exchange, professional placements, and humanitarian programs.",
     type: "website",
     url: "https://globalexperiencegh.org",
-    siteName: "Global Experience Placements",
+    siteName: "Global Experience",
     images: [
       {
         url: "https://globalexperiencegh.org/images/logo.png",
         width: 1200,
         height: 630,
-        alt: "Global Experience Placements Logo",
+        alt: "Global Experience Logo",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Global Experience Placements | Empowering Communities",
+    title: "Global Experience | Aligning Skills with Cooperate Goals",
     description:
       "Join our international volunteer and placement programs. Support communities through cultural exchange and humanitarian programs.",
     images: ["https://globalexperiencegh.org/images/logo.png"],
