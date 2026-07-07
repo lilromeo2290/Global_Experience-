@@ -10,7 +10,7 @@
 #   4. Creates .env with MySQL connection
 #   5. Sets up PM2 with correct config
 #   6. Configures Nginx via Webuzo's custom include (survives Webuzo updates)
-#   7. Comments out PHP blocks in webuzoVH.conf for this domain
+#     NOTE: Does NOT modify webuzoVH.conf — only uses custom include files
 #
 # Usage: bash deploy-globalexperience.sh [DB_PASSWORD]
 #=============================================================================
@@ -153,71 +153,8 @@ location ^~ /_next/static/ {
 NGINXCUSTOM
 echo "  Custom include updated: $CUSTOM_CONF"
 
-# 7b: Comment out PHP block for this domain in webuzoVH.conf
-python3 << 'PYEOF'
-import re, shutil, subprocess, sys
-
-VHOST = "/usr/local/apps/nginx/etc/conf.d/webuzoVH.conf"
-DOMAIN = "globalexperiencegh.org"
-
-shutil.copy2(VHOST, VHOST + ".bak.deploy")
-
-with open(VHOST) as f:
-    lines = f.readlines()
-
-out = []
-in_php = False
-php_depth = 0
-in_our_domain = False
-brace_depth = 0
-
-for line in lines:
-    s = line.strip()
-    
-    if s.startswith('server {') or s == 'server{':
-        if brace_depth == 0:
-            in_our_domain = False
-        brace_depth += 1
-    
-    if not in_our_domain:
-        if 'server_name' in s and DOMAIN in s:
-            in_our_domain = True
-    
-    brace_depth += s.count('{') - s.count('}')
-    
-    if brace_depth <= 0:
-        in_our_domain = False
-        in_php = False
-    
-    if in_our_domain and not in_php:
-        if re.match(r'location\s+~\s+\(\.', s):
-            in_php = True
-            php_depth = 1
-            out.append("        #DISABLED: " + line)
-            continue
-    
-    if in_php:
-        php_depth += s.count('{') - s.count('}')
-        out.append("        #DISABLED: " + line)
-        if php_depth <= 0:
-            in_php = False
-        continue
-    
-    out.append(line)
-
-with open(VHOST, 'w') as f:
-    f.writelines(out)
-
-r = subprocess.run(['/usr/local/apps/nginx/sbin/nginx', '-t'], capture_output=True, text=True)
-if r.returncode == 0:
-    subprocess.run(['/usr/local/apps/nginx/sbin/nginx', '-s', 'reload'])
-    print("  Nginx configured & reloaded")
-else:
-    print("  Nginx test FAILED - restoring backup")
-    print(r.stderr)
-    shutil.copy2(VHOST + ".bak.deploy", VHOST)
-    sys.exit(1)
-PYEOF
+# 7b: Just reload Nginx (custom includes handle everything — no webuzoVH.conf changes!)
+/usr/local/apps/nginx/sbin/nginx -t && /usr/local/apps/nginx/sbin/nginx -s reload && echo "  Nginx reloaded" || echo "  WARNING: Nginx reload failed"
 
 # ---- Step 8: Verify ----
 echo ""
